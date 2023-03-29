@@ -1,0 +1,52 @@
+#RPSH INPUT PARAMETERS
+#Models(Tully1/Tully2/Tully3/Morse1/Morse2/Morse3/SpinBoson2db2LChain/db3LChain)
+model 	db2lchain 
+
+#method(FSSH/RPSH, nb)
+method  fssh 1
+
+#Number of Particle (np)
+nParticle   20
+
+#Number of time steps
+nsteps 	2000000 
+
+#Number of Trajectories
+ntraj	300
+
+#Number of Parallel Jobs
+ncpu	20
+
+#Classical of time step
+timeStep 	1.0
+
+#Temperature in Kelvin
+temp	1000.0
+
+#Initial Momentum (k)
+Kinitial 	0.0
+
+#User Define K value(Yes/No)
+usrkval 	'No'
+
+#Accumulate various k value(Yes/No)
+acckval 	'No'
+
+#bead initialazation scheme ('same','gaussian',wigner)
+BeadPos		'gaussian'
+
+#initialazation scheme (fixed, Wigner,Gaussian)
+VInitial	'gaussian'
+
+#velocity reversal scheme for frustrated hop('Never','Always','Truhlar','Subotnik')
+VReverse	'never'
+
+#print run-time details
+rundtail	'Yes'
+
+#Skipping while printing history(default: 100)
+iprint		1000
+
+#End of Input File
+FINISH
+
