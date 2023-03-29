@@ -1,4 +1,13 @@
       module propagation_module
+!**********************************************************************
+!     SHARP PACK module that contains propragation schemes     
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!     New Jersey Institute of Technology
+!**********************************************************************
       use global_module
       use models_module
 
@@ -7,11 +16,15 @@
 
       SUBROUTINE ADVANCE_ADIA(eva,vdotd_old,vdotd_new,adia)
 !**********************************************************************
-!     
 !     SHARP PACK subroutine to advance the electronic coefficients
 !     by 4th order Runge-Kutta (RK) method
 !     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
+      use global_module
       implicit none
 
       integer    :: i
@@ -49,15 +62,17 @@
       return
       END SUBROUTINE ADVANCE_ADIA
 
-!---------------------------------------------------------------
+
       SUBROUTINE ADVANCE_MD(istate,rp,vp,fp)
 !**********************************************************************
-!     
 !     SHARP PACK subroutine to advance the classical positions
 !     and velocities by velocity verlet
 !     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
-
       implicit none
 
       integer              :: i,ip,ibd
@@ -144,12 +159,15 @@
       return
       END SUBROUTINE ADVANCE_MD
       
-!c!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       SUBROUTINE FORCE(psi,istate,dhel,fp)
 !**********************************************************************
-!     
 !     SHARP PACK subroutine to calculate force 
+!     by Hellmann–Feynman theorem on active surface
 !     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
 
       use global_module, only : np, NSTATES
@@ -174,12 +192,15 @@
       END SUBROUTINE FORCE
 
 
-!c!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       SUBROUTINE FORCE_Lchain(r,ff)
 !**********************************************************************
 !     
 !     SHARP PACK subroutine to calculate force of LinearChainModel
 !     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
 
       use global_module, only : np
@@ -220,6 +241,5 @@
 
       END SUBROUTINE FORCE_Lchain
 
-!*********** END MODULE ******************
-
+!**********************************************************************
       end module propagation_module

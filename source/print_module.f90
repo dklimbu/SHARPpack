@@ -1,12 +1,28 @@
       module print_module
+!**********************************************************************
+!     SHARP PACK module that contains printing variables     
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!     New Jersey Institute of Technology
+!**********************************************************************
       use global_module
       use modelvar_module
       implicit none
 
       contains
 
-!***********************************************************************
       subroutine printin()
+!**********************************************************************
+!     SHARP PACK subroutine to print system model parameters     
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
 
       implicit none
 
@@ -220,11 +236,16 @@
       end subroutine
 
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-!***********************************************************************
-!  print detail results of populations by different methods
-
       subroutine printresults(lkval)
+!**********************************************************************
+!     SHARP PACK subroutine to print detail results of populations 
+!     by different methods
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
 
       implicit none
       
@@ -321,32 +342,6 @@
         write(3,222) P0, ((redmat(i,nprint)-redmatr(i,nprint))/(ntraj), i=1,nstates),(redmatR(i,nprint)/(ntraj),i=1,nstates),&
                 real(ntrajR)/ntraj,real(nfrust_hop)/ntraj,real(nfrust_hop2)/ntraj
 
-!        inquire(file='pkval1.out', exist=lfile)
-!        if(lfile)then
-!           open(1,file='pkval1.out',status='old',access='append')
-!        else
-!           open(1,file='pkval1.out',status='new')
-!           write(1,'(A36,2x,A)') '# BRANCHING PROBABILTY OF MODEL:    ', modelname
-!           write(1,'(A)')        '# k              T1             T2             R1            R2            nR          nFrust      nFrust2'
-!        endif
-
-!        inquire(file='pkval2.out', exist=lfile)
-!        if(lfile)then
-!           open(2,file='pkval2.out',status='old',access='append')
-!        else
-!           open(2,file='pkval2.out',status='new')
-!           write(2,'(A36,2x,A)') '# BRANCHING PROBABILTY OF MODEL:    ', modelname
-!           write(2,'(A)')        '# k              T1             T2             R1            R2            nR          nFrust      nFrust2'
-!        endif
-
-!        write(1,222) P0, ((diabat3(i,nprint)-diabat3R(i,nprint))/(ntraj), i=1,nstates),(diabat3R(i,nprint)/(ntraj), i=1,nstates),&
-!                real(ntrajR)/ntraj,real(nfrust_hop)/ntraj,real(nfrust_hop2)/ntraj
-
-!        write(2,222) P0,((real(redmat_ec(i,i,nprint)-redmat_ecR(i,i,nprint))/real(ntraj)),i=1,nstates),&
-!                ((real(redmat_ecR(i,i,nprint))/real(ntraj)),i=1,nstates),real(ntrajR)/ntraj,real(nfrust_hop)/ntraj,real(nfrust_hop2)/ntraj
-
-!        close(1)
-!        close(2)
         close(3)
       endif
 
@@ -356,10 +351,16 @@
 
       end subroutine
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!***********************************************************************
 
       subroutine printlogo(nrite)
+!**********************************************************************
+!     SHARP PACK subroutine to print logo
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
 
       implicit none
 
@@ -389,40 +390,15 @@
       end subroutine
 
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!      
-!***********************************************************************
-      subroutine printlogo_old(nrite,ofile)
-
-      implicit none
-
-      integer            :: nrite
-      character(len=24)  :: ofile
-
-      open(nrite,file=ofile,status='unknown')
-
-      write(nrite,*) '                                                                         '
-      write(nrite,*) '*************************************************************************'
-      write(nrite,*) '                                                                         '
-      write(nrite,*) '       ********        ******           *******       ***      ***       '
-      write(nrite,*) '       **********      *********       **********     ***      ***       '
-      write(nrite,*) '       ***     ***     ***     ***    ***      ***    ***      ***       '
-      write(nrite,*) '       ***      ***    ***      ***   ***             ***      ***       '
-      write(nrite,*) '       ***    ****     ***     ***     *********      ************       '
-      write(nrite,*) '       *** *****       *********         *********    ************       '
-      write(nrite,*) '       *** ****        ********                 ***   ***      ***       '
-      write(nrite,*) '       ***    ***      ***            ***      ***    ***      ***       '
-      write(nrite,*) '       ***     ***     ***             **********     ***      ***       '
-      write(nrite,*) '       ***      ****   ***               *******      ***      ***       '
-      write(nrite,*) '                                                                         '
-      write(nrite,*) '*************************************************************************'
-      write(nrite,*) '                                                                         '
-
-      return 
-      end subroutine
-
-
-!***********************************************************************
       subroutine openfile()
+!**********************************************************************
+!     SHARP PACK subroutine to print open files
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
       implicit none
   
       character(len=24) :: file_hopp, file_dcoup, file_therm
@@ -453,9 +429,15 @@
       end subroutine openfile
 
 
-!***********************************************************************
       subroutine hopping_stat()
-! writing hopping statistics
+!**********************************************************************
+!     SHARP PACK subroutine for writing hopping statistics
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
       implicit none
 
       integer :: i,j
@@ -483,8 +465,15 @@
       end subroutine hopping_stat
 
 
-!***********************************************************************
       subroutine close_file()
+!**********************************************************************
+!     SHARP PACK subroutine to close files
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
       implicit none
 
       close(nrite_hopp)

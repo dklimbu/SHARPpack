@@ -1,25 +1,29 @@
       module nonadiabatic_module
 !**********************************************************************
+!     SHARP PACK module that contains nonadiabatic      
 !     
-!     SHARP PACK module that contains    
-!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!     New Jersey Institute of Technology
 !**********************************************************************
 
       implicit none
 
       contains
 
-!c=====================================================================
       SUBROUTINE HOPPING(istate,inext,vdotd_new,adia)
 !**********************************************************************
+!     SHARP PACK subroutine to calculate hopping of PES      
+!     IMPLEMENTING TULLY'S FEWEST SWITCH ALGORITHM.  
+!     WHEN DISCONTINUITY IN THE WAVE FUNCTION IS DETECTED, 
+!     DIABATIC MOTION IS ASSUMED
 !     
-!     SHARP PACK module that contains    
-!     
-!# SUBROUTINE TO IMPLEMENT TULLY'S FEWEST SWITCH 
-!# ALGORITHM.  WHEN DISCONTINUITY IN THE WAVE 
-!# FUNCTION IS DETECTED, DIABATIC MOTION IS ASSUMED
-!# AND HOPPING IS DISABLED FOR THIS ELECTRONIC STEP.
-!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
 
       use global_module, only : NSTATES,dtq
@@ -34,7 +38,7 @@
 !#------------- local variables ------------
       integer    :: i,j,k
       real*8     :: acumulator,dice,rholl,gik(NSTATES)
-      real*8     :: RANF  !,ran0
+      real*8     :: RANF 
       complex*16 :: aux1(NSTATES)  !#  TIME DERIVATIVES OF PSI I
       complex*16 :: aux2(NSTATES)  !#  TIME DERIVATIVES OF PSI II
       complex*16 :: rho(NSTATES)
@@ -44,8 +48,6 @@
       CALL RANDOM_NUMBER(ranf)
       dice = RANF
       acumulator = 0.0
-!!!! CHECK SIGN HERE
-      !rho(:) = CONJG(adia(:))*adia(istate)
       rho(:) = (adia(:)*CONJG(adia(istate)))
 
       aux2 = (0.0, 0.0)
@@ -54,11 +56,6 @@
       END DO
 
        gik(:) = REAL(rho(:)*aux2(:), 8) / rholl
-
-
-      !do i = 1,NSTATES
-      !  if(i .ne. istate)then
-      !    if(gik(i)< 0.d0) gik(i) = 0.d0
 
 ! downward transitions (if any)
 
@@ -88,15 +85,17 @@
              
       END SUBROUTINE HOPPING
 
-!c=====================================================================
+
       SUBROUTINE EKINRESCALE(istate,inext,vc,vp,rp,eva,dhel_rc,psi)
 !**********************************************************************
-!     
 !     SHARP PACK subroutine to scale velocity (KE) after successful
 !     hopping in between two adiabatic energy states
 !
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
-      
       use global_module
       use modelvar_module, only : nJump, nJumpFail
       use models_module
@@ -120,7 +119,6 @@
       real*8              :: eva_b(nstates,nb),psi_b(nstates,nstates,nb)
       real*8              :: hel(nstates,nstates),dhel(nstates,nstates,np)
 
-      !real*8     :: d12=-3.4398d0
       integer     :: npscale
 
       if(vckey == 1)then 
@@ -250,23 +248,21 @@
 
       endif
 
-
       WRITE(nrite_hopp,*)
-
       
       END SUBROUTINE EKINRESCALE
 
       
-!c=====================================================================
       SUBROUTINE pop_estimator(istate,itime,diabat1,diabat2,diabat3,adiabat1,adiabat2)
 !**********************************************************************
-!     
 !     SHARP PACK subroutine to calculate diabatic/adiabatic populations
 !
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!     New Jersey Institute of Technology
 !**********************************************************************
-!      real*8, intent(in)       :: psi(NSTATES,NSTATES,2)
-!      complex*16, intent(in)   :: adia(NSTATES)
-
       use global_module, only : nstates, nprint
       use modelvar_module, only : psi, adia
       implicit none
@@ -328,5 +324,6 @@
 
       END SUBROUTINE
 
-
+!**********************************************************************
       end module nonadiabatic_module
+

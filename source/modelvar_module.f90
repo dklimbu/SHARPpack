@@ -1,10 +1,14 @@
       module modelvar_module
-      use global_module, only: np, nb, nstates, nsteps, nprint,iskip
 !**********************************************************************
-!     
 !     SHARP PACK module that contains array variables     
 !     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!     New Jersey Institute of Technology
 !**********************************************************************
+      use global_module, only: np, nb, nstates, nsteps, nprint,iskip
 
       implicit none
 
@@ -39,8 +43,15 @@
 
       contains
 
-!**********************************************************************
       subroutine modelallocat()
+!**********************************************************************
+!     SHARP PACK subroutine to allocate array variables     
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
       implicit none
      
       !nprint = nsteps 
@@ -100,9 +111,16 @@
 
       end subroutine modelallocat
 
-!**********************************************************************
 
       subroutine modeldeallocat()
+!**********************************************************************
+!     SHARP PACK subroutine to deallocate array variables     
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
       implicit none
 
       deallocate(redmat)

@@ -1,129 +1,97 @@
       module nhc_module
-      
 !c**********************************************************************
-!c     
-!c     dl_poly_quantum module for defining Nose-Hoover Chain arrays for
+!c     SHARP Pack module for defining Nose-Hoover Chain arrays for
 !c     different ensembles
 !c     
-!c     authors    - M.R. Momeni & F.A. Shakib     
-!c     copyright  - M.R. Momeni & F.A. Shakib
+!c     authors    - D.K. Limbu & F.A. Shakib     
+!c     copyright  - D.K. Limbu & F.A. Shakib
 !c
 !c     Method Development and Materials Simulation Laboratory
 !c     New Jersey Institute of Technology
-!c     
 !c**********************************************************************
-
-!      use error_module,   only : error
 
       implicit none
 
-!      real(8) v_epsilon
       real(8), allocatable, save :: eta_nhc(:)
       real(8), allocatable, save :: peta(:)
-!      real(8), allocatable, save :: ksi(:)
-!      real(8), allocatable, save :: pksi(:)
       real*8  :: thermo_tot 
-!      public alloc_nhc_arrays,dealloc_nhc_arrays
       
       contains
       
-!      subroutine alloc_nhc_arrays(idnode,mxnode,nchain)
       subroutine alloc_nhc_arrays(nchain)
-      
 !c**********************************************************************
+!c     SHARP Pack routine to allocate arrays for Nose-Hoover Chain
 !c     
-!c     dl_poly quantum routine to allocate arrays for Nose-Hoover Chain
-!c     
-!c     authors    - M.R. Momeni & F.A. Shakib     
-!c     copyright  - M.R. Momeni & F.A. Shakib 2021
+!c     authors    - D.K. Limbu & F.A. Shakib     
+!c     copyright  - D.K. Limbu & F.A. Shakib
 !c
 !c     Method Development and Materials Simulation Laboratory
-!c     
 !c**********************************************************************
 
       implicit none
 
       logical safe
-!      integer, intent(in) :: idnode,mxnode,nchain
       integer, intent(in) :: nchain
       integer, dimension(1:4) :: fail
 
       safe=.true.
 
-!c     allocate arrays
       fail(:)=0
       
       allocate (eta_nhc(1:nchain),stat=fail(1))
       allocate (peta(1:nchain),stat=fail(2))
-!      allocate (ksi(1:nchain),stat=fail(3))
-!      allocate (pksi(1:nchain),stat=fail(4))
       
       if(any(fail.gt.0))safe=.false.
-!      if(mxnode.gt.1)call gstate(safe)
-!      if(.not.safe)call error(idnode,3001)
       
       end subroutine alloc_nhc_arrays
       
       subroutine dealloc_nhc_arrays()
       
 !c**********************************************************************
+!c     SHARP Pack routine to deallocate arrays for Nose-Hoover Chain
 !c     
-!c     dl_poly quantum routine to deallocate arrays for Nose-Hoover Chain
-!c     
-!c     authors    - M.R. Momeni & F.A. Shakib     
-!c     copyright  - M.R. Momeni & F.A. Shakib 2021
+!c     authors    - D.K. Limbu & F.A. Shakib     
+!c     copyright  - D.K. Limbu & F.A. Shakib
 !c
 !c     Method Development and Materials Simulation Laboratory
-!c     
 !c**********************************************************************
       
       implicit none
 
       logical safe
-!      integer, intent(in) :: idnode,mxnode
       integer, dimension(2) :: fail
       
       fail(:)=0
       safe=.true.
       
       deallocate(eta_nhc,peta,stat=fail(1))
-!      deallocate(ksi,pksi,stat=fail(2))
       
       if(any(fail.gt.0))safe=.false.
-!      if(mxnode.gt.1)call gstate(safe)
-!      if(.not.safe)call error(idnode,3002)
         
       end subroutine dealloc_nhc_arrays
 
 
-!      subroutine nhc_init(idnode,mxnode,nchain)
       subroutine nhc_init(nchain)
       
 !c**********************************************************************
+!c     SHARP Pack routine to initialise NVT-NHC thermostat
 !c     
-!c     dl_poly quantum routine to initialise NVT-NHC thermostat
-!c     
-!c     authors    - M.R. Momeni & F.A. Shakib     
-!c     copyright  - M.R. Momeni & F.A. Shakib 2021
+!c     authors    - D.K. Limbu & F.A. Shakib     
+!c     copyright  - D.K. Limbu & F.A. Shakib
 !c
 !c     Method Development and Materials Simulation Laboratory
-!c     
 !c**********************************************************************
       
       implicit none
       
       integer i
-!      integer, intent(in) :: idnode,mxnode,nchain
       integer, intent(in) :: nchain
 
         do i=1,nchain
           eta_nhc(i)=0.d0
           peta(i)=0.d0
-!          ksi(i)=0.d0
-!          pksi(i)=0.d0
         enddo
 
-!        v_epsilon=0.d0
 
       end subroutine nhc_init
 
@@ -131,18 +99,13 @@
       subroutine nhc_part(vp,KE)
 
 !c*********************************************************************
-!c
-!c     dl_poly quantum routine to integrate and apply NHC thermostat
+!c     SHARP Pack routine to integrate and apply NHC thermostat
 !c     together with NVT ensemble 
 !c
-!c     copyright - M.R.Momeni and F.A.Shakib
-!c     authors   - M.R.Momeni and F.A.Shakib 2021
+!c     authors    - D.K. Limbu & F.A. Shakib     
+!c     copyright  - D.K. Limbu & F.A. Shakib
 !c
 !c     Method Development and Materials Simulation Laboratory
-!
-!      DIL LIMBU 
-!      01/07/2022 :: modified to run pimd for SpinBoson model
-!c
 !c*********************************************************************
 
       use global_module
@@ -160,11 +123,6 @@
 
 !c     define block indices
 
-!      iatm0=(idnode*natms)/mxnode+1
-!      iatm1=((idnode+1)*natms)/mxnode
-
-!c     define NHC time variables
-!      natm = np*nb
       dt2=0.50d0*dt
       dt4=0.25d0*dt
       dt8=0.125d0*dt
@@ -272,8 +230,6 @@
                       + kbT*eta_nhc(i)
       enddo
 
-!      write(12,'(100e16.6)') peta
-!      write(13,'(100e16.6)') eta_nhc
       if(KE .ne. KE)then
         write(0,*) 'NaN detected in NHC THERMOSTAT !'
         write(0,100) 'peta:', peta
@@ -287,4 +243,5 @@
 
       end subroutine nhc_part
 
+!c**********************************************************************
       end module nhc_module 

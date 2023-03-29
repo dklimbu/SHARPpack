@@ -1,11 +1,7 @@
       module parse_module
 
 !c***********************************************************************
-!c     
-!c     dl_poly module for defining parsing arrays
-!c     copyright - daresbury laboratory
-!c     author    - w. smith    jan 2004
-!c     
+!c     SHARP Pack module for defining parsing arrays
 !c***********************************************************************
 
       integer, parameter :: lenrec=150
@@ -15,15 +11,9 @@
       contains
 
       subroutine getrec(safe,idnode,ifile)
-
 !c*********************************************************************
-!c     
-!c     dl_poly subroutine to read a character string on one node
+!c     SHARP Pack routine to read a character string on one node
 !c     and broadcast it to all other nodes
-!c     
-!c     copyright daresbury laboratory 1994
-!c     author w.smith december 1994
-!c     
 !c*********************************************************************
 
       implicit none
@@ -36,8 +26,6 @@
       
       safe=.true.
       
-!      call gsync()
-      
       if(idnode.eq.0)then
         
         read(ifile,'(a150)',end=100)line
@@ -49,18 +37,13 @@
           
         enddo
         
-!        call gstate(safe)
-!        call gisum(export,lenrec,import)
         
         return
         
   100   safe=.false.
         
-!        call gstate(safe)
-        
       else
         
-!        call gstate(safe)
         if(.not.safe)return
 
         do i=1,lenrec
@@ -69,8 +52,6 @@
 
         enddo
 
-!        call gisum(export,lenrec,import)
-        
         do i=1,lenrec
           
           record(i)=char(export(i))
@@ -84,21 +65,15 @@
       end subroutine getrec
 
       integer function intstr(word,len,lst)
-
 !c***********************************************************************
-!c     
-!c     dl_poly function for extracting integers from a 
+!c     SHARP Pack function for extracting integers from a 
 !c     character string
-!c     
-!c     copyright - daresbury laboratory 1994
-!c     author    - w. smith may 1994.
 !c     
 !c     parameters:
 !c     word   - input character string
 !c     len    - working length of character string
 !c     lst    - location of space character at end of
 !c     integer string
-!c     
 !c***********************************************************************
       
       implicit none
@@ -156,21 +131,14 @@
       real(8) function dblstr(word,len,lst)
 
 !c***********************************************************************
-!c     
-!c     dl_poly function for extracting double precisions from a 
+!c     SHARP Pack function for extracting double precisions from a 
 !c     character string. 
-!c     modified from dl_poly function intstr
-!c     
-!c     copyright - daresbury laboratory 1994
-!c     author    - w. smith may 1994.
-!c     modified  - t. forester april 1994
 !c     
 !c     parameters:
 !c     word   - input character string
 !c     len    - working length of character string
 !c     lst    - location of space character at end of
 !c     double precision string
-!c     
 !c***********************************************************************
       
       implicit none
@@ -268,15 +236,9 @@
       end function dblstr
 
       subroutine strip(string,imax)
-
 !c***********************************************************************
-!c     
-!c     DL_POLY routine to strip blanks from start of a string
+!c     SHARP Pack routine to strip blanks from start of a string
 !c     maximum length is 255 characters
-!c     
-!c     copyright daresbury laboratory 1993
-!c     author   t.forester       july 1993
-!c     
 !c***********************************************************************
 
       implicit none
@@ -304,15 +266,8 @@
       end subroutine strip
 
       subroutine lowcase(string,length)
-
 !c***********************************************************************
-!c     
-!c     DL_POLY routine to lowercase a string of up to 255 characters.
-!c     Transportable to non-ASCII machines
-!c     
-!c     copyright daresbury laboratory 1993
-!c     author    t. forester     july 1993
-!c     
+!c     SHARP Pack routine to lowercase a string of up to 255 characters.
 !c***********************************************************************
 
       implicit none
@@ -387,14 +342,8 @@
       end subroutine lowcase
 
       subroutine copystring(oldstr,newstr,length)
-
 !c***********************************************************************
-!c     
-!c     DL_POLY routine to copy one string into another
-!c     
-!c     copyright daresbury laboratory
-!c     author    w. smith    jan 2004
-!c     
+!c     SHARP Pack routine to copy one string into another
 !c***********************************************************************
 
       implicit none
@@ -414,14 +363,9 @@
       logical function findstring(seek,string,here)
 
 !c***********************************************************************
-!c     
-!c     DL_POLY routine to find an explicit string in an input record
+!c     SHARP Pack routine to find an explicit string in an input record
 !c     note: variable `seek' is a character string while variable
 !c    `string' is a character*1 array i.e. code is application specific
-!c
-!c     copyright daresbury laboratory
-!c     author    w.smith   jan   2004
-!c     
 !c***********************************************************************
 
       implicit none
@@ -453,12 +397,7 @@
       subroutine striptext(string,length,nwords)
 
 !c***********************************************************************
-!c     
-!c     DL_POLY routine to strip leading text from a data record
-!c     
-!c     copyright daresbury laboratory
-!c     author   w.smith jan 2004
-!c     
+!c     SHARP Pack routine to strip leading text from a data record
 !c***********************************************************************
 
       implicit none
@@ -502,13 +441,8 @@
       subroutine getword(word,string,len1,len2)
 
 !c***********************************************************************
-!c     
-!c     DL_POLY routine to fetch an 8 character word from a string
+!c     SHARP Pack routine to fetch an 8 character word from a string
 !c     while ignoring leading blanks
-!c
-!c     copyright daresbury laboratory
-!c     author   w.smith jan 2004
-!c     
 !c***********************************************************************
 
       implicit none
@@ -560,12 +494,7 @@
       character*8 function mkwd8(string)
 
 !c***********************************************************************
-!c     
-!c     DL_POLY routine to make an 8 character word from a string
-!c
-!c     copyright daresbury laboratory
-!c     author   w.smith nov 2006
-!c     
+!c     SHARP Pack routine to make an 8 character word from a string
 !c***********************************************************************
 
       implicit none
@@ -580,6 +509,7 @@
       return
       end function mkwd8
       
+!c***********************************************************************
       end module parse_module
 
 

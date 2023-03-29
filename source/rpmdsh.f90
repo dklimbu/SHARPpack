@@ -1,6 +1,7 @@
 PROGRAM ring_polymer_surface_hopping
 
   use global_module
+  use sysdef_module
   use modelvar_module
   use models_module
   use nhc_module
@@ -24,7 +25,7 @@ PROGRAM ring_polymer_surface_hopping
   call CPU_TIME(tt0)
 
 ! read input parameters from "input.in" file
-  call sysdef_module(lkval)
+  call sysdef(lkval)
 
 ! set default electronic time step if not assigned as input
   if(dtq.eq.0.d0)dtq=dt/10.d0
@@ -56,13 +57,6 @@ PROGRAM ring_polymer_surface_hopping
 
 ! open file for writing purpose into the files
   call openfile()
-
- ! Wb = nb/beta
-     
-!=======================initialization==================================
-
-! initialize bath mode for spin-boson model
-  call bath_initial()
 
 ! print input parameters as "param.out"
   call printin()

@@ -1,9 +1,12 @@
-!c=====================================================================
       subroutine run_traj(Wb,rp,vp,KE)
 !**********************************************************************
+!     SHARP PACK routine to run RPMD trajectory     
 !     
-!     SHARP PACK subroutine to 
-!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!     New Jersey Institute of Technology
 !**********************************************************************
       use global_module
       use nhc_module
@@ -50,17 +53,17 @@
 
       end subroutine run_traj
 
-!c=====================================================================
-      !subroutine grhel(Wb,rp,fp)
+
       subroutine grhel(rp,fp)
 !**********************************************************************
-!     
 !     SHARP PACK subroutine to calculate force based on ground state 
-!     potential 
 !     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
       use global_module
-     ! use models_module
       use modelvar_module, only: Wb,c
       implicit none
 
@@ -85,12 +88,15 @@
 
       end subroutine grhel
 
-!c=====================================================================
+
       subroutine sample_init_vp(vp,rp)
 !**********************************************************************
+!     SHARP PACK routine to sample initial velocity and position 
 !     
-!     SHARP PACK subroutine to sample initial velocity and position 
-!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
       use global_module
       use modelvar_module, only : Wb,c
@@ -99,12 +105,6 @@
       integer             :: ibd,ip
       real*8, intent(out) :: vp(np,nb),rp(np,nb)
       real*8              :: gaussn,sigR,sigP,alpha,sigRw,sigPw
-
-      ! testing for bead position from normal mode width
-      real*8 :: xn(1,nb),sigRn(nb)
-      real*8 :: xc,xcR
-
-      integer,save :: ic=0
 
       if(model .le. 3)then
          alpha = 0.25d0
@@ -152,10 +152,6 @@
          R0 = -10.d0
       endif
 
-      do ibd = 1, nb
-        sigRn(ibd) = 2.d0*nb/(beta*hbar)*sin((ibd-1)*pi/nb)
-      enddo
-
       do ip=1,np
          ! if((model > 6).and.(Vinit == 1))then
          if((model .gt. 6).and.(model .le. 9))then
@@ -173,16 +169,6 @@
            endif
          endif
 
-         !if(ic .eq. 0)then
-         !  if(Vinit .eq. 1)then
-         !     write(1000,*)'#',ip,sigR,sigP/mp
-         !  elseif(Vinit .eq. 2)then
-         !     write(1000,*)'#',ip,sigRw,sigPw/mp
-         !  else
-         !     write(1000,*)'#',ip,sigR,sigP/mp
-         !  endif
-         !endif
-
          if((Rinit==0).and.(Vinit == 1))sigR = gaussn()*sigR + R0  
          if((Rinit==0).and.(Vinit == 2))sigR = gaussn()*sigRw + R0  
          do ibd=1,nb
@@ -194,8 +180,6 @@
             elseif(Rinit==1)then
               ! assign each bead gaussian distributed position
               rp(ip,ibd) = gaussn()*sigR +R0  !- c(ip,1)/Wb(ip)**2
-
-              xn(1,ibd) = gaussn()*sigRn(ibd)
 
               if(lpcet) rp(ip,ibd) = sigR + dsqrt(2.d0*lambda/f0)
             elseif(Rinit==2)then
@@ -211,10 +195,6 @@
             elseif(vinit == 1)then
                ! initialize Gaussian distributed bead momenta 
                vp(ip,ibd) = gaussn()*sigP + P0
-!               rp(ip,ibd) = sigR + gaussn()*sigP/(2.d0*nb/beta*sin((ibd-1)*phase))
-!               if(ibd == 1) rp(ip,ibd) = 0.0  !TESTED ON 3/2/2022 and
-!               DIDN'T WORK !! rp(ip,:) must be same for Gaussian(?),
-!               WINGER NOT SURE!
             elseif(vinit == 2)then
                ! initialize Wigner distributed bead momenta 
                vp(ip,ibd) = gaussn()*sigPw + P0
@@ -224,47 +204,29 @@
             endif
          end do
 
-!         if(rinit .eq. 0)then
-!         call realft(xn,1,nb,-1)
-!         xc = sum(xn)/nb
-!         xcR = gaussn()*sigR
-!         do ibd = 1, nb
-!           rp(ip,ibd) = xn(1,ibd)-xc+xcR
-!         enddo
-!         endif
-
       end do
 
       vp = vp/mp
 
-!      call realft(rp,np,nb,-1)
-
-      ic=1
       return
       end subroutine sample_init_vp
 
-!c=====================================================================
+
       subroutine freerp (nf,p,q)
 !**********************************************************************
+!     SHARP PACK routine for 
+!     -----------------------------------------------------------------
+!     Free harmonic ring-polymer evolution through a time interval dt.
+!     -----------------------------------------------------------------
 !     
-!     SHARP PACK subroutine to  
-!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
       use global_module, only: nb
 
       implicit none
-!      implicit real*8  (a-h,o-z)
-!
-!     ------------------------------------------------------------------
-!     Free harmonic ring-polymer evolution through a time interval dt.
-!     ------------------------------------------------------------------
-!
-!      dimension p(nf,nb),q(nf,nb)
-!      parameter (nbmax = 1024)
-!      dimension poly(4,nbmax)
-!      data init /0/
-!      save init,poly
-!
       integer,parameter :: nbmax=128   !!1024
       integer      :: j,k,nf
       integer,save :: init = 0
@@ -300,23 +262,21 @@
       return
       end subroutine
 
-!c=====================================================================
       subroutine ring(nf,poly)
 !**********************************************************************
+!     SHARP PACK routine to calculate 
+!     -----------------------------------------------------------------
+!     Monodromy matrix elements for free ring-polymer evolution.
+!     -----------------------------------------------------------------
 !     
-!     SHARP PACK subroutine to  
-!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
       use global_module, only: nb,dt,mp,beta,hbar
 
       implicit none
-!      implicit real*8  (a-h,o-z)
-!
-!     ------------------------------------------------------------------
-!     Monodromy matrix elements for free ring-polymer evolution.
-!     ------------------------------------------------------------------
-!
-!      dimension poly(4,nb)
 
       integer  :: k,nf
       real*8   :: poly(4,nb)
@@ -356,28 +316,21 @@
       return
       end subroutine
 
-!c=====================================================================
       subroutine realft(data,m,n,mode)
 !**********************************************************************
-!     
-!     SHARP PACK subroutine to  
-!     
-!**********************************************************************
-      implicit none
-
-!      implicit real*8  (a-h,o-z)
-!      integer*8 plana,planb
-!     ------------------------------------------------------------------
+!     SHARP PACK routine to calculate 
+!     -----------------------------------------------------------------
 !     FFT of m real arrays (if mode = 1) or complex Hermitian
 !     arrays in real storage (if mode = -1), using -lfftw3.
 !     Works equally well with f77 and ifc.
-!     ------------------------------------------------------------------
-!      dimension data(m,n)
-!      parameter (nmax = 1024)
-!      dimension copy(nmax)
-!      data np /0/
-!      save copy,scale,plana,planb,np
+!     -----------------------------------------------------------------
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
 !
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
+      implicit none
       integer,parameter    :: nmax=1024
 
       integer              :: m,n,mode
@@ -420,21 +373,20 @@
       end
 
 
-!c=====================================================================
       subroutine get_energy(itraj,istep)
 !**********************************************************************
+!     SHARP PACK routine to calculate energy 
 !     
-!     SHARP PACK subroutine to  
-!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
       use global_module, only : mp,np,nb
       use modelvar_module, only : rp,vp,Wb,rc,vc
 
       implicit none
 
-!      real*8,intent(in) :: Wb(np)
-!      real*8,intent(in) :: rp(np,nb),vp(np,nb)
-!      real*8,intent(in) :: rc(np),vc(np)
       real*8            :: Ek, Ekc, Ering, Eringc
 
       integer  :: i, j, itraj,istep
@@ -467,13 +419,15 @@
       end subroutine
 
 
-!c=====================================================================
-!    Langevin thermostat as implemented in Ceriotti2010
       subroutine Langevin(vp,KE)
 !**********************************************************************
+!     SHARP PACK routine to calculate 
+!     Langevin thermostat as implemented in Ceriotti2010
 !     
-!     SHARP PACK subroutine to  
-!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
       use global_module, only : mp,np,nb,beta,dt,pi,tau0
 !      use modelvar_module, only : rp,vp,Wb,rc,vc
@@ -526,13 +480,15 @@
       end subroutine Langevin
 
 
-!c=====================================================================
       FUNCTION gaussn()
 !**********************************************************************
-!     
 !     SHARP PACK function to calculate normal distribution center at
 !     origin with unit standard deviation 
 !     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
       IMPLICIT NONE
 
@@ -546,12 +502,16 @@
       RETURN
       END FUNCTION gaussn
 
-!c=====================================================================
+
       subroutine sample_init_vp_lchain(vp,rp)
 !**********************************************************************
-!     
-!     SHARP PACK subroutine to sample initial velocity and position 
-!     
+!     SHARP PACK routine to sample initial velocity and position for
+!     N-Linear Chain Model
+!
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
       use global_module
       implicit none
@@ -577,3 +537,4 @@
       vp = vp/mp
 
       end subroutine sample_init_vp_lchain
+

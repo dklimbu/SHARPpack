@@ -1,7 +1,28 @@
-      subroutine sysdef_module(lkval)
+      module sysdef_module
+!**********************************************************************
+!     SHARP PACK module for defining simulation system     
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!     New Jersey Institute of Technology
+!**********************************************************************
       use parse_module
       use global_module
 
+      contains
+
+      subroutine sysdef(lkval)
+!**********************************************************************
+!     SHARP PACK routine for reading simulation control input
+!     parameters     
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
       implicit none
       
       character*1        :: directive(lenrec)
@@ -121,36 +142,36 @@
            elseif(findstring('morse3',directive,idum))then
               model = intstr(directive,lenrec,idum)+3
               modelname = 'MORSE MODEL 3'
-           elseif(findstring('spinboson1',directive,idum))then
-              model = intstr(directive,lenrec,idum)+6
-              modelname = 'Spin-Boson MODEL 1 (Ohmic)'
-           elseif(findstring('spinboson2',directive,idum))then
-              model = intstr(directive,lenrec,idum)+6
-              modelname = 'Spin-Boson MODEL 2 (Debye)'
-           elseif(findstring('fmo',directive,idum))then
-              model = 9
-              modelname = 'FMO MODEL'
-           elseif(findstring('pcet',directive,idum))then
-              model = 10
-              lpcet = .true.
-              delta = 0.d0/energy
-              modelname = 'PCET MODEL'
-              if(findstring('ia',directive,idum))then
-                modelname = 'PCET-IA MODEL'
-                delta = 0.d0/energy
-                nbasis = 30
-              elseif(findstring('ib',directive,idum))then
-                modelname = 'PCET-IB MODEL'
-                delta = 1.d0/energy
-                nbasis = 40
-              elseif(findstring('ic',directive,idum))then
-                modelname = 'PCET-IC MODEL'
-                delta = 3.51d0/energy
-                nbasis = 55
-              endif
-           elseif(findstring('superexchange',directive,idum))then
-              model = 11
-              modelname = '3-State Super Exchange MODEL'
+          ! elseif(findstring('spinboson1',directive,idum))then
+          !    model = intstr(directive,lenrec,idum)+6
+          !    modelname = 'Spin-Boson MODEL 1 (Ohmic)'
+          ! elseif(findstring('spinboson2',directive,idum))then
+          !    model = intstr(directive,lenrec,idum)+6
+          !    modelname = 'Spin-Boson MODEL 2 (Debye)'
+          ! elseif(findstring('fmo',directive,idum))then
+          !    model = 9
+          !    modelname = 'FMO MODEL'
+          ! elseif(findstring('pcet',directive,idum))then
+          !    model = 10
+          !    lpcet = .true.
+          !    delta = 0.d0/energy
+          !    modelname = 'PCET MODEL'
+          !    if(findstring('ia',directive,idum))then
+          !      modelname = 'PCET-IA MODEL'
+          !      delta = 0.d0/energy
+          !      nbasis = 30
+          !    elseif(findstring('ib',directive,idum))then
+          !      modelname = 'PCET-IB MODEL'
+          !      delta = 1.d0/energy
+          !      nbasis = 40
+          !    elseif(findstring('ic',directive,idum))then
+          !      modelname = 'PCET-IC MODEL'
+          !      delta = 3.51d0/energy
+          !      nbasis = 55
+          !    endif
+          ! elseif(findstring('superexchange',directive,idum))then
+          !    model = 11
+          !    modelname = '3-State Super Exchange MODEL'
            elseif(findstring('db2lchain',directive,idum))then
               model = 12
               modelname = '2-State with Linear Chain MODEL'
@@ -292,14 +313,15 @@
       end subroutine 
 
 
-! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!       
-!     SUBROUTINE READ SPIN-BOSON SYSTEM PARAMETERS
-!
       subroutine spin_sys()
-      use parse_module
-      use global_module
-
+!**********************************************************************
+!     SHARP PACK routine for reading spin-boson model parameters
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
       implicit none
       
       character*1        :: directive(lenrec)
@@ -375,11 +397,17 @@
       close(nread)
 
       end subroutine spin_sys
-! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 
       subroutine modelParam(baseModel)
-      use global_module
-
+!**********************************************************************
+!     SHARP PACK routine to set some specific  model parameters
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
       implicit none
       
       integer  :: baseModel
@@ -500,3 +528,5 @@
 
       end subroutine 
 
+!**********************************************************************
+      end module sysdef_module
