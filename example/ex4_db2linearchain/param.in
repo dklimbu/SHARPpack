@@ -1,5 +1,5 @@
-#RPSH INPUT PARAMETERS
-#Models(Tully1/Tully2/Tully3/Morse1/Morse2/Morse3/SpinBoson2db2LChain/db3LChain)
+#SHARP Pack INPUT PARAMETERS
+#Models(Tully1/Tully2/Tully3/Morse1/Morse2/Morse3/db2LChain/db3LChain)
 model 	db2lchain 
 
 #method(FSSH/RPSH, nb)
@@ -38,7 +38,7 @@ BeadPos		'gaussian'
 #initialazation scheme (fixed, Wigner,Gaussian)
 VInitial	'gaussian'
 
-#velocity reversal scheme for frustrated hop('Never','Always','Truhlar','Subotnik')
+#velocity reversal scheme for frustrated hop('Never','Always','delV1','delV2')
 VReverse	'never'
 
 #print run-time details

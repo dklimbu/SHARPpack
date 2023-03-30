@@ -53,43 +53,10 @@
       real*8,parameter    :: temp=315774d0,freq=219463.343d0
 
 ! Classical environment parameters
+      real*8,parameter    :: pi=3.14159265d0  !DACOS(-1.d0)
       real*8              :: beta
       real*8              :: mp 
-      real*8,parameter    :: pi=3.14159265d0  !DACOS(-1.d0)
-
-!! Spin-Boson parameters
-      real*8, parameter :: wmb = 3.0d0   ! wm = wm/wc ~ 3 
-      real*8            :: wmax          != wc * (1.0 - exp(-wmb))/np
-      real*8             :: zxi, wc, delta, eps
-
-!! Spin-Boson2-Debye parameters
-! Diabatic matrix parameters
-      real*8, parameter :: enu=208.5d0/freq
-      real*8            :: E_r, KT
-
-! NVT_PILE parameters
-      real*8            :: tau0
-
-! NVT_NOSE_HOOVER_CHAIN parameters
-      integer,parameter :: nsy=7
-      integer           :: nrespa
-      integer           :: nchain
-      real*8            :: weight(nsy)
-      real*8            :: qmass_t, qmass_part
-      real*8            :: taut
-
-!!!!!!PCET MODEL !!!!
-      ! Classical environment parameters
-      real*8,parameter::f0=55.7d0,eps_inf=4.2d0,eps0=79.2d0
-      real*8,parameter :: tauo=0.0103d0/tim
-      real*8,parameter :: taud=8.72d0/tim
-      real*8,parameter :: lambda=0.65d0/energy
-      real*8,parameter :: taul=eps_inf*(tauo+taud)/eps0
-      real*8           :: sigma         ! width of the random noise
-! Quantum subsystem parameters
-      real*8,parameter :: qpA=0.5/dist
-      real*8,parameter :: Vda=0.03/energy
-      integer          :: nbasis         ! nstates=2*nbasis
+      real*8              :: KT
 
 !!! LinearChainModel !!!
       integer :: nprint

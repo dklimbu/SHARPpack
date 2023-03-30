@@ -10,7 +10,6 @@ SRC = global_module.f90 \
       models_module.f90 \
       propagation_module.f90 \
       nonadiabatic_module.f90 \
-      nhc_module.f90 \
       rpmd_module.f90 \
       runTraj_module.f90 
 

@@ -30,13 +30,25 @@
   !write(0,*), 'numeric format for root_dir (x:1, xx:2, xxx:3), enter (1/2/3) ?'
   !read(*,*) iformat
 
-  open(1,file='input', status='old')
+  inquire(file='input',exist=file_exist)
+  if(file_exist)then
+    open(1,file='input', status='old')
     read(1,*) root_dir
     read(1,*) dfile
     read(1,*) ndir
     read(1,*) df
     read(1,*) iformat
-  close(1)
+    close(1)
+  else
+    write(0,*) "File 'input'  does not exist!"
+    write(0,*) "Create 'input' with following:"
+    write(0,*) "root_dir"
+    write(0,*) "data_file"
+    write(0,*) "# of dir"
+    write(0,*) "# column"
+    write(0,*) "format (#,##)"
+    stop
+  endif
 
   outfil = dfile(1:len_trim(dfile)-4)//'_ave.out'
 

@@ -1,9 +1,17 @@
   module runTraj_module
+!**********************************************************************
+!     SHARP Pack module for running trajectories
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!     New Jersey Institute of Technology
+!**********************************************************************
 
   use global_module
   use modelvar_module
   use models_module
-  use nhc_module
   use nonadiabatic_module
   use propagation_module
   use print_module
@@ -13,6 +21,14 @@
   contains
 
   subroutine runTraj()
+!**********************************************************************
+!     SHARP Pack routine to run trajectories
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
   implicit none
 
   integer  :: i,j,k,l,itime,itraj,ibd,ip
@@ -41,41 +57,12 @@
      
 ! randomly sample positon & velocity from gaussian distribution
 
-!10  call sample_init_vp(vp_samp,rp_samp)
-
     call sample_init_vp(vp_samp,rp_samp)
 
     if((model==12).or.(model==13))call sample_init_vp_lchain(vp_samp,rp_samp)
 
-!    write(332,'(i5,2x,50g15.7)') itraj,rp_samp(1,1:nb),vp_samp(1,1:nb)
-!   rp_samp = 0.d0
-! sample initial position with regular MD
-    if(lnhc) call nhc_init(nchain)
-
-    do i=1,nsample
-
-      call run_traj(Wb,rp_samp,vp_samp,KE)
-
-      if(((ntraj.lt.10).or.(mod(itraj,10).eq.0)).and.(mod(i,100).eq.0))then
-        PE=0.d0
-        do ip = 1, np
-          do ibd = 1, nb
-            PE = PE + 0.5d0 * mp * Wb(ip)**2 * rp_samp(ip,ibd)**2
-          enddo
-        enddo
-        write(nrite_therm,'(2I8,50e18.8)') itraj,i, KE*temp/(np*nb),KE,PE,thermo_tot,eta_nhc,peta
-!        write(334,'(i5,i6,2x,200g15.7)') itraj,i,rp_samp,vp_samp
-      endif
-!      write(84,'(I6,10e15.4)') i, rp_samp, vp_samp
-    end do
-
-!    write(333,'(i5,2x,200g15.7)') itraj,rp_samp,vp_samp
-! pass the end of sampling to the inital of real time propagation
-
     rp = rp_samp
     vp = vp_samp
-
-!    write(333,'(i5,2x,10g15.7)') itraj,rp(1,1:nb),vp(1,1:nb)
 
 ! Caculating the initial centroid variables
 
@@ -86,8 +73,6 @@
       rc(:)=rc(:)+rp(:,ibd)/real(nb)
       vc(:)=vc(:)+vp(:,ibd)/real(nb)
     enddo
-
-!   write(334,'(i5,2x,4g15.7)') itraj,rc,vc
 
 ! Initialize position and momentum of solvent
 
@@ -114,13 +99,7 @@
     enddo
     istate=i
     inext=i
-!    if(lIstate)then
-!      if(istate .ne. initS0) goto 10
-!    endif
-!    if(istate .ne. 1)goto 10
     nIniStat(istate) = nIniStat(istate) + 1
-
-!    write(100,'(20f15.6)') real(itraj), eva(:,1), psi(:,:,1),crit,real(istate)
 
     vdotd_old=0.d0
 
@@ -171,9 +150,6 @@
 ! start a trajectory for n-steps     
     DO itime = 1, NSTEPS
         
-   !   if((itraj.eq.1).and.(itime.eq.1))then
-   !     write(1000,101) itraj,itime,rc(1),vc(1),rp,vp
-   !   endif
 ! main nuclear propagation step
       CALL ADVANCE_MD(istate,rp,vp,fp)
        
@@ -253,7 +229,6 @@
         endif
       endif
 
-
      ! printdetail()
      IF(ldtl)THEN
        ! rc=0.d0
@@ -265,13 +240,7 @@
        !rc(:)=rc(:)/real(nb)
        vc(:)=vc(:)/real(nb)
 
-!      if(itraj == ntraj)then
-       if(lpcet .and. (nbasis .ne. 1))then
-         if(((ntraj .lt.10) .or. (mod(itraj,10).eq.0)).and.(mod(itime,iskip).eq.0))then
-           call calEnergy(rp,vp,KE,Vn,Ering,TotE,istate)
-           write(nrite_dcoup,101) itraj,itime*dt,rc(1),vc(1),totE,eva(1:30,1)
-         endif
-       elseif(((ntraj .lt.10) .or. (mod(itraj,10).eq.0)).and.(mod(itime,iskip).eq.0))then
+       if(((ntraj .lt.10) .or. (mod(itraj,10).eq.0)).and.(mod(itime,iskip).eq.0))then
          call calEnergy(rp,vp,KE,Vn,Ering,TotE,istate)
          write(nrite_dcoup,101) itraj,itime*dt,rc(1),vc(1),KE,Vn,Ering,TotE,eva(:,1), vdotd_new,hel(:,:,2),real(istate),eva(istate,1)
 
@@ -292,16 +261,22 @@
 
    ! traj loop
   ENDDO
- !101 format(i10,1x,i10,1x,150(e18.8E3,2x))
  101 format(i10,1x,f15.3,1x,150(f18.12,2x))
    
   if((model==12).or.(model==13))close(1000)
 
   end subroutine
 
-!#ccccccccccccccccccccccccccccccccccccccccccccc
+
   subroutine calEnergy(rp,vp,KE,Vn,Ho,Hn,isurf)
-!  use global_module
+!**********************************************************************
+!     SHARP Pack routine to calculate energies at particular time
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
   implicit none
 
   integer  :: ip,ibd, isurf
@@ -318,8 +293,6 @@
 
   KE = sum(vp*vp)*0.5d0*mp
 
-!  PE = eva_i*nb
-
   ! calculate active energy of each bead
   
   Vn = 0.d0
@@ -331,8 +304,6 @@
 
       Vn = Vn + eva_b(isurf,1)
   enddo
-
-
 
   Ho = 0.d0
   do ip = 1, np
@@ -351,4 +322,5 @@
 
   end subroutine calEnergy
   
+!**********************************************************************
   end module runTraj_module

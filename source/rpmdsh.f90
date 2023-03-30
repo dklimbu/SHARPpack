@@ -4,7 +4,6 @@ PROGRAM ring_polymer_surface_hopping
   use sysdef_module
   use modelvar_module
   use models_module
-  use nhc_module
   use nonadiabatic_module
   use propagation_module
   use runtraj_module
@@ -53,7 +52,6 @@ PROGRAM ring_polymer_surface_hopping
 
 ! allocate variables and initialize values
   call modelallocat()
-  if(lnhc) call alloc_nhc_arrays(nchain)
 
 ! open file for writing purpose into the files
   call openfile()
@@ -81,7 +79,6 @@ PROGRAM ring_polymer_surface_hopping
 
 ! deallocate the arrays
   call modeldeallocat()
-  if(lnhc) call dealloc_nhc_arrays()
 
 END PROGRAM ring_polymer_surface_hopping
 

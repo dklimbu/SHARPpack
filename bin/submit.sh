@@ -1,18 +1,26 @@
 #!/bin/sh
-# JOB SCRIPT TO RUN SHARP PACK
+
+#============================================================
+#     JOB SCRIPT TO RUN SHARP PACK
+#     
+#     authors    - D.K. Limbu & F.A. Shakib     
+#     copyright  - D.K. Limbu & F.A. Shakib
 #
-# DIL LIMBU
-# 
-# jobId=1 -> running parallel jobs
-# jobId=2 -> averaging parallel job results
+#     Method Development and Materials Simulation Laboratory
+#     New Jersey Institute of Technology
+#
+#     jobId=1 -> running parallel jobs
+#     jobId=2 -> averaging parallel job results
+#
+#============================================================
 
 jobId=1
 
-
 root2bin=~/Desktop/MyDocs/SHARPpack/bin
+
 exe=${root2bin}/sharp.x
 
-#====================================================
+#============================================================
 maxcpu=1
 ncpu=$(awk '/ncpu/{print $2}' param.in)
 

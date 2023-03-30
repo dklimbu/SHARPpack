@@ -93,17 +93,8 @@
 
 ! RP propogation, velocity-Verlet
 
-     !!ifLangevine dynamics for PCET 
-      if(lpcet)then
-        do ibd = 1, nb
-          do ip = 1, np
-            fran(ip,ibd) = sigma*gaussn()
-          enddo
-        enddo
-        aa = (fp - f0*taul*vp + fran)/mp
-
       !!Langevin dynamic for just N-th particle in LinearChain Model
-      elseif((model==12).or.(model==13))then
+      if((model==12).or.(model==13))then
 
         do ibd = 1, nb
            fR(ibd) = sigmaLC * gaussn()     
@@ -143,10 +134,7 @@
 
 ! second half of RP propogation
 
-      if(lpcet)then
-        aa = (fp - f0*taul*vp + fran)/mp
-
-      elseif((model==12).or.(model==13))then
+      if((model==12).or.(model==13))then
         aa = fp/mp
         aa(np,:) = (fp(np,:) - gamaLC*mp*vp(np,:) + fR)/mp
 

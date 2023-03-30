@@ -104,9 +104,9 @@
       elseif(vrkey == 1)then
          write(nrite,'(/,1x,A,4x,A)')  "Velocity Reversal for Frustrated Hop    'Always' "
       elseif(vrkey == 2)then
-         write(nrite,'(/,1x,A,4x,A)')  "Velocity Reversal for Frustrated Hop    'Truhlar' "
+         write(nrite,'(/,1x,A,4x,A)')  "Velocity Reversal for Frustrated Hop    'delV1' "
       elseif(vrkey == 3)then
-         write(nrite,'(/,1x,A,4x,A)')  "Velocity Reversal for Frustrated Hop    'Subotnik' "
+         write(nrite,'(/,1x,A,4x,A)')  "Velocity Reversal for Frustrated Hop    'delV2' "
       endif
 
       if(vckey == 1)then
@@ -132,56 +132,6 @@
       write(nrite,'(/,1x,A,2x,f8.4)')  'Electronic time step, dtE (a.u.)    ', dtq
 
       write(nrite,'(/,1x,A,2x,I8)')    'print skip                          ', iskip
-
-      if(model==7)then
-         write(nrite,'(/,1x,A,2x,e13.6)') 'SPIN-BOSON PARAMATERS:'
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   Δ             ', delta
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   ϵ             ', eps
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   ξ             ', zxi
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   ωc            ', wc
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   β             ', beta
-         write(nrite,'(/,1x,A,2x,e13.6)') 'FINISH SPIN-BOSON PARAMATERS.'
-      endif
-
-      if(model==8)then
-         write(nrite,'(/,1x,A,2x,e13.6)')   'SPIN-BOSON (DEBYE) PARAMATERS:'
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   Δ             ', delta/enu
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   ϵ             ', eps/enu
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   E_r           ', E_r/enu
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   ωc            ', wc/enu
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   ωmax          ', wmax/enu
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   KT(1/β)       ',1.d0/(beta*enu)
-         write(nrite,'(/,1x,A,2x,f8.4,2x,e13.6)')    '   enu           ', enu*freq, enu
-         write(nrite,'(/,1x,A,2x,e13.6)') 'FINISH SPIN-BOSON PARAMATERS.'
-      endif
-
-      if(model==9)then
-         write(nrite,'(/,1x,A,2x,e13.6)')   'FMO MODEL (DEBYE) PARAMATERS:'
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   E_r           ', E_r*freq
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   ωc            ', wc*freq
-         write(nrite,'(/,1x,A,2x,e13.4)')   '   ωmax          ', wmax*freq
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   KT(1/β)       ', temp/beta
-         write(nrite,'(/,1x,A,2x,e13.6)') 'FINISH FMO PARAMATERS.'
-      endif
-
-      if(model==10)then
-         write(nrite,'(/,1x,A,2x,e13.6)')   'PCET MODEL PARAMATERS:'
-         write(nrite,'(/,1x,A,2x,I8)')      '   nbasis        ', nbasis
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   Δ             ', delta*energy
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   V_DA          ', Vda*energy
-         write(nrite,'(/,1x,A,2x,f8.1)')    '   ωp            ', omega*freq
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   Temp(T)       ', temp/beta
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   ε_o           ', eps0
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   ε_∞           ', eps_inf
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   fo            ', f0
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   τ_o           ', tauo*tim
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   τ_d           ', taud*tim
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   τ_l           ', taul*tim
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   m             ', mp*tim*tim
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   λ             ', lambda*energy
-         write(nrite,'(/,1x,A,2x,f8.4)')    '   qpA           ', qpA*dist
-         write(nrite,'(/,1x,A,2x,e13.6)') 'FINISH PCET PARAMATERS.'
-      endif
 
       if(model==12)then
          write(nrite,'(/,1x,A,2x,e13.6)') '2-State LinearChain MODEL PARAMATERS:'
@@ -215,19 +165,6 @@
 
       write(nrite,*) '                                                 '
       write(nrite,*) '*************************************************************************'
-
-      if(llan.and.(nsample>0))then
-         write(nrite,"(/,1x,'Path Integral Langevin Equation (PILE)', &
-           /,1x,'thermostat relaxation time',1p,e12.4)")tau0
-         write(nrite,'(/,1x,A,2x,100e13.6)') 'Bath frequency, ωb[i]            ', wb
-      endif
-
-      if(lnhc.and.(nsample>0))then
-         write(nrite,"(/,1x,'Nose-Hoover Chain', &
-           /,1x,'thermostat relaxation time',1p,e12.4,&
-           /,1x,'number of RESPA steps             ',1p,i6, &
-           /,1x,'number of chains     ',1p,i6)") taut,nrespa,nchain
-      endif
 
       close(nrite)
 

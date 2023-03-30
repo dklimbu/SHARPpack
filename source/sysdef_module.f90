@@ -73,16 +73,6 @@
       beta = 0.d0
       mp = 1.d0
 
-      tau0 = 0
-
-      nrespa=1
-      nchain=1
-      qmass_t=0.d0
-      qmass_part=0.d0
-      taut=0.d0
-
-      wmax = 20.d0
-
       open(nread,file='param.in',status='old',IOSTAT=stat)
       if(stat .ne. 0) then
          write(0,*) " 'param.in' file NOT FOUND! "
@@ -142,36 +132,6 @@
            elseif(findstring('morse3',directive,idum))then
               model = intstr(directive,lenrec,idum)+3
               modelname = 'MORSE MODEL 3'
-          ! elseif(findstring('spinboson1',directive,idum))then
-          !    model = intstr(directive,lenrec,idum)+6
-          !    modelname = 'Spin-Boson MODEL 1 (Ohmic)'
-          ! elseif(findstring('spinboson2',directive,idum))then
-          !    model = intstr(directive,lenrec,idum)+6
-          !    modelname = 'Spin-Boson MODEL 2 (Debye)'
-          ! elseif(findstring('fmo',directive,idum))then
-          !    model = 9
-          !    modelname = 'FMO MODEL'
-          ! elseif(findstring('pcet',directive,idum))then
-          !    model = 10
-          !    lpcet = .true.
-          !    delta = 0.d0/energy
-          !    modelname = 'PCET MODEL'
-          !    if(findstring('ia',directive,idum))then
-          !      modelname = 'PCET-IA MODEL'
-          !      delta = 0.d0/energy
-          !      nbasis = 30
-          !    elseif(findstring('ib',directive,idum))then
-          !      modelname = 'PCET-IB MODEL'
-          !      delta = 1.d0/energy
-          !      nbasis = 40
-          !    elseif(findstring('ic',directive,idum))then
-          !      modelname = 'PCET-IC MODEL'
-          !      delta = 3.51d0/energy
-          !      nbasis = 55
-          !    endif
-          ! elseif(findstring('superexchange',directive,idum))then
-          !    model = 11
-          !    modelname = '3-State Super Exchange MODEL'
            elseif(findstring('db2lchain',directive,idum))then
               model = 12
               modelname = '2-State with Linear Chain MODEL'
@@ -243,13 +203,15 @@
 
          elseif(findstring('vreverse',directive,idum))then
 !c     velocity reversal scheme for frustrated hop
-           if(findstring('nev',directive,idum))then
+           if(findstring('never',directive,idum))then
              vrkey = 0
-           elseif(findstring('alw',directive,idum))then
+           elseif(findstring('alway',directive,idum))then
              vrkey = 1
-           elseif(findstring('tru',directive,idum))then
+           elseif(findstring('delv1',directive,idum))then
+!c          Truhlar's delV scheme for frustrated hop
              vrkey = 2
-           elseif(findstring('sub',directive,idum))then
+           elseif(findstring('delv2',directive,idum))then
+!c          Subotnik's delV2 scheme for frustrated hop
              vrkey = 3
            endif
 
@@ -272,18 +234,6 @@
 !c     number of initial momentum
            if(findstring('yes',directive,idum))then
              lkval = .true.
-           endif
-
-         elseif(findstring('thermostat',directive,idum))then
-!c     thermostat to run pimd
-           if(findstring('pile',directive,idum))then
-              tau0 = dblstr(directive,lenrec,idum)
-              if(NOT(lnhc))llan = .true.
-           elseif(findstring('nhc',directive,idum))then
-              taut=dblstr(directive,lenrec,idum)
-              nrespa=intstr(directive,lenrec,idum)
-              nchain=intstr(directive,lenrec,idum)
-              if(NOT(llan))lnhc = .true.
            endif
 
          elseif(findstring('rundtail',directive,idum))then
@@ -313,92 +263,6 @@
       end subroutine 
 
 
-      subroutine spin_sys()
-!**********************************************************************
-!     SHARP PACK routine for reading spin-boson model parameters
-!     
-!     authors    - D.K. Limbu & F.A. Shakib     
-!     copyright  - D.K. Limbu & F.A. Shakib
-!
-!     Method Development and Materials Simulation Laboratory
-!**********************************************************************
-      implicit none
-      
-      character*1        :: directive(lenrec)
-      logical            :: safe, loop, kill, lkval
-      integer            :: idum, idnode, stat
-
-      integer, parameter :: nread = 1, nrite = 6
-
-      idnode = 0
-      loop = .true.
-
-      open(nread,file='spin.in',status='old',IOSTAT=stat)
-      if(stat .ne. 0) then
-         write(0,*) " 'spin.in' file NOT FOUND! "
-         write(0,*)  
-         stop
-      end if
-      do while(loop)
-        
-         call getrec(safe,idnode,nread)
-       
-!c     convert to lowercase and strip out leading blanks
-         call lowcase(record,lenrec)
-         call strip(record,lenrec)
-         call copystring(record,directive,lenrec)
-
-         if(record(1).eq.'#'.or.record(1).eq.' ')then
-!c     record is commented out
-            cycle
-
-         elseif(findstring('ecoupling',directive,idum))then
-!c      delta, Δ, electronic coupling
-           delta = dblstr(directive,lenrec,idum)
-
-         elseif(findstring('ebias',directive,idum))then
-!c      eps, ϵ, electoronic bias
-           eps = dblstr(directive,lenrec,idum)
-
-         elseif(findstring('bathbeta',directive,idum))then
-!c      β, (kBT)^(−1) Bath Inverse Temp
-           beta = dblstr(directive,lenrec,idum)
-
-         elseif(findstring('kparam',directive,idum))then
-!c      ξ, zxi, Kondo Parameter
-           zxi = dblstr(directive,lenrec,idum)
-
-         elseif(findstring('cutfreq',directive,idum))then
-!c      ωc, Cut Off Frequency
-           wc = dblstr(directive,lenrec,idum)
-
-         elseif(findstring('maxfreq',directive,idum))then
-!c      ωc, Cut Off Frequency
-           wmax = dblstr(directive,lenrec,idum)
-
-         elseif(findstring('estrength',directive,idum))then
-!c      Reorganization Energy, E_r
-           E_r = dblstr(directive,lenrec,idum)
-
-         elseif(findstring('bathtemp',directive,idum))then
-!c      (kBT) BathTemp for SpinBoson2
-           KT = dblstr(directive,lenrec,idum)
-
-         elseif(findstring('finish',directive,idum))then
-!c     safe termination of reading CONTROL file
-            loop=.false.
-         else
-!c     unrecognised directive in control file
-           kill=.true.
-           if(idnode.eq.0)write(nrite,"(/,/,100a1)")record
-!           call error(idnode,-3)
-         endif
-      enddo
-      close(nread)
-
-      end subroutine spin_sys
-
-
       subroutine modelParam(baseModel)
 !**********************************************************************
 !     SHARP PACK routine to set some specific  model parameters
@@ -425,50 +289,6 @@
         beta = 1052.58d0   ! beta corresponding to 300K
         omega = 0.005d0
 
-!Mass, beta parameters for Spin-Boson Model
-      elseif(baseModel .eq. 7)then  
-        call spin_sys()
-        nstates = 2
-        mp = 1.0d0
-        wmax = wc * (1.0 - exp(-wmb))/np
-
-!Mass, beta parameters for Spin-Boson2 Model
-      elseif(baseModel .eq. 8)then  
-        call spin_sys()
-        nstates = 2
-        mp = 1.0d0
-        eps= eps * enu
-        delta= delta * enu
-        beta = 1.d0/(KT*enu)
-        wc = wc * enu
-        wmax = wmax * wc
-        E_r = E_r * enu
-
-!Mass, beta parameters for FMO Model
-      elseif(baseModel .eq. 9)then  
-        call spin_sys()
-        nstates = 7
-        mp = 1.0d0
-        beta = 1.d0/(KT/temp)
-        wc = wc / freq
-        wmax = 20.d0 * wc
-        E_r = E_r / freq
-
-!Mass, beta parameters for PCET Model
-      elseif(baseModel .eq. 10)then  
-        mp = 0.265/tim**2   !mp(water) in sysdef
-        beta = 1.d0/298.d0*temp   
-        omega = 3000.d0/freq
-        sigma = dsqrt(2.d0*f0*taul/(dt*beta))  ! width of the random noise
-        if(nb .gt. 1) nbasis = 1
-        nstates = 2*nbasis
-      
-!Mass, beta parameters for SuperExchange Models
-      elseif(baseModel .eq. 11)then  
-        nstates = 3
-        mp = 2000.0d0
-        beta = mp/(P0*P0)            !mp/(P0**2)
-      
 !Mass, beta parameters for 2-state linear chain Model
       elseif(baseModel .eq. 12)then  
         nstates = 2
@@ -509,13 +329,6 @@
          R0 = 3.3d0
       elseif(model==6)then
          R0 = 2.1d0
-      elseif((model>=7).and.(model<=9))then
-         R0 = 0.0d0
-      elseif(model==10)then  !PCET MODEL
-         R0 = 0.0d0
-         P0 = 0.d0
-      elseif(model==11)then  !SuperExchange Model
-         R0 = -10.d0
       elseif(model==12)then  !LinearCahin MODEL
          R0 = 0.0d0
          P0 = 0.d0
