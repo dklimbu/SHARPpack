@@ -31,7 +31,7 @@
       character(len=36)   :: modelname
       character(len=8)    :: method
 
-      logical             :: llan,lnhc,lpcet
+      logical             :: llan,lnhc
       logical             :: ldtl
   
       integer,parameter   :: nrite_hopp=110

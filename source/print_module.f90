@@ -115,11 +115,7 @@
          write(nrite,'(/,1x,A,4x,A)')  "Velocity Rescaling Scheme               'Beads-Average' "
       endif
 
-      if(lpcet)then
-        write(nrite,'(/,1x,A,2x,E12.4)')  'mass of particle, mp (a.u.)         ', mp
-      else
-        write(nrite,'(/,1x,A,2x,f8.1)')  'mass of particle, mp (a.u.)         ', mp
-      endif
+      write(nrite,'(/,1x,A,2x,f8.1)')  'mass of particle, mp (a.u.)         ', mp
 
       write(nrite,'(/,1x,A,2x,e13.6)') 'Inverse temperature of system, β    ', beta
 

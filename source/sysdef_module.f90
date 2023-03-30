@@ -41,7 +41,6 @@
       lkval = .false.
       llan = .false.
       lnhc = .false.
-      lpcet = .false.
       
       np = 1
       dt = 1.0

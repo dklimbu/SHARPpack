@@ -2,6 +2,11 @@
 
 !c***********************************************************************
 !c     SHARP Pack module for defining parsing arrays
+!c    
+!c     Adapted/updated by Dil K. Limbu from F77 to F90 
+!      based on parse_module in dl_poly software
+!c     copyright - daresbury laboratory
+!c     author    - w. smith    jan 2004
 !c***********************************************************************
 
       integer, parameter :: lenrec=150

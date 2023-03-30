@@ -92,10 +92,6 @@
 !     Free harmonic ring-polymer evolution through a time interval dt.
 !     -----------------------------------------------------------------
 !     
-!     authors    - D.K. Limbu & F.A. Shakib     
-!     copyright  - D.K. Limbu & F.A. Shakib
-!
-!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
       use global_module, only: nb
 
@@ -142,10 +138,6 @@
 !     Monodromy matrix elements for free ring-polymer evolution.
 !     -----------------------------------------------------------------
 !     
-!     authors    - D.K. Limbu & F.A. Shakib     
-!     copyright  - D.K. Limbu & F.A. Shakib
-!
-!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
       use global_module, only: nb,dt,mp,beta,hbar
 
@@ -198,10 +190,6 @@
 !     Works equally well with f77 and ifc.
 !     -----------------------------------------------------------------
 !     
-!     authors    - D.K. Limbu & F.A. Shakib     
-!     copyright  - D.K. Limbu & F.A. Shakib
-!
-!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
       implicit none
       integer,parameter    :: nmax=1024
@@ -250,10 +238,6 @@
 !**********************************************************************
 !     SHARP PACK routine to calculate energy 
 !     
-!     authors    - D.K. Limbu & F.A. Shakib     
-!     copyright  - D.K. Limbu & F.A. Shakib
-!
-!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
       use global_module, only : mp,np,nb
       use modelvar_module, only : rp,vp,Wb,rc,vc
@@ -297,10 +281,6 @@
 !     SHARP PACK function to calculate normal distribution center at
 !     origin with unit standard deviation 
 !     
-!     authors    - D.K. Limbu & F.A. Shakib     
-!     copyright  - D.K. Limbu & F.A. Shakib
-!
-!     Method Development and Materials Simulation Laboratory
 !**********************************************************************
       IMPLICIT NONE
 

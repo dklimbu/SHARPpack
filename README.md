@@ -16,9 +16,17 @@ $ make
 The SHARP pack is tested under a Linux environment with an Intel Fortran compiler. Path for BLAS, LAPACK and FFTW3 libraries need to be provided.
 
 ## Usage
-The SHARP pack software package includes several modules that can be used to perform different types of simulations and analysis. See SHARP Pack manual for more detail
+The SHARP pack software package includes several modules that can be used to perform different types of simulations and analysis. See SHARP Pack manual for more detail (coming soon).
 
 ## Examples
 The SHARP pack software package includes several examples that demonstrate how to use the different method(s)/model(s). These examples can be found in the example/ directory of the package.
 
-## License
+## Running Similation
+After compiling, sharp.x can be issued to run the job on the current directory on serial mode
+(ncpu 1). An input file, ‘param.in’, is required to run any SHARP pack simulation.
+Alternatively, the SHARP pack can be run using the job submission bash script (see
+submist.sh script in bin/ directory). Based on ncpu in ‘param.in’, the code will run serially
+on a single node or parallel (trajectories are parallelized in this case) on nodes on the cluster.
+
+## Contact
+For any queries and feedbacks please contact Dr. Limbu (dil.limbu@umkc.edu) or Dr. Shakib (shakib@njit.edu).
