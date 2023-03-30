@@ -29,4 +29,4 @@ submist.sh script in bin/ directory). Based on ncpu in ‘param.in’, the code 
 on a single node or parallel (trajectories are parallelized in this case) on nodes on the cluster.
 
 ## Contact
-For any queries and feedbacks please contact Dr. Limbu (dil.limbu@umkc.edu) or Dr. Shakib (shakib@njit.edu).
+For any queries and feedbacks please contact Dr. Limbu (dil.limbu@umkc.edu) or Dr. Shakib (shakib@njit.edu)
