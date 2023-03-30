@@ -22,11 +22,9 @@ The SHARP pack software package includes several modules that can be used to per
 The SHARP pack software package includes several examples that demonstrate how to use the different method(s)/model(s). These examples can be found in the example/ directory of the package.
 
 ## Running Similation
-After compiling, sharp.x can be issued to run the job on the current directory on serial mode
-(ncpu 1). An input file, ‘param.in’, is required to run any SHARP pack simulation.
-Alternatively, the SHARP pack can be run using the job submission bash script (see
-submist.sh script in bin/ directory). Based on ncpu in ‘param.in’, the code will run serially
-on a single node or parallel (trajectories are parallelized in this case) on nodes on the cluster.
+After compiling, sharp.x can be issued to run the job on the current directory on serial mode (**ncpu 1**). An input file, _**‘param.in’**_, is required to run any SHARP pack simulation.
+
+Alternatively, the SHARP pack can be run using the job submission bash script (see _**submist.sh**_ script in **bin/** directory). Based on ncpu in _**‘param.in’**_, the code will run _serially_ on a single node or _parallel_ (trajectories are parallelized in this case) on nodes on the cluster.
 
 ## Contact
 For any queries and feedbacks please contact Dr. Limbu (dil.limbu@umkc.edu) or Dr. Shakib (shakib@njit.edu)
