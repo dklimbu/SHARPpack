@@ -42,10 +42,6 @@
   real*8   :: KE,PE,Ering,TotE,Vn
 
   
-  character(len=2) :: atm(20)
-
-  atm = (/'H','He','Li','Be','B','C','N','O','F','Ne','Na','Mg','Al','Si','P','S','Cl','Ar','K','Ca'/) 
-
   ntrajR = 0
 
  
@@ -145,7 +141,6 @@
       endif
     enddo
 
-   if((model==12).or.(model==13))open(1000,file='HISTORY.xyz', status='unknown')   
 !==================================================================================
 ! start a trajectory for n-steps     
     DO itime = 1, NSTEPS
@@ -244,14 +239,6 @@
          call calEnergy(rp,vp,KE,Vn,Ering,TotE,istate)
          write(nrite_dcoup,101) itraj,itime*dt,rc(1),vc(1),KE,Vn,Ering,TotE,eva(:,1), vdotd_new,hel(:,:,2),real(istate),eva(istate,1)
 
-         !writing LCHAIN models final trajectory only
-         if((itraj == ntraj).and.((model==12).or.(model==13)))then
-           write(1000,'(I4)') np
-           write(1000,*) 
-           do ip = 1, np
-             write(1000,'(A2,f15.8,2A8)') atm(ip), rc(ip), '0.0', '0.0'
-           enddo
-         endif
        endif
      ENDIF
 
@@ -263,8 +250,6 @@
   ENDDO
  101 format(i10,1x,f15.3,1x,150(f18.12,2x))
    
-  if((model==12).or.(model==13))close(1000)
-
   end subroutine
 
 
