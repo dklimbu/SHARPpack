@@ -64,8 +64,6 @@
      
 ! randomly sample positon & velocity from gaussian distribution
 
-!10  call sample_init_vp(vp_samp,rp_samp)
-
     call sample_init_vp(vp_samp,rp_samp)
 
     if((model==12).or.(model==13))call sample_init_vp_lchain(vp_samp,rp_samp)
