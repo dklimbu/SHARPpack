@@ -12,7 +12,7 @@ nParticle   1
 nsteps 	8000 
 
 #Number of Trajectories
-ntraj	5000
+ntraj	1000
 
 #Number of Parallel Jobs
 ncpu	10

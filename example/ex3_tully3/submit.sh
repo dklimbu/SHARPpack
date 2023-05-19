@@ -16,8 +16,7 @@
 
 jobId=1
 
-root2bin=~/Desktop/MyDocs/SHARPpack/bin
-
+root2bin=~/SHARPpackv1/bin
 exe=${root2bin}/sharp.x
 
 #============================================================
@@ -32,21 +31,26 @@ echo 'cpu:' $ncpu
 
 root_dir=run
 
+#============================================================
+## CREATE PARALLEL DIRECTORY ##
+#============================================================
 paralleldir(){
-  if [ $ncpu -lt 10 ];
-  then
+  if [ $ncpu -lt 10 ]; then
     DIR=${root_dir}1
-  else
+  elif [ $ncpu -lt 100 ]; then
     DIR=${root_dir}01
+  else
+    DIR=${root_dir}001
   fi
 
   if [ ! -d ${DIR} ]
   then
-    if [ $ncpu -lt 10 ]
-    then
+    if [ $ncpu -lt 10 ]; then
       mkdir $(seq -f "${root_dir}%01g" 1 $((ncpu)))
-    else
+    elif [ $ncpu -lt 100 ]; then
       mkdir $(seq -f "${root_dir}%02g" 1 $((ncpu)))
+    else
+      mkdir $(seq -f "${root_dir}%03g" 1 $((ncpu)))
     fi
     echo ${root_dir} created!!
   else
@@ -75,26 +79,37 @@ paralleldir(){
   done
 }
 
+#============================================================
+## RUN SERIAL JOB ##
+#============================================================
 if [ $ncpu == 1 ];then
 
   ${exe} &
 
   echo "Serial job running in a single cpu!!"
 
+#============================================================
+## RUN PARALLEL JOB(S) ##
+#============================================================
 elif [ $ncpu -gt 1 ] && [ $jobId == 1 ] ;then
   #create parallel jobs
   paralleldir
 
   echo "Parallel job running on " $ncpu "cpus."
 
+#============================================================
+## CALCULATE AVERAGE FROM PARALLEL JOB(S) ##
+#============================================================
 elif [ $ncpu -gt 1 ] && [ $jobId == 2 ] ;then
-  if [ $ncpu -lt 10 ];
-  then
+  if [ $ncpu -lt 10 ];then
     DIR=${root_dir}1
     iformat=1
-  else
+  elif [ $ncpu -lt 100 ];then
     DIR=${root_dir}01
     iformat=2
+  else
+    DIR=${root_dir}001
+    iformat=3
   fi
 
   if [ ! -d ${DIR} ]
@@ -126,6 +141,10 @@ elif [ $ncpu -gt 1 ] && [ $jobId == 2 ] ;then
   ${root2bin}/average.x
 
   rm -f input
+
+#============================================================
+## ERROR ##
+#============================================================
 else
 
   echo "Error in jobId!!, USE"
@@ -133,4 +152,5 @@ else
   echo "jobId=2 for averaging parallel job results"
   echo 
 fi
+#============================================================
 

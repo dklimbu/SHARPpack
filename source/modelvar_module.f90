@@ -40,7 +40,6 @@
       integer,allocatable    :: nJump(:,:), nJumpFail(:,:) 
       integer,allocatable    :: nIniStat(:)
 
-
       contains
 
       subroutine modelallocat()
@@ -85,7 +84,6 @@
 
       allocate(nJump(nstates,nstates),nJumpFail(nstates,nstates)) 
       allocate(nIniStat(nstates))
-
 
       diabat1=0.
       diabat2=cmplx(0.,0.)

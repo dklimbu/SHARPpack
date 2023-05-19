@@ -19,7 +19,7 @@ set grid mxtics xtics ytics mytics
 #set label 3 'FSSH  2000 K' at 25, 0.75
 #set label 1 '(b)' at 5, 0.9
 
-e1=0;e2=13.0;
+e1=0;e2=8.0;
 temp=1000
 kbT=0.0083*temp
 

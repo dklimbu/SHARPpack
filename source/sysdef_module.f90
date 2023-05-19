@@ -39,8 +39,6 @@
       loop = .true.
       ldtl = .false.
       lkval = .false.
-      llan = .false.
-      lnhc = .false.
       
       np = 1
       dt = 1.0
@@ -236,9 +234,10 @@
            endif
 
          elseif(findstring('rundtail',directive,idum))then
-!c     number of initial momentum
+!c     printing running detail
            if(findstring('yes',directive,idum))then
              ldtl = .true.
+              dlevel=intstr(directive,lenrec,idum)
            endif
 
          elseif(findstring('iprint',directive,idum))then
@@ -259,85 +258,6 @@
       enddo
       close(nread)
 ! end reading input.in file
-      end subroutine 
-
-
-      subroutine modelParam(baseModel)
-!**********************************************************************
-!     SHARP PACK routine to set some specific  model parameters
-!     
-!     authors    - D.K. Limbu & F.A. Shakib     
-!     copyright  - D.K. Limbu & F.A. Shakib
-!
-!     Method Development and Materials Simulation Laboratory
-!**********************************************************************
-      implicit none
-      
-      integer  :: baseModel
-
-!Mass, beta parameters for Tully's Models
-      if(baseModel .le. 3)then  
-        nstates = 2
-        mp = 2000.0d0
-        beta = mp/(P0*P0)   !1.0d0/P0            !mp/(P0**2)
-
-! Parameters for Morse Models
-      elseif(baseModel.gt.3 .and. model .le.6)then  
-        nstates = 3
-        mp = 20000.0d0
-        beta = 1052.58d0   ! beta corresponding to 300K
-        omega = 0.005d0
-
-!Mass, beta parameters for 2-state linear chain Model
-      elseif(baseModel .eq. 12)then  
-        nstates = 2
-        mp = 12.d0 * amu2au   !! amu --> a.u.
-        beta = 1.d0/kT*temp    !! a.u.
-        v11 = 0.d0 * kJ_mol2au  !! kJ/mol --> a.u.
-        v22 = 13.0d0 * kJ_mol2au  !! kJ/mol --> a.u.
-        d_ab = 0.d0
-        d_ab(1,2)= -6.0d0 * 0.52918d0  !-6.0 A^(-1)
-        d_ab(2,1)=-d_ab(1,2)
-        gamaLC = 0.002418d0   !! 10^14 S^-1 --> a.u.
-        sigmaLC = sqrt(2.d0*gamaLC*mp*nb/beta/dt) 
-
-!Mass, beta parameters for 2-state linear chain Model
-      elseif(baseModel .eq. 13)then  
-        nstates = 3
-        mp = 12.d0 * amu2au   !! amu --> a.u.
-        beta = 1.d0/kT*temp    !! a.u.
-        v11 = 0.0   !!a.u.
-        v22 = 0.01  !!a.u.
-        v33 = 0.005 !!a.u.
-        d_ab = 0.d0
-        d_ab(1,2)= -6.5d0 !!a.u.
-        d_ab(2,1)=-d_ab(1,2) 
-        d_ab(2,3)= 8.d0  !!a.u.
-        d_ab(3,2)=-d_ab(2,3)
-        gamaLC = 0.002418d0   !! 10^14 S^-1 --> a.u.
-        sigmaLC = sqrt(2.d0*gamaLC*mp*nb/beta/dt) 
-      endif
-
-      
-! set the point of excited state
-      if(model .le. 3)then
-         R0 = -15.d0
-      elseif(model==4)then
-         R0 = 2.9d0
-      elseif(model==5)then
-         R0 = 3.3d0
-      elseif(model==6)then
-         R0 = 2.1d0
-      elseif(model==12)then  !LinearCahin MODEL
-         R0 = 0.0d0
-         P0 = 0.d0
-      elseif(model==13)then  !LinearCahin MODEL
-         R0 = 0.0d0
-         P0 = 0.d0
-      endif
-
-      return
-
       end subroutine 
 
 !**********************************************************************

@@ -10,6 +10,8 @@
 !**********************************************************************
       use global_module
       use models_module
+      use rpmd_module
+      use initial_module
 
       contains
 
@@ -24,7 +26,6 @@
 !
 !     Method Development and Materials Simulation Laboratory
 !**********************************************************************
-      use global_module
       implicit none
 
       integer    :: i
@@ -35,9 +36,9 @@
       complex*16 :: adia(NSTATES)
       complex*16 :: k1(NSTATES),k2(NSTATES),k3(NSTATES),k4(NSTATES)
 
-      eva_half = 0.5*(eva(:,1)+eva(:,2))
+      eva_half = 0.5d0*(eva(:,1)+eva(:,2))
 
-      vdotd_half = 0.5*(vdotd_old+vdotd_new)
+      vdotd_half = 0.5d0*(vdotd_old+vdotd_new)
       
 ! 4th order RK scheme
 
@@ -46,18 +47,18 @@
       end do
 
       do i=1,nstates
-        k2(i) = (adia(i)+k1(i)*0.5*dtq)*eva_half(i)/eye-sum(vdotd_half(i,:)*(adia(:)+k1(:)*0.5*dtq))
+        k2(i) = (adia(i)+k1(i)*0.5d0*dtq)*eva_half(i)/eye-sum(vdotd_half(i,:)*(adia(:)+k1(:)*0.5*dtq))
       end do
 
       do i=1,nstates
-        k3(i) = (adia(i)+k2(i)*0.5*dtq)*eva_half(i)/eye-sum(vdotd_half(i,:)*(adia(:)+k2(:)*0.5*dtq))
+        k3(i) = (adia(i)+k2(i)*0.5d0*dtq)*eva_half(i)/eye-sum(vdotd_half(i,:)*(adia(:)+k2(:)*0.5*dtq))
       end do
 
       do i=1,nstates
         k4(i) = (adia(i)+k3(i)*dtq)*eva(i,2)/eye-sum(vdotd_new(i,:)*(adia(:)+k3(:)*dtq))
       end do
 
-      adia = adia+dtq/6.0*(k1+2.0*k2+2.0*k3+k4)
+      adia = adia+dtq/6.d0*(k1+2.d0*k2+2.d0*k3+k4)
 
       return
       END SUBROUTINE ADVANCE_ADIA
@@ -73,6 +74,7 @@
 !
 !     Method Development and Materials Simulation Laboratory
 !**********************************************************************
+!      use initial_module, only : gaussn
       implicit none
 
       integer              :: i,ip,ibd
@@ -84,24 +86,26 @@
       real*8               :: ee(NSTATES)
       real*8               :: p(np,nb)
       real*8               :: temppsi(NSTATES,NSTATES)
-      real*8               :: gaussn
+      !real*8               :: gaussn
 
       real*8               :: aa(np,nb)
+      real*8               :: dt2
 
 ! for LinearChainModel
       real*8    :: fR(nb)
 
 ! RP propogation, velocity-Verlet
+      dt2 = 0.5d0*dt
 
       !!Langevin dynamic for just N-th particle in LinearChain Model
       if((model==12).or.(model==13))then
 
         do ibd = 1, nb
-           fR(ibd) = sigmaLC * gaussn()     
+           fR(ibd) = sigmaLC(ibd) * gaussn()     
         enddo
 
         aa = fp/mp
-        aa(np,:) = (fp(np,:) - gamaLC*mp*vp(np,:) + fR)/mp
+        aa(np,:) = (fp(np,:) - gamaLC(1:nb)*mp*vp(np,:) + fR)/mp
 
       else
 
@@ -110,7 +114,7 @@
       endif
 
      !!! Velocity-Verlet
-      vp=vp+0.5*dt*aa     !! fp/mp
+      vp=vp+dt2*aa     !! fp/mp
 
       p=vp*mp
 
@@ -136,13 +140,13 @@
 
       if((model==12).or.(model==13))then
         aa = fp/mp
-        aa(np,:) = (fp(np,:) - gamaLC*mp*vp(np,:) + fR)/mp
+        aa(np,:) = (fp(np,:) - gamaLC(1:nb)*mp*vp(np,:) + fR)/mp
 
       else
         aa = fp/mp
       endif
 
-      vp=vp+0.5*dt*aa    !!fp/mp
+      vp=vp+dt2*aa    !!fp/mp
 
       return
       END SUBROUTINE ADVANCE_MD
@@ -182,7 +186,6 @@
 
       SUBROUTINE FORCE_Lchain(r,ff)
 !**********************************************************************
-!     
 !     SHARP PACK subroutine to calculate force of LinearChainModel
 !     
 !     authors    - D.K. Limbu & F.A. Shakib     
@@ -214,7 +217,7 @@
         do j=iL,iR
           if(i .ne. j)then
             if((i==np).and.(j.gt.np))then
-              rij = r(i) - 10.d0
+              rij = r(i) - 2.0d0 !N+1 particle is fixed, !!10.d0
               rr = sqrt(rij*rij)
             else
               rij = r(i)-r(j)

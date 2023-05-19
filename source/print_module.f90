@@ -269,11 +269,11 @@
         else
            open(3,file='pkval.out',status='new')
            write(3,'(A36,2x,A)') '# BRANCHING PROBABILTY OF MODEL:    ', modelname
-           write(3,'(A)')        '# k              T1             T2             R1            R2            nR          nFrust      nFrust2'
+           write(3,'(A,A12,9(A15))') '#','k-val','T1-pop','T2-pop','R1-pop','R2-pop','nRevTraj','nFrust','nFrustRev','nAttempted','nSuccess'
         endif
 
         write(3,222) P0, ((redmat(i,nprint)-redmatr(i,nprint))/(ntraj), i=1,nstates),(redmatR(i,nprint)/(ntraj),i=1,nstates),&
-                real(ntrajR)/ntraj,real(nfrust_hop)/ntraj,real(nfrust_hop2)/ntraj
+                real(ntrajR)/ntraj,real(nfrust_hop)/ntraj,real(nfrust_hop2)/ntraj,real(sum(nJump)+sum(nJumpFail))/ntraj,real(sum(nJump))/ntraj
 
         close(3)
       endif
@@ -334,11 +334,10 @@
 !**********************************************************************
       implicit none
   
-      character(len=24) :: file_hopp, file_dcoup, file_therm
+      character(len=24) :: file_hopp, file_dcoup
 
       file_hopp = 'hoppinghist.out'
       file_dcoup = 'dcoupling.out'
-      file_therm = 'thermostate.out'
 
       open(nrite_hopp,file=file_hopp,status='unknown')
       call printlogo(nrite_hopp)
@@ -350,11 +349,6 @@
          write(nrite_dcoup,'(1x,A)') '# nTraj      nSteps      R_1 (a.u.)    Velocity_1 (a.u.)     &
            KE    PE     Ering     TotalEnergy    Energy (nstates)           dCoupling (nstates,nstates)  &
            Diabatic Potentials Vij(nstates,nstates),         istate   Energy(istate)'
-      endif
-
-      if((lnhc.or.llan).and.(nsample>0))then
-        open(nrite_therm,file=file_therm,status='unknown')
-        write(nrite_therm,'(1x,A)') '# nTraj      nSteps      Temperature(K)   KEO(a.u)      PEO(a.u.)     Thermo_tot,  eta    peta'
       endif
 
       return
@@ -411,7 +405,6 @@
 
       close(nrite_hopp)
       if(ldtl)close(nrite_dcoup)
-      close(nrite_therm)
       
       return 
       end subroutine close_file

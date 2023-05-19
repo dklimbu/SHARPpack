@@ -16,7 +16,6 @@
       real*8,private :: A, B, Ct, D, Eo
       real*8,private :: Dm(3),bm(3),Re(3), cm(3)
       real*8,private :: Aij(3), Rij(3), amj(3)
-      real*8,private :: aa(3),bb(3)  ! for 3-state super exchange model
 
       contains
 
@@ -277,6 +276,7 @@
       RETURN
       
       END SUBROUTINE DIAG
+
 
 !**********************************************************************
       end module models_module

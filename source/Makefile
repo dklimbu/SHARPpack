@@ -6,11 +6,12 @@ SRC = global_module.f90 \
       modelvar_module.f90 \
       parse_module.f90 \
       sysdef_module.f90 \
-      print_module.f90 \
+      initial_module.f90 \
       models_module.f90 \
+      rpmd_module.f90 \
+      print_module.f90 \
       propagation_module.f90 \
       nonadiabatic_module.f90 \
-      rpmd_module.f90 \
       runTraj_module.f90 
 
 MAIN =  rpmdsh.f90

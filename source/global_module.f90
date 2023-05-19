@@ -31,12 +31,10 @@
       character(len=36)   :: modelname
       character(len=8)    :: method
 
-      logical             :: llan,lnhc
       logical             :: ldtl
   
       integer,parameter   :: nrite_hopp=110
       integer,parameter   :: nrite_dcoup=120
-      integer,parameter   :: nrite_therm=130
       integer,parameter   :: nrite_bath=140
  
       integer             :: vrkey
@@ -59,9 +57,10 @@
       real*8              :: KT
 
 !!! LinearChainModel !!!
+      integer :: dlevel
       integer :: nprint
-      real*8  :: gamaLC
-      real*8  :: sigmaLC
+      real*8  :: gamaLC(64)
+      real*8  :: sigmaLC(64)
       real*8  :: d_ab(3,3)     
       real*8  :: v11
       real*8  :: v22

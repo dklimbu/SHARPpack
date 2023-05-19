@@ -4,6 +4,7 @@ PROGRAM ring_polymer_surface_hopping
   use sysdef_module
   use modelvar_module
   use models_module
+  use initial_module
   use nonadiabatic_module
   use propagation_module
   use runtraj_module
@@ -56,6 +57,8 @@ PROGRAM ring_polymer_surface_hopping
 ! open file for writing purpose into the files
   call openfile()
 
+!=======================initialization==================================
+ 
 ! print input parameters as "param.out"
   call printin()
 

@@ -8,10 +8,11 @@
 !     Method Development and Materials Simulation Laboratory
 !     New Jersey Institute of Technology
 !**********************************************************************
-
   use global_module
   use modelvar_module
   use models_module
+  use initial_module
+  use rpmd_module
   use nonadiabatic_module
   use propagation_module
   use print_module
@@ -41,17 +42,29 @@
   real*8   :: crit,length,currentlength
   real*8   :: KE,PE,Ering,TotE,Vn
 
-  
-  ntrajR = 0
+  integer,parameter  :: nrite_dtl1=1001
+  integer,parameter  :: nrite_dtl2=1002
 
+  ntrajR = 0
  
   nlit=int(dt/dtq)
   rnlit = 1.0/REAL(nlit,8)
+
+  if(dlevel .eq. 1)then
+     open(nrite_dtl1,file='HISTORYc',status='unknown')
+     write(nrite_dtl1,'(1x,A)') '# nTraj       Time(fs)    rc     vc '
+  endif
+  if(dlevel .eq. 2)then
+     open(nrite_dtl2,file='HISTORYb',status='unknown')
+     write(nrite_dtl2,'(1x,A)') '# nTraj       Time(fs)    rp(np,nb)     vp(np,nb) '
+  endif
 
 ! main trajectory loop
   DO itraj=1,ntraj
      
 ! randomly sample positon & velocity from gaussian distribution
+
+!10  call sample_init_vp(vp_samp,rp_samp)
 
     call sample_init_vp(vp_samp,rp_samp)
 
@@ -97,33 +110,7 @@
     inext=i
     nIniStat(istate) = nIniStat(istate) + 1
 
-    vdotd_old=0.d0
-
-    if((model==12).or.(model==13))then
-      do k=1,nstates
-        do l=1,nstates
-          if(k.ne.l)then
-            vdotd_old(k,l) = vc(1)*d_ab(k,l)
-          endif
-        enddo
-      enddo
-
-    else
-      do k=1,nstates
-        do l=1,nstates
-          if (k.ne.l) then
-            do i=1,nstates
-              do j=1,nstates
-                do ip=1,np
-                  vdotd_old(k,l) = vdotd_old(k,l)+psi(i,k,1)*dhel_rc(i,j,ip)*psi(j,l,1)*vc(ip)/(eva(l,1)-eva(k,1))
-                enddo
-              enddo
-            end do
-          endif
-        end do
-      end do
-    endif
-
+    call compute_vdotd_old(vdotd_old,psi)
 
 !=================================================================================
 ! Initialize the forces
@@ -169,21 +156,8 @@
       end do
 
       ! middle decoup based on SHS-Tully 94
-        
-      vdotd_new=0.d0
- !!! CHECK using eq 32\times velocity Tully94 paper
-      DO k=1,nstates
-        DO l=1,nstates
-          if(k.ne.l) then
-            if((model==12).or.(model==13))then
-            !!v*d_ij = p1*d_ij/m as for LinearChainModel
-              vdotd_new(k,l) = vc(1)*d_ab(k,l)
-            else
-              vdotd_new(k,l) = sum(psi(:,k,1) * psi(:,l,2) - psi(:,k,2)*psi(:,l,1))/(2.*dt)
-            endif
-          end if
-        END DO
-      END DO
+
+      call compute_vdotd(vdotd_new,psi)
 
 !      difference for ave_eva and vdotd
       deva(:) = eva(:,2) - eva(:,1)  
@@ -239,6 +213,9 @@
          call calEnergy(rp,vp,KE,Vn,Ering,TotE,istate)
          write(nrite_dcoup,101) itraj,itime*dt,rc(1),vc(1),KE,Vn,Ering,TotE,eva(:,1), vdotd_new,hel(:,:,2),real(istate),eva(istate,1)
 
+         if(dlevel .eq. 1) write(nrite_dtl1,102) itraj,itime*dt,rc,vc
+         if(dlevel .eq. 2) write(nrite_dtl2,102) itraj,itime*dt,(rp(ip,:),ip=1,np),(vp(ip,:),ip=1,np)
+
        endif
      ENDIF
 
@@ -248,10 +225,100 @@
 
    ! traj loop
   ENDDO
- 101 format(i10,1x,f15.3,1x,150(f18.12,2x))
+
+ 101 format(i10,1x,f15.3,1x,150(e18.8E3,2x))
+ 102 format(i10,1x,f15.3,1x,350(f15.6,2x))
    
+  if(dlevel .eq. 1) close(nrite_dtl1)
+  if(dlevel .eq. 2) close(nrite_dtl2)
+
   end subroutine
 
+
+  subroutine compute_vdotd_old(vdotd_old,psi)
+!**********************************************************************
+!     SHARP Pack routine to compute vdotd_old
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
+  implicit none
+
+  integer            :: i,j,k,l,ip
+  real*8,intent(out) :: vdotd_old(nstates,nstates)
+  real*8,intent(in)  :: psi(nstates,nstates,2) ! old,current or new electronic step
+
+  vdotd_old=0.d0
+
+  if((model==12).or.(model==13))then
+    do k=1,nstates
+      do l=1,nstates
+        if(k.ne.l)then
+          do ip=1,1  !np
+            vdotd_old(k,l) = vdotd_old(k,l)+vc(ip)*d_ab(k,l)
+          enddo
+        endif
+      enddo
+    enddo
+
+  else
+    do k=1,nstates
+      do l=1,nstates
+        if (k.ne.l) then
+          !do i=1,nstates
+          !  do j=1,nstates
+          do ip=1,np
+          !      vdotd_old(k,l) = vdotd_old(k,l)+psi(i,k,1)*dhel_rc(i,j,ip)*psi(j,l,1)*vc(ip)/(eva(l,1)-eva(k,1))
+            vdotd_old(k,l) = vdotd_old(k,l)+sum(psi(:,k,1)*matmul(dhel_rc(:,:,ip),psi(:,l,1)))*vc(ip)/(eva(l,1)-eva(k,1))
+          enddo
+          !  enddo
+          !end do
+        endif
+      end do
+    end do
+  endif
+
+  end subroutine compute_vdotd_old
+
+
+  subroutine compute_vdotd(vdotd_new,psi)
+!**********************************************************************
+!     SHARP Pack routine to compute vdotd_new
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
+  implicit none
+
+  integer            :: i,j,k,l,ip
+  real*8,intent(out) :: vdotd_new(nstates,nstates)
+  real*8,intent(in)  :: psi(nstates,nstates,2) ! old,current or new electronic step
+
+
+  ! middle decoup based on SHS-Tully 94
+
+  vdotd_new=0.d0
+
+! CHECK using eq 32\times velocity Tully94 paper
+  do k=1,nstates
+    do l=1,nstates
+      if(k.ne.l) then
+        if((model==12).or.(model==13))then
+        !!v*d_ij = p1*d_ij/m as for LinearChainModel
+          vdotd_new(k,l) = vc(1)*d_ab(k,l)
+        else
+          vdotd_new(k,l) = sum(psi(:,k,1) * psi(:,l,2) - psi(:,k,2)*psi(:,l,1))/(2.*dt)
+        endif
+      end if
+    enddo
+  enddo
+
+  end subroutine compute_vdotd
+        
 
   subroutine calEnergy(rp,vp,KE,Vn,Ho,Hn,isurf)
 !**********************************************************************
@@ -262,6 +329,7 @@
 !
 !     Method Development and Materials Simulation Laboratory
 !**********************************************************************
+!  use global_module
   implicit none
 
   integer  :: ip,ibd, isurf
@@ -278,6 +346,8 @@
 
   KE = sum(vp*vp)*0.5d0*mp
 
+!  PE = eva_i*nb
+
   ! calculate active energy of each bead
   
   Vn = 0.d0
@@ -289,6 +359,8 @@
 
       Vn = Vn + eva_b(isurf,1)
   enddo
+
+
 
   Ho = 0.d0
   do ip = 1, np
