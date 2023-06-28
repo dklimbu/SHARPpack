@@ -269,11 +269,13 @@
         else
            open(3,file='pkval.out',status='new')
            write(3,'(A36,2x,A)') '# BRANCHING PROBABILTY OF MODEL:    ', modelname
-           write(3,'(A,A12,9(A15))') '#','k-val','T1-pop','T2-pop','R1-pop','R2-pop','nRevTraj','nFrust','nFrustRev','nAttempted','nSuccess'
+           write(3,'(A,A12,9(A15))') '#','k-val','T1-pop','T2-pop','R1-pop','R2-pop','nRevTraj',&
+                   'nFrust','nFrustRev','nAttempted','nSuccess'
         endif
 
         write(3,222) P0, ((redmat(i,nprint)-redmatr(i,nprint))/(ntraj), i=1,nstates),(redmatR(i,nprint)/(ntraj),i=1,nstates),&
-                real(ntrajR)/ntraj,real(nfrust_hop)/ntraj,real(nfrust_hop2)/ntraj,real(sum(nJump)+sum(nJumpFail))/ntraj,real(sum(nJump))/ntraj
+                real(ntrajR)/ntraj,real(nfrust_hop)/ntraj,real(nfrust_hop2)/ntraj,&
+                real(sum(nJump)+sum(nJumpFail))/ntraj,real(sum(nJump))/ntraj
 
         close(3)
       endif

@@ -209,7 +209,8 @@
 
        if(((ntraj .lt.10) .or. (mod(itraj,10).eq.0)).and.(mod(itime,iskip).eq.0))then
          call calEnergy(rp,vp,KE,Vn,Ering,TotE,istate)
-         write(nrite_dcoup,101) itraj,itime*dt,rc(1),vc(1),KE,Vn,Ering,TotE,eva(:,1), vdotd_new,hel(:,:,2),real(istate),eva(istate,1)
+         write(nrite_dcoup,101) itraj,itime*dt,rc(1),vc(1),KE,Vn,Ering,TotE,eva(:,1), &
+                 vdotd_new,hel(:,:,2),real(istate),eva(istate,1)
 
          if(dlevel .eq. 1) write(nrite_dtl1,102) itraj,itime*dt,rc,vc
          if(dlevel .eq. 2) write(nrite_dtl2,102) itraj,itime*dt,(rp(ip,:),ip=1,np),(vp(ip,:),ip=1,np)
