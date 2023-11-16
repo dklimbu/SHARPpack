@@ -9,6 +9,7 @@ PROGRAM ring_polymer_surface_hopping
   use propagation_module
   use runtraj_module
   use print_module
+  use rpmd_module
 
   implicit none
 
@@ -26,9 +27,6 @@ PROGRAM ring_polymer_surface_hopping
 
 ! read input parameters from "input.in" file
   call sysdef(lkval)
-
-! set default electronic time step if not assigned as input
-  if(dtq.eq.0.d0)dtq=dt/10.d0
 
 ! adjust nTraj based on nCPUs
   ntraj = int(real(ntraj)/real(ncpu))
@@ -49,12 +47,14 @@ PROGRAM ring_polymer_surface_hopping
   call RANDOM_SEED(PUT=seed)
 
 ! assign some model specific parameters like mass, etc
-  call modelParam(model)
+  call modelParam(keymodel)
 
 ! allocate variables and initialize values
   call modelallocat()
 
-! open file for writing purpose into the files
+  call cmat_init()
+
+  ! open file for writing purpose into the files
   call openfile()
 
 !=======================initialization==================================
@@ -62,11 +62,15 @@ PROGRAM ring_polymer_surface_hopping
 ! print input parameters as "param.out"
   call printin()
 
+! print analytical potential energy surface"
+  call printHel()
+
 ! main trajectory loop
   call runTraj()
 
 ! writing hopping statistics
-  call hopping_stat()
+  if(ldtl)call hopping_stat()
+  call hopping_stat2()
 
   call CPU_TIME(tt1)
   if(ldtl)then

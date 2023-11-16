@@ -52,6 +52,9 @@
       write(nrite,'(1x,A,2x,A)') '                              ',trim(method)                             
       write(nrite,*) '                    SIMULATION CONTROL PARAMETERS                            '
       write(nrite,*) '                                                                             '
+      if(lfft)then
+      write(nrite,*) '                              with FFT                                       '
+      endif
       write(nrite,*) '*****************************************************************************'
       write(nrite,*) '                                                 '
       if(ncpu == 1)then
@@ -83,20 +86,20 @@
 
       write(nrite,'(/,1x,A,2x,f8.2,A)')'P0, initial momentum, k             ', P0,' (a.u.)'
 
-      if(Rinit == 0)then
+      if(R0key == 0)then
          write(nrite,'(/,1x,A,4x,A)')  'R0 beads for specific particle      ', "'Same'"
-      elseif(Rinit == 1)then
+      elseif(R0key == 1)then
          write(nrite,'(/,1x,A,4x,A)')  'R0 beads for specific particle      ', "'Gaussian'"
-      elseif(Rinit == 2)then
-         write(nrite,'(/,1x,A,4x,A)')  'R0 beads for specific particle      ', "'Wigner distribution'"
+      elseif(R0key == 2)then
+         write(nrite,'(/,1x,A,4x,A)')  'R0 beads for specific particle      ', "'Wigner'"
       endif
 
-      if(vinit == 0)then
+      if(v0key == 0)then
          write(nrite,'(/,1x,A,4x,A)')  'P0 initializatoin scheme            ', "'Deterministic'"
-      elseif(vinit == 1)then
-         write(nrite,'(/,1x,A,4x,A)')  'P0 initialization scheme            ', "'Gaussian distribution'"
-      elseif(vinit == 2)then
-         write(nrite,'(/,1x,A,4x,A)')  'P0 initialization scheme            ', "'Wigner distribution'"
+      elseif(v0key == 1)then
+         write(nrite,'(/,1x,A,4x,A)')  'P0 initialization scheme            ', "'Gaussian'"
+      elseif(v0key == 2)then
+         write(nrite,'(/,1x,A,4x,A)')  'P0 initialization scheme            ', "'Wigner'"
       endif
 
       if(vrkey == 0)then
@@ -119,7 +122,7 @@
 
       write(nrite,'(/,1x,A,2x,e13.6)') 'Inverse temperature of system, β    ', beta
 
-      if(model >3 .and. model <=6)then
+      if(keymodel >=4 .and. keymodel <=6)then
          write(nrite,'(/,1x,A,2x,e13.6)') 'Vibrational frequency, ω            ', omega
       endif
 
@@ -129,7 +132,7 @@
 
       write(nrite,'(/,1x,A,2x,I8)')    'print skip                          ', iskip
 
-      if(model==12)then
+      if(keymodel == 12)then
          write(nrite,'(/,1x,A,2x,e13.6)') '2-State LinearChain MODEL PARAMATERS:'
          write(nrite,'(/,1x,A,2x,e13.6)') '   T (in Kelvin)   ', kT
          write(nrite,'(/,1x,A,2x,e13.6)') '   V11 (kJ/mol)    ', v11/kJ_mol2au
@@ -142,7 +145,7 @@
          write(nrite,'(/,1x,A,2x,e13.6)') '   γ (s^-1)        ', 1.0e14
          write(nrite,'(/,1x,A,2x,e13.6)') 'FINISH 2-State LinearChain PARAMATERS.'
       endif
-      if(model==13)then
+      if(keymodel == 13)then
          write(nrite,'(/,1x,A,2x,e13.6)') '3-State LinearChain MODEL PARAMATERS:'
          write(nrite,'(/,1x,A,2x,e13.6)') '   T (in Kelvin)   ', kT
          write(nrite,'(/,1x,A,2x,e13.6)') '   V11 (a.u.)      ', v11
@@ -182,16 +185,14 @@
 
       implicit none
       
-      integer :: i, j, itime, iiskip
+      integer :: i, j, itime
       logical :: lkval,lfile
 
-      iiskip = int(1.0/dt)
-
-        open(56,file='adiabat1.out',status='unknown')
-        open(66,file='adiabat2.out',status='unknown')
-        open(76,file='diabat1.out',status='unknown')
-        open(77,file='diabat2.out',status='unknown')
-        open(78,file='diabat3.out',status='unknown')
+        open(56,file='pop_adiabat1.out',status='unknown')
+        open(66,file='pop_adiabat2.out',status='unknown')
+        open(76,file='pop_diabat1.out',status='unknown')
+        open(77,file='pop_diabat2.out',status='unknown')
+        open(78,file='pop_diabat3.out',status='unknown')
 
         write(56,'(A13,2x,A)') '# MODEL:    ', modelname
         write(66,'(A13,2x,A)') '# MODEL:    ', modelname
@@ -205,21 +206,20 @@
         write(77,'(A13,2x,A)') '#TIME (a.u.)', 'DIABATIC POPULATIONS: METHOD II'
         write(78,'(A13,2x,A)') '#TIME (a.u.)', 'DIABATIC POPULATIONS: METHOD III'
         
-       if(ntrajR > 0)then 
-        open(86,file='adiabatR1.out',status='unknown')
-        open(87,file='adiabatR2.out',status='unknown')
-        open(88,file='diabatR3.out',status='unknown')
+!       if(ntrajR > 0)then 
+!        open(86,file='pop_adiabatR1.out',status='unknown')
+!        open(87,file='pop_adiabatR2.out',status='unknown')
+!        open(88,file='pop_diabatR3.out',status='unknown')
 
-        write(86,'(A13,2x,A)') '# MODEL:    ', modelname
-        write(87,'(A13,2x,A)') '# MODEL:    ', modelname
-        write(88,'(A13,2x,A)') '# MODEL:    ', modelname
+!        write(86,'(A13,2x,A)') '# MODEL:    ', modelname
+!        write(87,'(A13,2x,A)') '# MODEL:    ', modelname
+!        write(88,'(A13,2x,A)') '# MODEL:    ', modelname
         
-        write(86,'(A13,2x,A)') '#TIME (a.u.)', 'ADIABATIC REFLECTED POPULATIONS: METHOD I'
-        write(87,'(A13,2x,A)') '#TIME (a.u.)', 'ADIABATIC REFLECTED POPULATIONS: METHOD II'
-        write(88,'(A13,2x,A)') '#TIME (a.u.)', 'DIABATIC REFLECTED POPULATIONS: METHOD III'
-       endif
+!        write(86,'(A13,2x,A)') '#TIME (a.u.)', 'ADIABATIC REFLECTED POPULATIONS: METHOD I'
+!        write(87,'(A13,2x,A)') '#TIME (a.u.)', 'ADIABATIC REFLECTED POPULATIONS: METHOD II'
+!        write(88,'(A13,2x,A)') '#TIME (a.u.)', 'DIABATIC REFLECTED POPULATIONS: METHOD III'
+!       endif
 
-        if(dt.ge.1.0)then
         do itime=0,nprint
            write(56,222) itime*iskip*dt,(redmat(i,itime)/real(ntraj),i=1,nstates)
            write(66,222) itime*iskip*dt,((redmat_ec(i,j,itime)/real(ntraj),i=1,nstates),j=1,nstates)
@@ -227,28 +227,13 @@
            write(77,222) itime*iskip*dt,(diabat2(i,itime)/real(ntraj),i=1,nstates)
            write(78,222) itime*iskip*dt,(diabat3(i,itime)/real(ntraj),i=1,nstates)
          
-          if(ntrajR > 0)then 
-           write(86,222) itime*iskip*dt,(redmatR(i,itime)/real(ntraj),i=1,nstates)
-           write(87,222) itime*iskip*dt,((redmat_ecR(i,j,itime)/real(ntraj),i=1,nstates),j=1,nstates)
-           write(88,222) itime*iskip*dt,(diabat3R(i,itime)/real(ntraj),i=1,nstates)
-          endif
+!          if(ntrajR > 0)then 
+!           write(86,222) itime*iskip*dt,(redmatR(i,itime)/real(ntraj),i=1,nstates)
+!           write(87,222) itime*iskip*dt,((redmat_ecR(i,j,itime)/real(ntraj),i=1,nstates),j=1,nstates)
+!           write(88,222) itime*iskip*dt,(diabat3R(i,itime)/real(ntraj),i=1,nstates)
+!          endif
         end do
 
-        else
-        do itime=iiskip,nprint,iiskip
-           write(56,222) itime*iskip*dt,(redmat(i,itime)/real(ntraj),i=1,nstates)
-           write(66,222) itime*iskip*dt,((redmat_ec(i,j,itime)/real(ntraj),i=1,nstates),j=1,nstates)
-           write(76,222) itime*iskip*dt,(diabat1(i,itime)/real(ntraj),i=1,nstates)
-           write(77,222) itime*iskip*dt,(diabat2(i,itime)/real(ntraj),i=1,nstates)
-           write(78,222) itime*iskip*dt,(diabat3(i,itime)/real(ntraj),i=1,nstates)
-
-          if(ntrajR > 0)then 
-           write(86,222) itime*iskip*dt,(redmatR(i,itime)/real(ntraj),i=1,nstates)
-           write(87,222) itime*iskip*dt,((redmat_ecR(i,j,itime)/real(ntraj),i=1,nstates),j=1,nstates)
-           write(88,222) itime*iskip*dt,(diabat3R(i,itime)/real(ntraj),i=1,nstates)
-          endif
-        end do
-        endif 
         close(56)
         close(66)
         close(76)
@@ -263,17 +248,18 @@
 
       if(lkval)then
         
-        inquire(file='pkval.out', exist=lfile)
+        inquire(file='pop_branch.out', exist=lfile)
         if(lfile)then
-           open(3,file='pkval.out',status='old',access='append')
+           open(3,file='pop_branch.out',status='old',access='append')
         else
-           open(3,file='pkval.out',status='new')
+           open(3,file='pop_branch.out',status='new')
            write(3,'(A36,2x,A)') '# BRANCHING PROBABILTY OF MODEL:    ', modelname
-           write(3,'(A,A12,9(A15))') '#','k-val','T1-pop','T2-pop','R1-pop','R2-pop','nRevTraj',&
-                   'nFrust','nFrustRev','nAttempted','nSuccess'
+           write(3,'(A,A12,9(A15))') '#','k-val','T1-pop','T2-pop','R1-pop','R2-pop',&
+                   'nRevTraj','nFrust','nFrustRev','nAttempted','nSuccess'
         endif
 
-        write(3,222) P0, ((redmat(i,nprint)-redmatr(i,nprint))/(ntraj), i=1,nstates),(redmatR(i,nprint)/(ntraj),i=1,nstates),&
+        write(3,222) P0, ((redmat(i,nprint)-redmatr(i,nprint))/(ntraj), i=1,nstates),&
+                (redmatR(i,nprint)/(ntraj),i=1,nstates),&
                 real(ntrajR)/ntraj,real(nfrust_hop)/ntraj,real(nfrust_hop2)/ntraj,&
                 real(sum(nJump)+sum(nJumpFail))/ntraj,real(sum(nJump))/ntraj
 
@@ -341,16 +327,15 @@
       file_hopp = 'hoppinghist.out'
       file_dcoup = 'dcoupling.out'
 
-      open(nrite_hopp,file=file_hopp,status='unknown')
-      call printlogo(nrite_hopp)
-      write(nrite_hopp,'(A13,2x,A)') '# MODEL:    ', modelname
-      
       if(ldtl)then
+         open(nrite_hopp,file=file_hopp,status='unknown')
+         call printlogo(nrite_hopp)
+         write(nrite_hopp,'(A13,2x,A)') '# MODEL:    ', modelname
+      
          open(nrite_dcoup,file=file_dcoup,status='unknown')
          write(nrite_dcoup,'(A13,2x,A)') '# MODEL:    ', modelname
          write(nrite_dcoup,'(1x,A)') '# nTraj      nSteps      R_1 (a.u.)    Velocity_1 (a.u.)     &
-           KE    PE     Ering     TotalEnergy    Energy (nstates)           dCoupling (nstates,nstates)  &
-           Diabatic Potentials Vij(nstates,nstates),         istate   Energy(istate)'
+           KE    Ering     PE    TotalEnergy    istate    Energy(istate)   dCoupling (nstates,nstates)'
       endif
 
       return
@@ -375,23 +360,95 @@
       do i = 1, nstates
         do j = 1, nstates
           if(i .ne. j)then
-            write(nrite_hopp,'(" # Accepted jump from ",I3," to ",I3," : ",I8)') i,j,nJump(i,j)
-            write(nrite_hopp,'(" # Rejected jump from ",I3," to ",I3," : ",I8)') i,j,nJumpFail(i,j)
+            write(nrite_hopp,'(" # Accepted jump from     ",I3," to ",I3," : ",I8)') i,j,nJump(i,j)
+            write(nrite_hopp,'(" # Rejected jump from     ",I3," to ",I3," : ",I8)') i,j,nJumpFail(i,j)
           endif
         enddo
       enddo
-      write(nrite_hopp,'(" #Total Successful Jump:",I8)') sum(nJump)
-      write(nrite_hopp,'(" #Total Attempted Jump:",I8)') sum(nJump)+sum(nJumpFail)
+
       write(nrite_hopp,*)
-      write(nrite_hopp,*) "#Total Initial states:", nIniStat
+      do i = 1, nstates
+        do j = 1, nstates
+          if(i .ne. j)then
+            write(nrite_hopp,'(" # Frustrated Hop from    ",I3," to ",I3," : ",I8)') i,j,nFrust(i,j)
+            write(nrite_hopp,'(" # FrustratedRev Hop from ",I3," to ",I3," : ",I8)') i,j,nFrustR(i,j)
+          endif
+        enddo
+      enddo
+
       write(nrite_hopp,*)
-      write(nrite_hopp,*) "#Total Frustrated Hop:", nfrust_hop
+      write(nrite_hopp,'(" #Total Successful Jump:  ",I8)') sum(nJump)
+      write(nrite_hopp,'(" #Total Attempted Jump:   ",I8)') sum(nJump)+sum(nJumpFail)
+      write(nrite_hopp,*)
+      write(nrite_hopp,*) "#Total Initial states:   ", nIniStat
+      write(nrite_hopp,*)
+      write(nrite_hopp,*) "#Total Frustrated Hop:   ", nfrust_hop
       write(nrite_hopp,*) "#Reversed Frustrated Hop:", nfrust_hop2
       write(nrite_hopp,'("===============================================")')
 
       return
 
       end subroutine hopping_stat
+
+
+      subroutine hopping_stat2()
+!**********************************************************************
+!     SHARP PACK subroutine for writing hopping statistics
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
+      implicit none
+
+      integer :: i,j,nrite_hop2=130
+      character(len=24)  :: datentime
+
+      open(unit=nrite_hop2,file='param.out',status='old',access='append')
+
+      write(nrite_hop2,'("============= Hopping Statistics ==============")')
+      do i = 1, nstates
+        do j = 1, nstates
+          if(i .ne. j)then
+            write(nrite_hop2,'(" # Accepted jump from     ",I3," to ",I3," : ",I8)') i,j,nJump(i,j)
+            write(nrite_hop2,'(" # Rejected jump from     ",I3," to ",I3," : ",I8)') i,j,nJumpFail(i,j)
+          endif
+        enddo
+      enddo
+
+      write(nrite_hop2,*)
+      do i = 1, nstates
+        do j = 1, nstates
+          if(i .ne. j)then
+            write(nrite_hop2,'(" # Frustrated Hop from    ",I3," to ",I3," : ",I8)') i,j,nFrust(i,j)
+            write(nrite_hop2,'(" # FrustratedRev Hop from ",I3," to ",I3," : ",I8)') i,j,nFrustR(i,j)
+          endif
+        enddo
+      enddo
+
+      write(nrite_hop2,*)
+      write(nrite_hop2,'(" #Total Successful Jump:  ",I8)') sum(nJump)
+      write(nrite_hop2,'(" #Total Attempted Jump:   ",I8)') sum(nJump)+sum(nJumpFail)
+      write(nrite_hop2,*)
+      write(nrite_hop2,*) "#Total Initial states:   ", nIniStat
+      write(nrite_hop2,*)
+      write(nrite_hop2,*) "#Total Frustrated Hop:   ", nfrust_hop
+      write(nrite_hop2,*) "#Reversed Frustrated Hop:", nfrust_hop2
+      write(nrite_hop2,'("===============================================")')
+
+      call fdate(datentime)
+
+      write(nrite_hop2,*) '                                                 '
+      write(nrite_hop2,*) "JOB FINISHED AT: ", datentime   
+      write(nrite_hop2,*) '                                                 '
+      write(nrite_hop2,'("===============================================")')
+
+      close(nrite_hop2)
+
+      return
+
+      end subroutine hopping_stat2
 
 
       subroutine close_file()
@@ -405,7 +462,7 @@
 !**********************************************************************
       implicit none
 
-      close(nrite_hopp)
+      if(ldtl)close(nrite_hopp)
       if(ldtl)close(nrite_dcoup)
       
       return 

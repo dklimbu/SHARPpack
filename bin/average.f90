@@ -45,7 +45,7 @@
 
   write(0,*)
   write(0,*) '************************************'
-  write(0,*), 'Averaging from File(s):'
+  write(0,*) 'Averaging from File(s):'
   do i = 1, ndir
 
     if(iformat .eq. 1)then
@@ -72,7 +72,7 @@
       stop
     endif
 
-    write(0,*),i,trim(infile)
+    write(0,*) i,trim(infile)
     
     !do j = 1, headskip
      read(i,'(A)') header1

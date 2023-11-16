@@ -16,7 +16,6 @@
       complex*16,allocatable :: redmat_ec(:,:,:)
       complex*16,allocatable :: diabat2(:,:)
       real*8, allocatable    :: diabat1(:,:),diabat3(:,:)
-      real*8, allocatable    :: Wb(:),c(:,:)
       real*8,allocatable     :: rc(:),vc(:)
       real*8,allocatable     :: rp_samp(:,:),vp_samp(:,:)
       real*8,allocatable     :: rp(:,:),vp(:,:),fp(:,:)
@@ -38,7 +37,10 @@
       complex*16,allocatable :: redmat_ecR(:,:,:)
 
       integer,allocatable    :: nJump(:,:), nJumpFail(:,:) 
+      integer,allocatable    :: nFrust(:,:), nFrustR(:,:) 
       integer,allocatable    :: nIniStat(:)
+
+      real*8,allocatable     :: cmat(:,:)
 
       contains
 
@@ -61,7 +63,6 @@
       allocate(redmat_ec(nstates,nstates,0:nprint))
       allocate(diabat2(nstates,0:nprint))
       allocate(diabat1(nstates,0:nprint),diabat3(nstates,0:nprint))
-      allocate(Wb(np),c(np,nstates))
       allocate(rc(np),vc(np))
       allocate(rp_samp(np,nb),vp_samp(np,nb))
       allocate(rp(np,nb),vp(np,nb),fp(np,nb))
@@ -83,7 +84,10 @@
       allocate(redmat_ecR(nstates,nstates,0:nprint))
 
       allocate(nJump(nstates,nstates),nJumpFail(nstates,nstates)) 
+      allocate(nFrust(nstates,nstates),nFrustR(nstates,nstates)) 
       allocate(nIniStat(nstates))
+
+      allocate(cmat(nb,nb))
 
       diabat1=0.
       diabat2=cmplx(0.,0.)
@@ -99,11 +103,13 @@
       redmatR=0.
       redmat_ecR=cmplx(0.,0.)
 
-      Wb = 0.
-
       nJump = 0
       nJumpFail = 0
+      nFrust = 0
+      nFrustR = 0
       nIniStat = 0
+
+      cmat = 0.d0
 
       return 
 
@@ -125,7 +131,6 @@
       deallocate(redmat_ec)
       deallocate(diabat2)
       deallocate(diabat1,diabat3)
-      deallocate(Wb, c)
       deallocate(rc,vc)
       deallocate(rp_samp,vp_samp)
       deallocate(rp,vp,fp)
@@ -147,7 +152,10 @@
       deallocate(redmat_ecR)
 
       deallocate(nJump,nJumpFail)
+      deallocate(nFrust,nFrustR)
       deallocate(nIniStat)
+
+      deallocate(cmat)
 
       return 
 

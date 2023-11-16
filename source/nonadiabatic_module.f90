@@ -86,7 +86,7 @@
       END SUBROUTINE HOPPING
 
 
-      SUBROUTINE EKINRESCALE(istate,inext,vc,vp,rp,eva,dhel_rc,psi)
+      SUBROUTINE EKINRESCALE(istate,inext,vc,vp,rp,eva,dhel_rc,psi,ctime)
 !**********************************************************************
 !     SHARP PACK subroutine to scale velocity (KE) after successful
 !     hopping in between two adiabatic energy states
@@ -97,7 +97,7 @@
 !     Method Development and Materials Simulation Laboratory
 !**********************************************************************
       use global_module
-      use modelvar_module, only : nJump, nJumpFail
+      use modelvar_module, only : nJump, nJumpFail, nFrust, nFrustR
       use models_module
       use propagation_module 
       implicit none
@@ -115,11 +115,16 @@
       real*8                 :: fp1(np),fp2(np)
       real*8                 :: f1,f2
 
-      real*8, intent(in)  :: rp(np,nb)
-      real*8              :: eva_b(nstates,nb),psi_b(nstates,nstates,nb)
-      real*8              :: hel(nstates,nstates),dhel(nstates,nstates,np)
+      real*8, intent(in):: rp(np,nb)
+      real*8            :: eva_b(nstates,nb),psi_b(nstates,nstates,nb)
+      real*8            :: hel(nstates,nstates),dhel(nstates,nstates,np)
+
+      real*8            :: avetim
 
       integer     :: npscale
+      integer     :: ctime
+
+      avetim = 0.d0
 
       if(vckey == 1)then 
         ediff=eva(istate,2)-eva(inext,2)
@@ -139,7 +144,10 @@
       a_tot=0.d0
       b_tot=0.d0
 
-      if((model==12).or.(model==13))then
+      if((keymodel==12).or.(keymodel==13))then
+
+        avetim = 30.d0
+
         do ip=1,1   !np !!! VELOCITY SCALING JUST P-1 !!!  
           
           dcoup(ip) = d_ab(istate,inext) 
@@ -153,7 +161,8 @@
         do i=1,nstates
           do j=1,nstates
             do ip=1,np
-              dcoup(ip) = dcoup(ip)+psi(i,istate,2)*dhel_rc(i,j,ip)*psi(j,inext,2)/(eva(inext,2)-eva(istate,2))
+              dcoup(ip) = dcoup(ip)+psi(i,istate,2)*dhel_rc(i,j,ip)* &
+                          psi(j,inext,2)/(eva(inext,2)-eva(istate,2))
             enddo
           enddo
         enddo
@@ -165,13 +174,20 @@
 
       endif
     
-      WRITE(nrite_hopp,*)
-      WRITE(nrite_hopp,'(" Trying to hop from ",I3," to ",I3)') istate,inext
+      if(ldtl)then
+        WRITE(nrite_hopp,*)
+        WRITE(nrite_hopp,'(" Trying to hop from ",I3," to ",I3)') &
+                           istate,inext
+      endif
+
       det = b_tot*b_tot + 4.d0*a_tot*ediff
       
       IF (det>=0) THEN
-        WRITE(nrite_hopp,'(" Enough Kinetic energy to hop, accepted")')
-        nJump(istate,inext) = nJump(istate,inext) + 1
+        if(ldtl)WRITE(nrite_hopp,'(" Enough Kinetic energy to hop, &
+                                   accepted")')
+        if((ctime*dt/41340.d0) > avetim)then
+           nJump(istate,inext) = nJump(istate,inext) + 1
+        endif
 
          IF (b_tot<0) THEN
             gama=(b_tot+dsqrt(det))/(2.d0*a_tot)
@@ -182,16 +198,25 @@
 
       !! FRUNSTRATED HOPPING
       ELSEIF (det<0) THEN
+        if((ctime*dt/41340.d0)>avetim)then
         nfrust_hop = nfrust_hop + 1
+        nFrust(istate,inext) = nFrust(istate,inext) + 1
+        endif
 
         ! Never reverse velocity
         if(vrkey == 0)then
           gama = 0.d0
+          if((ctime*dt/41340.d0)>avetim)then
           nfrust_hop2 = 0
+          nFrustR(istate,inext) = nFrustR(istate,inext) + 0
+          endif
         ! Always reverse velocity based on Hammes-Tully1994
         elseif(vrkey == 1)then
           gama = b_tot/a_tot
+          if((ctime*dt/41340.d0)>avetim)then
           nfrust_hop2 = nfrust_hop2 + 1
+          nFrustR(istate,inext) = nFrustR(istate,inext) + 1
+          endif
 
         ! Truhlar scheme of velocity reversal, Chem. Phys. Lett. 369, 60 (2003)
         elseif(vrkey == 2)then
@@ -204,7 +229,10 @@
           !! Truhlar condtion as in J.Chem.Phys.147,214112(2017) 
           if((b_tot*f2) < 0.d0)then
             gama = b_tot/a_tot
+            if((ctime*dt/41340.d0)>avetim)then
             nfrust_hop2 = nfrust_hop2 + 1
+            nFrustR(istate,inext) = nFrustR(istate,inext) + 1
+            endif
           endif
         
         !! Jain & Subotnik condtion as 
@@ -220,19 +248,25 @@
           !! Truhlar condtion as in J.Chem.Phys.147,214112(2017) 
           if(((b_tot*f2) < 0.d0).and.((f1*f2) < 0.d0))then
             gama = b_tot/a_tot
+            if((ctime*dt/41340.d0)>avetim)then
             nfrust_hop2 = nfrust_hop2 + 1
+            nFrustR(istate,inext) = nFrustR(istate,inext) + 1
+            endif
           endif
 
         endif
 
-        WRITE(nrite_hopp,'(" Not enough kinetic energy, rejected")')
-        nJumpFail(istate,inext) = nJumpFail(istate,inext) + 1
+        if(ldtl)WRITE(nrite_hopp,'(" Not enough kinetic energy, &
+                                    rejected")')
+        if((ctime*dt/41340.d0)>avetim)then
+          nJumpFail(istate,inext) = nJumpFail(istate,inext) + 1
+        endif
         inext=istate
       ENDIF
 
 !     RESCALING VELOCITY ALONG DIRECTION OF dij TO CONSERVE ENERGY     
       !! velocity rescaling for P-1 only
-      if((model==12).or.(model==13))then
+      if((keymodel==12).or.(keymodel==13))then
         DO ip=1,1
           DO ibd=1,nb
             vp(ip,ibd)=vp(ip,ibd) - gama*dcoup(ip)/mp
@@ -248,12 +282,13 @@
 
       endif
 
-      WRITE(nrite_hopp,*)
+      if(ldtl)WRITE(nrite_hopp,*)
       
       END SUBROUTINE EKINRESCALE
 
       
-      SUBROUTINE pop_estimator(istate,itime,diabat1,diabat2,diabat3,adiabat1,adiabat2)
+      SUBROUTINE pop_estimator(istate,itime,diabat1,diabat2,diabat3, &
+                 adiabat1,adiabat2)
 !**********************************************************************
 !     SHARP PACK subroutine to calculate diabatic/adiabatic populations
 !
@@ -269,7 +304,8 @@
 
       integer                  :: i,j,k,l
       integer, intent(in)      :: istate,itime
-      real*8, intent(inout)    :: diabat1(NSTATES,0:nprint),diabat3(NSTATES,0:nprint)
+      real*8, intent(inout)    :: diabat1(NSTATES,0:nprint)
+      real*8, intent(inout)    :: diabat3(NSTATES,0:nprint)
       real*8, intent(inout)    :: adiabat1(NSTATES,0:nprint)
       complex*16, intent(inout):: diabat2(NSTATES,0:nprint)
       complex*16, intent(inout):: adiabat2(NSTATES,NSTATES,0:nprint)
@@ -316,7 +352,8 @@
          do l=1,NSTATES
             if (k.lt.l) then
                do i=1,NSTATES
-                  diabat3(i,itime)=diabat3(i,itime)+2*Real(psi(i,k,1)*adia(k)*conjg(adia(l))*psi(i,l,1))
+                  diabat3(i,itime)=diabat3(i,itime)+2*Real(psi(i,k,1)* &
+                                   adia(k)*conjg(adia(l))*psi(i,l,1))
                enddo
             endif
          enddo

@@ -39,12 +39,13 @@
       loop = .true.
       ldtl = .false.
       lkval = .false.
+      lfft = .false.
       
       np = 1
       dt = 1.0
-      dtq = 0.d0
+      dtq = 0.1d0
 
-      model = 0
+      keymodel = 1
       nstates = 0
       nsteps = 0
       nsample = 0
@@ -52,8 +53,8 @@
       ntrajR = 0
       nb = 1
       iskip = 100
-      vinit = 0
-      Rinit = 1
+      v0key = 0
+      R0key = 1
       P0 = 0
       R0 = 0
       omega = 0
@@ -72,6 +73,8 @@
 
       open(nread,file='param.in',status='old',IOSTAT=stat)
       if(stat .ne. 0) then
+         write(0,*)  
+         write(0,*) " ERROR!! "
          write(0,*) " 'param.in' file NOT FOUND! "
          write(0,*) " Please, provide necessary input file! "
          write(0,*)  
@@ -93,62 +96,74 @@
 !c     record is commented out
             cycle
 
-         elseif(findstring('nparticle',directive,idum))then
-!c     number of timesteps
+         elseif(findstring('npart',directive,idum))then
+!c     number of particle(s)
            np = intstr(directive,lenrec,idum)
 
-         elseif(findstring('nsteps',directive,idum))then
-!c     number of timesteps
+         elseif(findstring('nstep',directive,idum))then
+!c     number of simulation steps
            nsteps = intstr(directive,lenrec,idum)
 
-         elseif(findstring('nsample',directive,idum))then
-!c     number of timesteps
+         elseif(findstring('nsamp',directive,idum))then
+!c     number of rpmd sample
            nsample = intstr(directive,lenrec,idum)
 
          elseif(findstring('ntraj',directive,idum))then
-!c     number of timesteps
+!c     number of of trajectories
            ntraj = intstr(directive,lenrec,idum)
 
          elseif(findstring('model',directive,idum))then
 !c     selection of model
            if(findstring('tully1',directive,idum))then
-              model = intstr(directive,lenrec,idum)
-              modelname = 'TULLY MODEL 1'
+             keymodel = 1
+             modelname = 'TULLY MODEL 1'
            elseif(findstring('tully2',directive,idum))then
-              model = intstr(directive,lenrec,idum)
-              modelname = 'TULLY MODEL 2'
+             keymodel = 2
+             modelname = 'TULLY MODEL 2'
            elseif(findstring('tully3',directive,idum))then
-              model = intstr(directive,lenrec,idum)
-              modelname = 'TULLY MODEL 3'
+             keymodel = 3
+             modelname = 'TULLY MODEL 3'
            elseif(findstring('morse1',directive,idum))then
-              model = intstr(directive,lenrec,idum)+3
-              modelname = 'MORSE MODEL 1'
+             keymodel = 4
+             modelname = 'MORSE MODEL 1'
            elseif(findstring('morse2',directive,idum))then
-              model = intstr(directive,lenrec,idum)+3
-              modelname = 'MORSE MODEL 2'
+             keymodel = 5
+             modelname = 'MORSE MODEL 2'
            elseif(findstring('morse3',directive,idum))then
-              model = intstr(directive,lenrec,idum)+3
-              modelname = 'MORSE MODEL 3'
+             keymodel = 6
+             modelname = 'MORSE MODEL 3'
            elseif(findstring('db2lchain',directive,idum))then
-              model = 12
-              modelname = '2-State with Linear Chain MODEL'
+             keymodel = 12
+             modelname = '2-State with Linear Chain MODEL'
            elseif(findstring('db3lchain',directive,idum))then
-              model = 13
-              modelname = '3-State with Linear Chain MODEL'
+             keymodel = 13
+             modelname = '3-State with Linear Chain MODEL'
            endif
 
-         elseif(findstring('nstates',directive,idum))then
+         elseif(findstring('nmode',directive,idum))then
+!c     fast-fourier transform for nomral mode
+           if(findstring('fft',directive,idum))then
+            lfft = .true.
+!c     matrix transform for nomral mode
+           elseif(findstring('mat',directive,idum))then
+            lfft = .false.
+           endif
+
+         elseif(findstring('nstate',directive,idum))then
 !c     number of nstates
            nstates = intstr(directive,lenrec,idum)
 
-         elseif(findstring('method',directive,idum))then
-!c     method and number of nbeads
-           if(findstring('fssh',directive,idum))then
-              nb = 1
-              method = 'FSSH'
-           elseif(findstring('rpsh',directive,idum))then
-              nb=intstr(directive,lenrec,idum)
-              method='RPSH'
+         elseif(findstring('nbead',directive,idum))then
+!c     number of nbeads
+           nb = intstr(directive,lenrec,idum)
+           if(nb .eq. 1)then
+             method = 'FSSH'
+           elseif(nb .gt. 1)then
+             method='RPSH'
+           else
+!c     default
+             nb = 1
+             method = 'FSSH'
            endif
 
          elseif(findstring('ncpu',directive,idum))then
@@ -158,10 +173,11 @@
          elseif(findstring('timestep',directive,idum))then
 !c     classical timestep (dt_c)
            dt = dblstr(directive,lenrec,idum)
+           dtq=dt/10.d0
 
-         elseif(findstring('etimestep',directive,idum))then
+!         elseif(findstring('electime',directive,idum))then
 !c     electronic timestep (dtq)
-           dtq = dblstr(directive,lenrec,idum)
+!           dtq = dblstr(directive,lenrec,idum)
 
          elseif(findstring('temp',directive,idum))then
 !c     number of initial momentum
@@ -174,27 +190,27 @@
          elseif(findstring('beadpos',directive,idum))then
 !c     position initialization for nbeads
            if(findstring('same',directive,idum))then
-             Rinit = 0
-           elseif(findstring('gaussian',directive,idum))then
-             Rinit = 1
+             R0key = 0
+           elseif(findstring('gauss',directive,idum))then
+             R0key = 1
            elseif(findstring('wigner',directive,idum))then
-             Rinit = 2
+             R0key = 2
            else
              write(0,*) 'Default gaussian bead position initilazation!!'
-             Rinit = 1
+             R0key = 1
            endif
 
          elseif(findstring('vinitial',directive,idum))then
 !c     number of initial momentum
            if(findstring('fixed',directive,idum))then
-             Vinit = 0
-           elseif(findstring('gaussian',directive,idum))then
-             Vinit = 1
+             v0key = 0
+           elseif(findstring('gauss',directive,idum))then
+             v0key = 1
            elseif(findstring('wigner',directive,idum))then
-             Vinit = 2
+             v0key = 2
            else
              write(0,*)'Invalid momentum initilazation,setting defacult'
-             Vinit = 1
+             v0key = 1
              !!stop 
            endif
 
@@ -213,10 +229,10 @@
            endif
 
          elseif(findstring('vrescale',directive,idum))then
-!c     velocity  scheme for frustrated hop
-           if(findstring('ca',directive,idum))then
+!c     velocity  rescale to conserve energy
+           if(findstring('cent',directive,idum))then
              vckey = 1
-           elseif(findstring('ba',directive,idum))then
+           elseif(findstring('bead',directive,idum))then
              vckey = 2
            endif
 

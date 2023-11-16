@@ -15,7 +15,7 @@
       real*8              :: dt    
       real*8              :: dtq
 
-      integer             :: model
+      integer             :: keymodel
       integer             :: nstates
       integer             :: nsteps
       integer             :: nsample
@@ -23,8 +23,8 @@
       integer             :: ntrajR
       integer             :: nb
       integer             :: iskip 
-      integer             :: vinit
-      integer             :: Rinit
+      integer             :: v0key
+      integer             :: R0key
       real*8              :: P0
       real*8              :: R0 
       real*8              :: omega
@@ -32,6 +32,7 @@
       character(len=8)    :: method
 
       logical             :: ldtl
+      logical             :: lfft
   
       integer,parameter   :: nrite_hopp=110
       integer,parameter   :: nrite_dcoup=120
@@ -54,7 +55,7 @@
       real*8,parameter    :: pi=3.14159265d0  !DACOS(-1.d0)
       real*8              :: beta
       real*8              :: mp 
-      real*8              :: KT
+      real*8              :: kT
 
 !!! LinearChainModel !!!
       integer :: dlevel

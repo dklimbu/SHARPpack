@@ -1,6 +1,6 @@
 #!/bin/bash -I
 
-root2bin=~/SHARPpackv1/bin
+root2bin=~/Softwares/SHARPpack/bin
 exe=${root2bin}/sharp.x
 
 echo JOB STARTED AT:

@@ -9,7 +9,6 @@
 !     New Jersey Institute of Technology
 !**********************************************************************
       use global_module
-      use modelvar_module, only : Wb, c
 
       implicit none
 
@@ -33,10 +32,10 @@
 !      H  = | V21   V22   ... |
 !           | ...   ...   ... |
 !  
-!     model = 1-3 (Tully Model 1,2,3)
-!     model = 4-6 (Morse Model 1,2,3)     
-!     model = 12 (2-state coupled with N-linear chain)     
-!     model = 13 (2-state coupled with N-linear chain)     
+!     keymodel = 1-3 (Tully Model 1,2,3)
+!     keymodel = 4-6 (Morse Model 1,2,3)     
+!     keymodel = 12 (2-state coupled with N-linear chain)     
+!     keymodel = 13 (2-state coupled with N-linear chain)     
 !     
 !**********************************************************************
 
@@ -56,8 +55,8 @@
       hel = 0.d0
       dhel = 0.d0
 
-! if(model == 1) <= Tully Model I
-      if(model == 1)then
+! if(keymodel == 1) <= Tully Model I
+      if(keymodel == 1)then
          A = 0.01d0
          B = 1.6d0
          Ct = 0.005d0
@@ -70,16 +69,16 @@
              dhel(1,1,1) = A*B*exp(B*rxyz(1))
          endif
 
-         hel(2,2) = -1.*hel(1,1)
+         hel(2,2) = -1.d0*hel(1,1)
          hel(1,2) = Ct*exp(-D*rxyz(1)*rxyz(1))
          hel(2,1) = hel(1,2)
 
-         dhel(2,2,1) = -1.*dhel(1,1,1)
+         dhel(2,2,1) = -1.d0*dhel(1,1,1)
          dhel(1,2,1) = hel(1,2)*(-2.*D*rxyz(1))
          dhel(2,1,1) = dhel(1,2,1)
 
-! if(model == 2) <= Tully Model II
-      elseif(model == 2)then
+! if(keymodel == 2) <= Tully Model II
+      elseif(keymodel == 2)then
          A = 0.10d0
          B = 0.28d0
          Ct = 0.015d0
@@ -94,8 +93,8 @@
          dhel(1,2,1) = hel(1,2) * (-2.*D*rxyz(1))
          dhel(2,1,1) = dhel(1,2,1)
 
-! if(model == 3) <= Tully Model III
-      elseif(model == 3)then
+! if(keymodel == 3) <= Tully Model III
+      elseif(keymodel == 3)then
          A = 0.0006d0
          B = 0.10d0
          Ct = 0.90d0
@@ -116,8 +115,8 @@
          hel(2,1) = hel(1,2)
          dhel(2,1,1) = dhel(1,2,1)
 
-! if(model == 4) <= Morse Model I
-      elseif(model == 4)then
+! if(keymodel == 4) <= Morse Model I
+      elseif(keymodel == 4)then
          Dm = (/0.003d0, 0.004d0, 0.003d0/)
          bm = (/0.650d0, 0.600d0, 0.650d0/)
          Re = (/5.000d0, 4.000d0, 6.000d0/)
@@ -129,9 +128,12 @@
 
          !Diagonal elements
          do i = 1,3
-            hel(i,i) = Dm(i) * (1.0d0 - dexp(-bm(i)*(rxyz(1)-Re(i))))**2 +cm(i)
+            hel(i,i) = Dm(i)*(1.0d0-dexp(-bm(i)*(rxyz(1)-Re(i))))**2 &
+                       +cm(i)
 
-            dhel(i,i,1) = 2.d0*Dm(i)*bm(i)*(1.0d0-dexp(-bm(i)*(rxyz(1)-Re(i))))*exp(-bm(i)*(rxyz(1)-Re(i)))
+            dhel(i,i,1) =2.d0*Dm(i)*bm(i)* &
+                         (1.0d0-dexp(-bm(i)*(rxyz(1)-Re(i))))* &
+                         exp(-bm(i)*(rxyz(1)-Re(i)))
          enddo
 
          !Off-Diagonal elements
@@ -147,8 +149,8 @@
          dhel(2,1,1) = dhel(1,2,1)
          dhel(3,2,1) = dhel(2,3,1)
 
-! if(model == 5) <=  Morse Model II      
-      elseif(model == 5)then
+! if(keymodel == 5) <=  Morse Model II      
+      elseif(keymodel == 5)then
          Dm = (/0.020d0, 0.010d0, 0.003d0/)
          bm = (/0.650d0, 0.400d0, 0.650d0/)
          Re = (/4.500d0, 4.000d0, 4.400d0/)
@@ -160,9 +162,11 @@
 
         !Diagonal elements
          do i = 1,3
-            hel(i,i) = Dm(i) * (1.0d0 - dexp(-bm(i)*(rxyz(1)-Re(i))))**2 +cm(i)
+            hel(i,i) = Dm(i)*(1.0d0-dexp(-bm(i)*(rxyz(1)-Re(i))))**2 &
+                       +cm(i)
 
-            dhel(i,i,1) = 2*Dm(i)*bm(i)*(1.0d0-dexp(-bm(i)*(rxyz(1)-Re(i))))*exp(-bm(i)*(rxyz(1)-Re(i)))
+            dhel(i,i,1) = 2*Dm(i)*bm(i)*(1.0d0-dexp(-bm(i)*(rxyz(1)- &
+                          Re(i))))*exp(-bm(i)*(rxyz(1)-Re(i)))
          enddo
 
          !Off-Diagonal elements
@@ -178,8 +182,8 @@
          dhel(2,1,1) = dhel(1,2,1)
          dhel(3,1,1) = dhel(1,3,1)
 
-! if(model == 6) <=  Morse Model III      
-      elseif(model == 6)then
+! if(keymodel == 6) <=  Morse Model III      
+      elseif(keymodel == 6)then
          Dm = (/0.020d0, 0.020d0, 0.003d0/)
          bm = (/0.400d0, 0.650d0, 0.650d0/)
          Re = (/4.000d0, 4.500d0, 6.000d0/)
@@ -191,9 +195,11 @@
 
          !Diagonal elements
          do i = 1,3
-            hel(i,i) = Dm(i) * (1.0d0 - dexp(-bm(i)*(rxyz(1)-Re(i))))**2 +cm(i)
+            hel(i,i) = Dm(i)*(1.0d0-dexp(-bm(i)*(rxyz(1)-Re(i))))**2 &
+                       +cm(i)
 
-            dhel(i,i,1) = 2*Dm(i)*bm(i)*(1.0d0-dexp(-bm(i)*(rxyz(1)-Re(i))))*exp(-bm(i)*(rxyz(1)-Re(i)))
+            dhel(i,i,1) = 2*Dm(i)*bm(i)*(1.0d0-dexp(-bm(i)*(rxyz(1)- &
+                          Re(i))))*exp(-bm(i)*(rxyz(1)-Re(i)))
          enddo
 
          !Off-Diagonal elements
@@ -209,14 +215,14 @@
          dhel(2,1,1) = dhel(1,2,1)
          dhel(3,1,1) = dhel(1,3,1)
 
-! if(model == 12) <= detailed balance  2-State with N-Chain Model      
-      elseif(model == 12)then
+! if(keymodel == 12) <= detailed balance  2-State with N-Chain Model      
+      elseif(keymodel == 12)then
 
          hel(1,1) = v11
          hel(2,2) = v22
 
-! if(model == 13) <= detailed balance 3-State SuperExchange with N-Chain Model      
-      elseif(model == 13)then
+! if(keymodel == 13) <= detailed balance 3-State SuperExchange with N-Chain Model      
+      elseif(keymodel == 13)then
 
          hel(1,1) = v11 
          hel(2,2) = v22 

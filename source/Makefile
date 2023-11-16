@@ -1,6 +1,6 @@
 FC=ifort
 
-FLAGS = -traceback -O3 -lfftw3 -llapack -lblas #-fbounds-check -DDEBUG -pg         
+FLAGS = -O3 -lfftw3 -llapack -lblas #-fbounds-check -DDEBUG -pg         
 
 SRC = global_module.f90 \
       modelvar_module.f90 \
@@ -12,7 +12,7 @@ SRC = global_module.f90 \
       print_module.f90 \
       propagation_module.f90 \
       nonadiabatic_module.f90 \
-      runTraj_module.f90 
+      runtraj_module.f90 
 
 MAIN =  rpmdsh.f90
 

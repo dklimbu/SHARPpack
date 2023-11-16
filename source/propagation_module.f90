@@ -47,15 +47,18 @@
       end do
 
       do i=1,nstates
-        k2(i) = (adia(i)+k1(i)*0.5d0*dtq)*eva_half(i)/eye-sum(vdotd_half(i,:)*(adia(:)+k1(:)*0.5*dtq))
+        k2(i) = (adia(i)+k1(i)*0.5d0*dtq)*eva_half(i)/eye- &
+                sum(vdotd_half(i,:)*(adia(:)+k1(:)*0.5*dtq))
       end do
 
       do i=1,nstates
-        k3(i) = (adia(i)+k2(i)*0.5d0*dtq)*eva_half(i)/eye-sum(vdotd_half(i,:)*(adia(:)+k2(:)*0.5*dtq))
+        k3(i) = (adia(i)+k2(i)*0.5d0*dtq)*eva_half(i)/eye- &
+                sum(vdotd_half(i,:)*(adia(:)+k2(:)*0.5*dtq))
       end do
 
       do i=1,nstates
-        k4(i) = (adia(i)+k3(i)*dtq)*eva(i,2)/eye-sum(vdotd_new(i,:)*(adia(:)+k3(:)*dtq))
+        k4(i) = (adia(i)+k3(i)*dtq)*eva(i,2)/eye- &
+                sum(vdotd_new(i,:)*(adia(:)+k3(:)*dtq))
       end do
 
       adia = adia+dtq/6.d0*(k1+2.d0*k2+2.d0*k3+k4)
@@ -98,14 +101,16 @@
       dt2 = 0.5d0*dt
 
       !!Langevin dynamic for just N-th particle in LinearChain Model
-      if((model==12).or.(model==13))then
+      if((keymodel==12).or.(keymodel==13))then
 
-        do ibd = 1, nb
-           fR(ibd) = sigmaLC(ibd) * gaussn()     
-        enddo
+        call Langevin(vp)
+
+!        do ibd = 1, nb
+!           fR(ibd) = sigmaLC(ibd) * gaussn()     
+!        enddo
 
         aa = fp/mp
-        aa(np,:) = (fp(np,:) - gamaLC(1:nb)*mp*vp(np,:) + fR)/mp
+!        aa(np,:) = (fp(np,:) - gamaLC(1:nb)*mp*vp(np,:) + fR)/mp
 
       else
 
@@ -124,7 +129,7 @@
       vp=p/mp
 
       do ibd=1,nb
-        if((model==12).or.(model==13))then
+        if((keymodel==12).or.(keymodel==13))then
         ! LinearChainModel classical force calculation
           CALL FORCE_Lchain(rp(1:np,ibd), fp(1:np,ibd))
 
@@ -138,15 +143,20 @@
 
 ! second half of RP propogation
 
-      if((model==12).or.(model==13))then
+      if((keymodel==12).or.(keymodel==13))then
         aa = fp/mp
-        aa(np,:) = (fp(np,:) - gamaLC(1:nb)*mp*vp(np,:) + fR)/mp
+!        aa(np,:) = (fp(np,:) - gamaLC(1:nb)*mp*vp(np,:) + fR)/mp
+
+        vp=vp+dt2*aa    !!fp/mp
+
+        call Langevin(vp)
 
       else
         aa = fp/mp
+        vp=vp+dt2*aa    !!fp/mp
       endif
 
-      vp=vp+dt2*aa    !!fp/mp
+!      vp=vp+dt2*aa    !!fp/mp
 
       return
       END SUBROUTINE ADVANCE_MD
@@ -224,7 +234,8 @@
               rr = sqrt(rij*rij)
             endif
 
-            ff(i) = ff(i)-Vo*(2.d0*a*a*rr-3.d0*a*a*a*rr*rr+2.32d0*a*a*a*a*rr*rr*rr)*rij/rr
+            ff(i) = ff(i)-Vo*(2.d0*a*a*rr-3.d0*a*a*a*rr*rr+ &
+                    2.32d0*a*a*a*a*rr*rr*rr)*rij/rr
           endif
         enddo
 
@@ -232,5 +243,59 @@
 
       END SUBROUTINE FORCE_Lchain
 
+
+      subroutine Langevin(vp)
+!**********************************************************************
+!     SHARP PACK subroutine to implement Langevin thermostat as 
+!     implemented in Ceriotti2010, to LinearChain model in normal mode
+!     
+!     authors    - D.K. Limbu & F.A. Shakib     
+!     copyright  - D.K. Limbu & F.A. Shakib
+!
+!     Method Development and Materials Simulation Laboratory
+!**********************************************************************
+      use global_module, only : mp,np,nb,dt,beta,dt,gamaLC ! ,pi,tau0
+
+      implicit none
+
+      integer :: ip, ib
+
+      real*8,intent(inout)  :: vp(np,nb)
+!      real*8  :: gama(nb), wk(nb)
+      real*8   :: C1(nb), C2(nb), ranf(nb)
+      real*8  :: dt2 !betan, ph, dt2,KE
+!      real*8  :: gaussn
+
+!      ph = pi/nb
+!      betan = beta/nb
+      dt2 = dt/2.d0
+!      tau0 = 0.7d0
+
+      do ib = 1, nb
+!        wk(ib) = 2.d0/betan * sin((ib-1)*ph)
+!        gama(ib) = 2.d0 * wk(ib)
+!        if(ib==1) gama(ib) = 1.0/tau0
+        C1(ib) = exp(-dt2*gamaLC(ib))
+        C2(ib) = dsqrt(1.d0 - C1(ib)*C1(ib))
+!        write(111,*) ib, C1(ib),C2(ib)
+      enddo
+
+      vp = vp*mp
+!  Langevin start here
+      call realft(vp,np,nb,+1)
+
+      do ip = np, np
+         do ib = 1, nb
+            ranf(ib) = gaussn()
+         enddo
+
+         vp(ip,:) = C1*vp(ip,:) + dsqrt(mp*nb/beta)*C2 * ranf
+      enddo
+
+      call realft(vp,np,nb,-1)
+
+      vp = vp/mp
+
+      end subroutine Langevin
 !**********************************************************************
       end module propagation_module

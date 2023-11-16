@@ -3,41 +3,6 @@
 
       contains
 
-      subroutine grhel(rp,fp)
-!**********************************************************************
-!     SHARP PACK subroutine to calculate force based on ground state 
-!     
-!     authors    - D.K. Limbu & F.A. Shakib     
-!     copyright  - D.K. Limbu & F.A. Shakib
-!
-!     Method Development and Materials Simulation Laboratory
-!**********************************************************************
-      use global_module
-      use modelvar_module, only: Wb,c
-      implicit none
-
-      integer             :: ip,ibd
-      real*8              :: rp(np,nb)
-      real*8, intent(out) :: fp(np,nb)
-      real*8              :: hel(nstates,nstates)
-      real*8              :: dhel(nstates,nstates,np)
-
-      do ip=1,np
-         do ibd=1,nb
-            fp(ip,ibd) = -mp*(rp(ip,ibd)-R0)*Wb(ip)**2 !- c(ip,1) 
-         enddo
-      enddo
-   
-      !do ibd=1,nb
-      !   CALL gethel(rp(:,ibd),hel(:,:),dhel(:,:,:))
-      !   fp(1:np,ibd) = -dhel(1,1,:)
-      !enddo
-
-      return
-
-      end subroutine grhel
-
-
       subroutine freerp (nf,p,q)
 !**********************************************************************
 !     SHARP PACK routine for 
@@ -144,6 +109,9 @@
 !     -----------------------------------------------------------------
 !     
 !**********************************************************************
+      use modelvar_module, only : cmat
+      use global_module,   only : lfft
+
       implicit none
       integer,parameter    :: nmax=1024
 
@@ -154,83 +122,109 @@
       real*8               :: scale
       real*8               :: copy(nmax)
       real*8,intent(inout) :: data(m,n)
-      
+
+      data np /0/
       save copy,scale,plana,planb,np
 !
-      if (n .ne. np) then
-         if (n .gt. nmax) stop 'realft 1'
-         scale = dsqrt(1.d0/n)
-         call dfftw_plan_r2r_1d(plana,n,copy,copy,0,64)
-         call dfftw_plan_r2r_1d(planb,n,copy,copy,1,64)
-         np = n
+      if(lfft)then
+        if (n .ne. np) then
+          if (n .gt. nmax) stop 'realft 1'
+          scale = dsqrt(1.d0/n)
+          call dfftw_plan_r2r_1d(plana,n,copy,copy,0,64)
+          call dfftw_plan_r2r_1d(planb,n,copy,copy,1,64)
+          np = n
+        endif
       endif
 
       do k = 1,m
-         do j = 1,n
-            copy(j) = data(k,j)
-         enddo
+
+         if(lfft)then
+            do j = 1,n
+               copy(j) = data(k,j)
+            enddo
+         else
+            copy(1:n) = 0.d0
+         endif
 
          if (mode .eq. 1) then
-            call dfftw_execute(plana)
+            if(lfft)then
+               call dfftw_execute(plana)
+            else
+               do j=1,n
+                  copy(j)=dot_product(cmat(1:n,j),data(k,1:n))    
+               enddo
+            endif
+
          else if (mode .eq. -1) then
-            call dfftw_execute(planb)
+            if(lfft)then
+               call dfftw_execute(planb)
+            else
+               do j=1,n
+                  copy(j)=dot_product(cmat(j,1:n),data(k,1:n))    
+               enddo
+            endif
+
          else
             stop 'realft 2'
          endif
 
-         do j = 1,n
-            data(k,j) = scale*copy(j)
-         enddo
+         if(lfft)then
+            do j = 1,n
+               data(k,j) = scale*copy(j)
+            enddo
+         else
+            do j = 1,n
+               data(k,j) = copy(j)
+            enddo
+         endif
+
       enddo
 
       return
-      end
+      end subroutine realft
 
 
-      subroutine get_energy(itraj,istep)
+      subroutine cmat_init()
 !**********************************************************************
-!     SHARP PACK routine to calculate energy 
+!     SHARP PACK routine to initialize transform matrix 
 !     
 !     authors    - D.K. Limbu & F.A. Shakib     
 !     copyright  - D.K. Limbu & F.A. Shakib
 !
 !     Method Development and Materials Simulation Laboratory
 !**********************************************************************
-      use global_module, only : mp,np,nb
-      use modelvar_module, only : rp,vp,Wb,rc,vc
+      use global_module, only : pi,nb
+      use modelvar_module, only : cmat
 
       implicit none
+      
+      integer  :: j,k
 
-      real*8            :: Ek, Ekc, Ering, Eringc
+      do j=1,nb
 
-      integer  :: i, j, itraj,istep
+        cmat(j,1) = 1.d0/sqrt(real(nb))
+      
+        do k=1,nb/2
 
-      Ek = 0.0d0
-      Ering = 0.0d0
-      Ekc = 0.0d0
-      Eringc = 0.0d0
+          cmat(j,k+1) = sqrt(2.d0/nb)*cos(2.d0*pi*j*k/nb)
 
-!      Ek = 0.5 * mp * sum(vp*vp)
-      Ekc = 0.5 * mp * sum(vc*vc)
-
-      do i = 1, np
-        do j = 1, nb
-          Ek = Ek + 0.5 * mp * vp(i,j)*vp(i,j)
         enddo
+
+        do k=nb/2+1,nb-1
+
+          cmat(j,k+1) = sqrt(2.d0/nb)*sin(2.d0*pi*j*k/nb)
+
+        enddo
+
+        if(mod(nb,2).eq.0) then
+                
+          cmat(j,nb/2+1)=1.d0/sqrt(real(nb))*(-1.d0)**j
+
+        endif
+
       enddo
 
-
-      do i = 1, np
-        Ering = Ering + 0.5d0 * mp * Wb(i)**2 * (rp(i,1))**2
-        Eringc = Eringc + 0.5d0 * mp * Wb(i)**2 * rc(i)**2
-        do j = 2, np
-          Ering = Ering + 0.5d0 * mp * Wb(i)**2 * (rp(i,j))**2
-        enddo
-      enddo
-
-      write(100,'(2I8,30(e15.6E3))') itraj, istep, rc,vc, Ek, Ering, Ekc,Eringc,rp,vp
-
-      end subroutine
+      end subroutine cmat_init
 
 !**********************************************************************
       end module rpmd_module

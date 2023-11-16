@@ -16,7 +16,7 @@
 
 jobId=1
 
-root2bin=~/SHARPpackv1/bin
+root2bin=~/Softwares/SHARPpack/bin
 exe=${root2bin}/sharp.x
 
 #============================================================
@@ -82,7 +82,7 @@ paralleldir(){
 #============================================================
 ## RUN SERIAL JOB ##
 #============================================================
-if [ $ncpu == 1 ];then
+if [ $ncpu -eq 1 ];then
 
   ${exe} &
 
@@ -91,7 +91,7 @@ if [ $ncpu == 1 ];then
 #============================================================
 ## RUN PARALLEL JOB(S) ##
 #============================================================
-elif [ $ncpu -gt 1 ] && [ $jobId == 1 ] ;then
+elif [ $ncpu -gt 1 ] && [ $jobId -eq 1 ] ;then
   #create parallel jobs
   paralleldir
 
@@ -100,7 +100,7 @@ elif [ $ncpu -gt 1 ] && [ $jobId == 1 ] ;then
 #============================================================
 ## CALCULATE AVERAGE FROM PARALLEL JOB(S) ##
 #============================================================
-elif [ $ncpu -gt 1 ] && [ $jobId == 2 ] ;then
+elif [ $ncpu -gt 1 ] && [ $jobId -eq 2 ] ;then
   if [ $ncpu -lt 10 ];then
     DIR=${root_dir}1
     iformat=1

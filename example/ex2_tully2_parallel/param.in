@@ -1,38 +1,34 @@
 #SHARP Pack INPUT PARAMETERS
-#Models(Tully1/Tully2/Tully3/Morse1/Morse2/Morse3/db2LChain/db3LChain)
-model 	tully2 
+model 	tully2
 
-#method(FSSH/RPSH, nb)
-method  rpsh 4
-
-#Number of Particle (np)
+#Number of Particle(s)
 nParticle   1
 
-#Number of time steps
+#nbeads (nb)
+nbeads  4
+
+#normal mode transfrom(fft/matrix)
+nmode  fft
+
+#Simulation time steps
 nsteps 	3000 
 
 #Number of Trajectories
 ntraj	10000
 
 #Number of Parallel Jobs
-ncpu	10
+ncpu	8
 
-#Classical of time step
+#Simulation of time step
 timeStep 	1.0
 
 #Initial Momentum (k)
 Kinitial 	30.0
 
-#User Define K value(Yes/No)
-usrkval 	'No'
-
-#Accumulate various k value(Yes/No)
-acckval 	'No'
-
-#bead initialazation scheme ('same','gaussian',wigner)
+#bead initialazation scheme ('same','gaussian','wigner')
 BeadPos		'gaussian'
 
-#initialazation scheme (fixed, Wigner,Gaussian)
+#initialazation scheme ('fixed', 'wigner','gaussian')
 VInitial	'fixed'
 
 #velocity reversal scheme for frustrated hop('Never','Always','delV1','delV2')
@@ -41,7 +37,7 @@ VReverse	'never'
 #print run-time details
 rundtail	'Yes'
 
-#Skipping while printing history(default: 100)
+#print step(s)(default: 100)
 iprint		10
 
 #End of Input File
