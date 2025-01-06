@@ -18,5 +18,5 @@ Welcome to **SHARP Pack** documentation,
    :caption: Contents:
 
 .. note::
-   This website in under active development...
+   This website is in under active development...
 
