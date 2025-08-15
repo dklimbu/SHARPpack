@@ -1,0 +1,209 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ring Polymer Surface Hopping (RPSH) Algorithm &mdash; SHARP Pack 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="shortcut icon" href="_static/rpsh.png"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=60dbed4a"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Diagonal Born–Oppenheimer Correction (DBOC)" href="method-dboc.html" />
+    <link rel="prev" title="Keywords" href="keywords.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SHARP Pack
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keywords.html">Keywords</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Method:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Ring Polymer Surface Hopping (RPSH) Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="method-dboc.html">Diagonal Born–Oppenheimer Correction (DBOC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="method-decoh.html">Decoherence</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Bibliography</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SHARP Pack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Ring Polymer Surface Hopping (RPSH) Algorithm</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ring-polymer-surface-hopping-rpsh-algorithm">
+<h1>Ring Polymer Surface Hopping (RPSH) Algorithm<a class="headerlink" href="#ring-polymer-surface-hopping-rpsh-algorithm" title="Link to this heading"></a></h1>
+<p>The RPSH method combines the nuclear path-integral representation of nuclei <span id="id1">[<a class="reference internal" href="reference.html#id101" title="Ian R. Craig and David E. Manolopoulos. Quantum Statistics and Classical Mechanics: Real Time Correlation Functions from Ring Polymer Molecular Dynamics. J. Chem. Phys., 121:3368–3373, 2004. doi:10.1063/1.1777575.">6</a>]</span> with Tully’s fewest-switches surface hopping <span id="id2">[<a class="reference internal" href="reference.html#id64" title="John C. Tully. Molecular dynamics with electronic transitions. J. Chem. Phys., 93(2):1061-1071, 1990. URL: https://doi.org/10.1063/1.459170, doi:10.1063/1.459170.">7</a>]</span> scheme.</p>
+<table class="docutils align-center">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><figure class="align-center">
+<a class="reference internal image-reference" href="_images/ringpolymer.png"><img alt="Path integral formalism" src="_images/ringpolymer.png" style="width: 95%;" />
+</a>
+</figure>
+</td>
+<td><figure class="align-center">
+<a class="reference internal image-reference" href="_images/rpsh2.png"><img alt="Ring polymer surface hopping" src="_images/rpsh2.png" style="width: 95%;" />
+</a>
+</figure>
+</td>
+</tr>
+</tbody>
+</table>
+<p>For a system of <span class="math notranslate nohighlight">\(N\)</span> particles in the electronic ground state, the general Hamiltonian is:</p>
+<div class="math notranslate nohighlight" id="equation-qham">
+<span class="eqno">(1)<a class="headerlink" href="#equation-qham" title="Link to this equation"></a></span>\[\hat{H} = \sum_{I=1}^{N} \frac{\hat{\mathbf{P}}_I^2}{2M_I} + \hat{V}(\mathbf{R}),\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{R}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> are nuclear position and momentum vectors,</p></li>
+<li><p><span class="math notranslate nohighlight">\(M_I\)</span> is the mass of the <span class="math notranslate nohighlight">\(I\)</span>-th nuclear degree of freedom (DOF),</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{V}(\mathbf{R})\)</span> is the potential energy surface.</p></li>
+</ul>
+<p>The extended Hamiltonian <span class="math notranslate nohighlight">\(H_n\)</span> for a ring polymer of <strong>n</strong> beads with positions <span class="math notranslate nohighlight">\(\{\mathbf{R}_1, \dots, \mathbf{R}_n\}\)</span> and momenta <span class="math notranslate nohighlight">\(\{\mathbf{P}_1, \dots, \mathbf{P}_n\}\)</span> is:</p>
+<div class="math notranslate nohighlight" id="equation-piham">
+<span class="eqno">(2)<a class="headerlink" href="#equation-piham" title="Link to this equation"></a></span>\[\begin{split}\begin{split}
+H_n(\mathbf{R},\mathbf{P}) = &amp;\sum_{I=1}^N \sum_{k=1}^{n}
+\left[ \frac{P^2_{I,k}}{2M_{I,k}} +
+\frac{1}{2} M_{I,k} \omega_n^2 \left( R_{I,k} - R_{I,k-1} \right)^2 \right] \\
+&amp;+ \sum_{k=1}^{n} V\left( R_{1,k}, \dots, R_{N,k} \right),
+\end{split}\end{split}\]</div>
+<p>The surface hopping approach can use the extended Hamiltonian (Eq. <a class="reference internal" href="#equation-piham">(2)</a>) to propagate the entire ring polymer on a single adiabatic surface <span class="math notranslate nohighlight">\(|\alpha; \mathbf{R} \rangle\)</span>, with non-adiabatic transitions between surfaces determined by the fewest-switches ansatz.
+The Hamiltonian is modified by introducing state-dependent potentials:</p>
+<div class="math notranslate nohighlight">
+\[V_{\alpha}(\mathbf{R}) = \langle \alpha; \mathbf{R} | \hat{V} | \alpha; \mathbf{R} \rangle,\]</div>
+<p>leading to the <strong>Ring Polymer Surface Hopping (RPSH)</strong> algorithm. This requires numerical integration of the time-dependent Schrödinger equation (TDSE) along classical trajectories.</p>
+<p>Two approximations for TDSE propagation are used in RPSH <span id="id3">[<a class="reference internal" href="reference.html#id91" title="Philip Shushkov, Richard Li, and John C. Tully. Ring polymer molecular dynamics with surface hopping. J. Chem. Phys., 137(22):22A549, 2012. doi:10.1063/1.4766449.">8</a>]</span>:</p>
+<ol class="arabic">
+<li><p><strong>Bead Approximation (RPSH-BA)</strong>
+The TDSE is averaged over beads:</p>
+<div class="math notranslate nohighlight">
+\[i\hbar \dot{c}_{\alpha}(t) =
+\frac{1}{n}\sum_{k=1}^n V_{\alpha}(\mathbf{R}_k) c_{\alpha}(t)
+- i\hbar \sum_{\gamma} \frac{1}{n} \sum_{k=1}^n
+\dot{\mathbf{R}}_k \cdot \mathbf{d}_{\alpha\gamma}(\mathbf{R}_k) c_{\gamma}(t),\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{d}_{\alpha\gamma}(\mathbf{R}_k)\)</span> is the NACV for bead <span class="math notranslate nohighlight">\(k\)</span>.</p>
+</li>
+<li><p><strong>Centroid Approximation (RPSH-CA)</strong>
+TDSE is evaluated at the ring-polymer centroid:</p>
+<div class="math notranslate nohighlight">
+\[\bar{\mathbf{R}} = \frac{1}{n} \sum_{k=1}^n \mathbf{R}_k, \quad
+\bar{\mathbf{P}} = \frac{1}{n} \sum_{k=1}^n \mathbf{P}_k,\]</div>
+<div class="math notranslate nohighlight">
+\[i\hbar \dot{c}_{\alpha}(t) =
+V_{\alpha}(\bar{\mathbf{R}}) c_{\alpha}(t)
+- i\hbar \sum_{\gamma}
+\dot{\bar{\mathbf{R}}} \cdot \mathbf{d}_{\alpha\gamma}(\bar{\mathbf{R}}) c_{\gamma}(t).\]</div>
+</li>
+</ol>
+<p>The probability of a non-adiabatic transition at each timestep <span class="math notranslate nohighlight">\(\Delta t\)</span> is computed from the density matrix <span class="math notranslate nohighlight">\(\rho_{\alpha\gamma} = c_{\alpha} c_{\gamma}^*\)</span> and NACVs (as in RPSH-BA or RPSH-CA).</p>
+<blockquote>
+<div><blockquote>
+<div><div class="math notranslate nohighlight">
+\[g_{\alpha\rightarrow\gamma} =
+\max\left(0, \frac{2\,\Delta t}{|c_{\alpha}|^2}
+\mathrm{Re} \left[ c_{\alpha}^* c_{\gamma}\,
+\mathbf{\dot{R}}\cdot \mathbf{d}_{\alpha\gamma} \right]\right).\]</div>
+</div></blockquote>
+<ul class="simple">
+<li><p>Attempt a hop between states. If a hop occurs, the ring polymer switches surfaces and nuclear velocities are rescaled to conserve total energy. If the hop is energetically forbidden, remain in the current state.</p></li>
+</ul>
+</div></blockquote>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/rpsh2.png"><img alt="Ring polymer surface hopping" src="_images/rpsh2.png" style="width: 50%;" />
+</a>
+</figure>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="keywords.html" class="btn btn-neutral float-left" title="Keywords" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="method-dboc.html" class="btn btn-neutral float-right" title="Diagonal Born–Oppenheimer Correction (DBOC)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SHARP Pack Developers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

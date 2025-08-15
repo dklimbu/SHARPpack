@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SHARP Pack documentation &mdash; SHARP Pack 2.0 documentation</title>
+  <title>Decoherence &mdash; SHARP Pack 2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -21,7 +21,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Introduction" href="intro.html" /> 
+    <link rel="next" title="Tutorials" href="tutorial.html" />
+    <link rel="prev" title="Diagonal Born–Oppenheimer Correction (DBOC)" href="method-dboc.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -32,7 +33,7 @@
 
           
           
-          <a href="#" class="icon icon-home">
+          <a href="index.html" class="icon icon-home">
             SHARP Pack
           </a>
 <div role="search">
@@ -51,10 +52,10 @@
 <li class="toctree-l1"><a class="reference internal" href="keywords.html">Keywords</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Method:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="method-rpsh.html">Ring Polymer Surface Hopping (RPSH) Algorithm</a></li>
 <li class="toctree-l1"><a class="reference internal" href="method-dboc.html">Diagonal Born–Oppenheimer Correction (DBOC)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="method-decoh.html">Decoherence</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Decoherence</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
 <ul>
@@ -71,15 +72,15 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">SHARP Pack</a>
+          <a href="index.html">SHARP Pack</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">SHARP Pack documentation</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Decoherence</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -88,69 +89,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="sharp-pack-documentation">
-<h1>SHARP Pack documentation<a class="headerlink" href="#sharp-pack-documentation" title="Link to this heading"></a></h1>
-<figure class="align-center">
-<a class="reference internal image-reference" href="_images/rpsh.png"><img alt="SHARPPack" src="_images/rpsh.png" style="width: 243.8px; height: 178.60000000000002px;" />
-</a>
-</figure>
-<p>Welcome to <strong>SHARP Pack</strong> documentation,</p>
-<div class="toctree-wrapper compound">
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This website is in under active development…</p>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="install.html#step-1-clone-the-source-code">Step 1: Clone the Source Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#step-2-navigate-to-the-source-directory">Step 2: Navigate to the Source Directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#step-3-compile-the-executable">Step 3: Compile the Executable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#step-4-verify-the-executable">Step 4: Verify the Executable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#usage">Usage</a></li>
+  <section id="decoherence">
+<h1>Decoherence<a class="headerlink" href="#decoherence" title="Link to this heading"></a></h1>
+<p>Energy-based decoherence correction <span id="id1">[<a class="reference internal" href="reference.html#id2" title="Giovanni Granucci and Maurizio Persico. Critical appraisal of the fewest switches algorithm for surface hopping. The Journal of Chemical Physics, 126(13):134114, 04 2007. doi:10.1063/1.2715585.">9</a>]</span> applies exponential damping to inactive adiabatic states, while renormalizing the active state to preserve the total wavefunction norm (<span class="math notranslate nohighlight">\(\sum |c_i|^2 = 1\)</span>).</p>
+<div class="math notranslate nohighlight">
+\[c_i \rightarrow c_i \exp\left(-\frac{\Delta t}{\tau_{ia}}\right),  \quad \forall \; i \ne a,\]</div>
+<div class="math notranslate nohighlight">
+\[c_a = c_a \left[\frac{1 - \sum_{i \ne a}|c_i|^2}{|c_a|^2}\right]^{1/2},\]</div>
+<p>with</p>
+<div class="math notranslate nohighlight">
+\[\tau_{ia} = \frac{\hbar}{|E_i - E_a|}
+\left( C + \frac{E_0}{T_a} \right),\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(E_i\)</span> is the energy of inactive state <span class="math notranslate nohighlight">\(i\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(E_a\)</span> is the energy of active state <span class="math notranslate nohighlight">\(a\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(T_a\)</span> is the kinetic energy on the active surface,</p></li>
+<li><p><span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(E_0\)</span> are empirical constants.</p></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="model.html">Models</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="model.html#tully-models">Tully Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model.html#morse-potential-models">Morse Potential Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model.html#linear-chain-models">Linear Chain Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model.html#spinboson-model">Spin–Boson Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model.html#spectral-density">Spectral Density</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="keywords.html">Keywords</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Theoretical Method:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="method-rpsh.html">Ring Polymer Surface Hopping (RPSH) Algorithm</a></li>
-<li class="toctree-l1"><a class="reference internal" href="method-dboc.html">Diagonal Born–Oppenheimer Correction (DBOC)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="method-decoh.html">Decoherence</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">References:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="reference.html">Bibliography</a></li>
-</ul>
-</div>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="intro.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="method-dboc.html" class="btn btn-neutral float-left" title="Diagonal Born–Oppenheimer Correction (DBOC)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorial.html" class="btn btn-neutral float-right" title="Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

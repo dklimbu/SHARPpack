@@ -1,0 +1,480 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Models &mdash; SHARP Pack 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="shortcut icon" href="_static/rpsh.png"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=60dbed4a"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Keywords" href="keywords.html" />
+    <link rel="prev" title="Installation" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SHARP Pack
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tully-models">Tully Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#morse-potential-models">Morse Potential Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linear-chain-models">Linear Chain Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#spinboson-model">Spin–Boson Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#spectral-density">Spectral Density</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#debye-form">Debye form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ohmic-form">Ohmic form</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="keywords.html">Keywords</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Method:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="method-rpsh.html">Ring Polymer Surface Hopping (RPSH) Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="method-dboc.html">Diagonal Born–Oppenheimer Correction (DBOC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="method-decoh.html">Decoherence</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Bibliography</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SHARP Pack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Models</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="models">
+<h1>Models<a class="headerlink" href="#models" title="Link to this heading"></a></h1>
+<span id="tab-model"></span><table class="docutils align-default" id="id4">
+<caption><span class="caption-text">Models</span><a class="headerlink" href="#id4" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Keyword</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>tully1</cite></p></td>
+<td><p>Tully’s Simple Avoided Crossing Model</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>tully2</cite></p></td>
+<td><p>Tully’s Dual Avoided Crossing Model</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>tully3</cite></p></td>
+<td><p>Tully’s Extended Coupling with Reflection Model</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>morse1</cite></p></td>
+<td><p>Morse Model I – photo-dissociation</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>morse2</cite></p></td>
+<td><p>Morse Model II – photo-dissociation</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>morse3</cite></p></td>
+<td><p>Morse Model III – photo-dissociation</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>db2lchain</cite></p></td>
+<td><p>2-state model coupled with linear chain</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>db3lchain</cite></p></td>
+<td><p>3-state super-exchange model with linear chain coupling</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>spinboson</cite></p></td>
+<td><p>Spin-Boson model coupled to N-harmonic bath</p></td>
+</tr>
+</tbody>
+</table>
+<section id="tully-models">
+<h2>Tully Models<a class="headerlink" href="#tully-models" title="Link to this heading"></a></h2>
+<p>Diabatic Hamiltonians:</p>
+<p><strong>Model I</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}V_{11}(R) =
+\begin{cases}
+   A(1 - e^{-B R}) &amp; \text{if } R &gt; 0 \\
+  -A(1 - e^{B R})  &amp; \text{if } R &lt; 0
+\end{cases}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[V_{22}(R) = -V_{11}(R)\]</div>
+<div class="math notranslate nohighlight">
+\[V_{12}(R) = V_{21}(R) = C e^{-D R^2}\]</div>
+<p><strong>Model II</strong></p>
+<div class="math notranslate nohighlight">
+\[V_{11}(R) = 0\]</div>
+<div class="math notranslate nohighlight">
+\[V_{22}(R) = -A e^{-B R^2} + E_0\]</div>
+<div class="math notranslate nohighlight">
+\[V_{12}(R) = V_{21}(R) = C e^{-D R^2}\]</div>
+<p><strong>Model III</strong></p>
+<div class="math notranslate nohighlight">
+\[V_{11}(R) = A, \quad V_{22}(R) = -A\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}V_{12}(R) = V_{21}(R) =
+\begin{cases}
+  B e^{C R}, &amp; \text{if } R &lt; 0 \\
+  B(2 - e^{-C R}), &amp; \text{if } R &gt; 0
+\end{cases}\end{split}\]</div>
+<p><strong>Parameters (atomic units):</strong></p>
+<table class="docutils align-default" id="id5">
+<caption><span class="caption-text">Tully Model Parameters</span><a class="headerlink" href="#id5" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 18.2%" />
+<col style="width: 27.3%" />
+<col style="width: 27.3%" />
+<col style="width: 27.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Model I</strong></p></th>
+<th class="head"><p><strong>Model II</strong></p></th>
+<th class="head"><p><strong>Model III</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>A</p></td>
+<td><p>0.01</p></td>
+<td><p>0.1</p></td>
+<td><p>6e-4</p></td>
+</tr>
+<tr class="row-odd"><td><p>B</p></td>
+<td><p>1.6</p></td>
+<td><p>0.28</p></td>
+<td><p>0.1</p></td>
+</tr>
+<tr class="row-even"><td><p>C</p></td>
+<td><p>0.005</p></td>
+<td><p>0.015</p></td>
+<td><p>0.9</p></td>
+</tr>
+<tr class="row-odd"><td><p>D</p></td>
+<td><p>1.0</p></td>
+<td><p>0.06</p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p>E₀</p></td>
+<td><p>–</p></td>
+<td><p>0.05</p></td>
+<td><p>–</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="morse-potential-models">
+<h2>Morse Potential Models<a class="headerlink" href="#morse-potential-models" title="Link to this heading"></a></h2>
+<div class="math notranslate nohighlight">
+\[V_{ii}(R) = D_{e,i} \left(1 - e^{-\beta_i(R - R_{e,i})} \right)^2 + c_i\]</div>
+<div class="math notranslate nohighlight">
+\[V_{ij}(R) = A_{ij} e^{-a_{ij}(R - R_{ij})^2}, \quad V_{ji}(R) = V_{ij}(R)\]</div>
+<table class="docutils align-center" id="id6">
+<caption><span class="caption-text">Numerical values of the parameters related to the three Morse potential models (in a.u.)</span><a class="headerlink" href="#id6" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 10.0%" />
+<col style="width: 10.0%" />
+<col style="width: 10.0%" />
+<col style="width: 10.0%" />
+<col style="width: 10.0%" />
+<col style="width: 10.0%" />
+<col style="width: 10.0%" />
+<col style="width: 10.0%" />
+<col style="width: 10.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+<th class="head"><p><strong>Model I</strong></p></th>
+<th class="head"></th>
+<th class="head"></th>
+<th class="head"><p><strong>Model II</strong></p></th>
+<th class="head"></th>
+<th class="head"></th>
+<th class="head"><p><strong>Model III</strong></p></th>
+<th class="head"></th>
+</tr>
+<tr class="row-even"><th class="head"><p><strong>Param</strong></p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(D_{e,i}\)</span></p></td>
+<td><p>0.003</p></td>
+<td><p>0.004</p></td>
+<td><p>0.003</p></td>
+<td><p>0.02</p></td>
+<td><p>0.01</p></td>
+<td><p>0.003</p></td>
+<td><p>0.02</p></td>
+<td><p>0.02</p></td>
+<td><p>0.003</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\beta_i\)</span></p></td>
+<td><p>0.65</p></td>
+<td><p>0.60</p></td>
+<td><p>0.65</p></td>
+<td><p>0.65</p></td>
+<td><p>0.40</p></td>
+<td><p>0.65</p></td>
+<td><p>0.40</p></td>
+<td><p>0.65</p></td>
+<td><p>0.65</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(R_{e,i}\)</span></p></td>
+<td><p>5.0</p></td>
+<td><p>4.0</p></td>
+<td><p>6.0</p></td>
+<td><p>4.5</p></td>
+<td><p>4.0</p></td>
+<td><p>4.4</p></td>
+<td><p>4.0</p></td>
+<td><p>4.5</p></td>
+<td><p>6.0</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(c_i\)</span></p></td>
+<td><p>0.00</p></td>
+<td><p>0.01</p></td>
+<td><p>0.006</p></td>
+<td><p>0.00</p></td>
+<td><p>0.01</p></td>
+<td><p>0.02</p></td>
+<td><p>0.02</p></td>
+<td><p>0.00</p></td>
+<td><p>0.02</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(ij\)</span></p></td>
+<td><p>12</p></td>
+<td><p>13</p></td>
+<td><p>23</p></td>
+<td><p>12</p></td>
+<td><p>13</p></td>
+<td><p>23</p></td>
+<td><p>12</p></td>
+<td><p>13</p></td>
+<td><p>23</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(A_{ij}\)</span></p></td>
+<td><p>0.002</p></td>
+<td><p>0.0</p></td>
+<td><p>0.002</p></td>
+<td><p>0.005</p></td>
+<td><p>0.005</p></td>
+<td><p>0.0</p></td>
+<td><p>0.005</p></td>
+<td><p>0.005</p></td>
+<td><p>0.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(R_{ij}\)</span></p></td>
+<td><p>3.40</p></td>
+<td><p>0.0</p></td>
+<td><p>4.80</p></td>
+<td><p>3.66</p></td>
+<td><p>3.34</p></td>
+<td><p>0.0</p></td>
+<td><p>3.40</p></td>
+<td><p>4.97</p></td>
+<td><p>0.0</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(a_{ij}\)</span></p></td>
+<td><p>16.0</p></td>
+<td><p>0.0</p></td>
+<td><p>16.0</p></td>
+<td><p>32.0</p></td>
+<td><p>32.0</p></td>
+<td><p>0.0</p></td>
+<td><p>32.0</p></td>
+<td><p>32.0</p></td>
+<td><p>0.0</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="linear-chain-models">
+<h2>Linear Chain Models<a class="headerlink" href="#linear-chain-models" title="Link to this heading"></a></h2>
+</section>
+<section id="spinboson-model">
+<h2>Spin–Boson Model<a class="headerlink" href="#spinboson-model" title="Link to this heading"></a></h2>
+<p>The Spin–Boson Hamiltonian <span id="id1">[<a class="reference internal" href="reference.html#id24" title="A. J. Leggett, S. Chakravarty, A. T. Dorsey, Matthew P. A. Fisher, Anupam Garg, and W. Zwerger. Dynamics of the dissipative two-state system. Rev. Mod. Phys., 59:1–85, Jan 1987. doi:10.1103/RevModPhys.59.1.">1</a>]</span> is</p>
+<div class="math notranslate nohighlight">
+\[H = H_s + H_b + H_{sb}.\]</div>
+<p>Two–level system Hamiltonian:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}H_s = \epsilon \sigma_z + \Delta \sigma_x =
+\begin{pmatrix}
+\epsilon &amp; \Delta \\
+\Delta &amp; -\epsilon
+\end{pmatrix},\end{split}\]</div>
+<p>with bias <span class="math notranslate nohighlight">\(\epsilon\)</span> and coupling <span class="math notranslate nohighlight">\(\Delta\)</span>.</p>
+<p>Bath Hamiltonian:</p>
+<div class="math notranslate nohighlight">
+\[H_b = \sum_j \left( \frac{P_j^2}{2 M_j}
++ \frac{1}{2} M_j \omega_j^2 R_j^2 \right).\]</div>
+<p>System–bath coupling:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}H_{sb} = \sigma_z \sum_j c_j R_j =
+\begin{pmatrix}
+\sum_j c_j R_j &amp; 0 \\
+0 &amp; -\sum_j c_j R_j
+\end{pmatrix}.\end{split}\]</div>
+</section>
+<hr class="docutils" />
+<section id="spectral-density">
+<h2>Spectral Density<a class="headerlink" href="#spectral-density" title="Link to this heading"></a></h2>
+<p>General definition for <span class="math notranslate nohighlight">\(N\)</span> bath modes <span id="id2">[<a class="reference internal" href="reference.html#id9" title="Haobin Wang, Xueyu Song, David Chandler, and William H. Miller. Semiclassical study of electronically nonadiabatic dynamics in the condensed-phase: spin-boson problem with debye spectral density. J. Chem. Phys., 110(10):4828-4840, 03 1999. doi:10.1063/1.478388.">2</a>, <a class="reference internal" href="reference.html#id4" title="Roel Templaar and David R. Reichman. Generalization of fewest-switches surface hopping for coherence. J. Chem. Phys., 148:102309, 2018.">3</a>]</span>:</p>
+<div class="math notranslate nohighlight">
+\[J(\omega) = \frac{\pi}{2} \sum_{j=1}^{N}
+\frac{c_j^2}{M_j \omega_j} \, \delta(\omega - \omega_j),\]</div>
+<dl class="simple">
+<dt>where,</dt><dd><ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(M_j\)</span> = mass of <span class="math notranslate nohighlight">\(j\)</span>-th oscillator,</p></li>
+<li><p><span class="math notranslate nohighlight">\(c_j\)</span> = coupling constant,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\omega_j\)</span> = oscillator frequency.</p></li>
+</ul>
+</dd>
+</dl>
+<section id="debye-form">
+<h3>Debye form<a class="headerlink" href="#debye-form" title="Link to this heading"></a></h3>
+<div class="math notranslate nohighlight">
+\[J_D(\omega) = \frac{E_r}{2} \,
+\frac{\omega \, \omega_c}{\omega^2 + \omega_c^2},\]</div>
+<dl class="simple">
+<dt>where,</dt><dd><ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(E_r\)</span> = reorganization energy,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\omega_c\)</span> = cutoff frequency.</p></li>
+</ul>
+</dd>
+</dl>
+<hr class="docutils" />
+<p><strong>Debye Bath Discretization</strong></p>
+<p>Frequencies and couplings are discretizeda as <span id="id3">[<a class="reference internal" href="reference.html#id7" title="Haobin Wang, Michael Thoss, and William H. Miller. Systematic convergence in the dynamical hybrid approach for complex systems: a numerically exact methodology. J. Chem. Phys., 115(7):2979-2990, 08 2001. doi:10.1063/1.1385561.">4</a>, <a class="reference internal" href="reference.html#id6" title="Najeh Rekik, Chang-Yu Hsieh, Holly Freedman, and Gabriel Hanna. A mixed quantum-classical liouville study of the population dynamics in a model photo-induced condensed phase electron transfer reaction. J. Chem. Phys., 138(14):144106, 04 2013. doi:10.1063/1.4799272.">5</a>]</span>:</p>
+<div class="math notranslate nohighlight">
+\[\omega_j = \omega_c \cdot
+\tan\left( \frac{j}{N} \tan^{-1}\left( \frac{\omega_{\text{max}}}{\omega_c} \right) \right),\]</div>
+<div class="math notranslate nohighlight">
+\[c_j = \omega_j \sqrt{
+\frac{M_j E_r}{\pi N} \,
+\tan^{-1}\left( \frac{\omega_{\text{max}}}{\omega_c} \right)
+},\]</div>
+<p>with <span class="math notranslate nohighlight">\(\omega_{\text{max}} = 20 \omega_c\)</span>.</p>
+</section>
+<hr class="docutils" />
+<section id="ohmic-form">
+<h3>Ohmic form<a class="headerlink" href="#ohmic-form" title="Link to this heading"></a></h3>
+<div class="math notranslate nohighlight">
+\[J_O(\omega) = \frac{\pi}{2} \, \alpha \, \omega \, e^{\omega/\omega_c},\]</div>
+<dl class="simple">
+<dt>where,</dt><dd><ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\alpha\)</span> = Kondo parameter that controls the strength of the coupling,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\omega_c\)</span> = cutoff frequency.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Ohmic Bath Discretization</strong></p>
+<p>Frequencies and couplings are discretizeda as:</p>
+<div class="math notranslate nohighlight">
+\[\omega_j = \omega_c \cdot
+\log\left(1 - \frac{j}{1+N} \right),\]</div>
+<div class="math notranslate nohighlight">
+\[c_j = \omega_j \sqrt{
+\frac{M_j \alpha}{1+N}},\]</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="install.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="keywords.html" class="btn btn-neutral float-right" title="Keywords" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SHARP Pack Developers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
