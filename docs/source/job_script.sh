@@ -18,7 +18,7 @@
 
 # Path to your executable
 #============================================================
-root2bin=~/Softwares/SHARP_pack2/bin
+root2bin=~/Softwares/SHARP_pack_2/bin
 exe=${root2bin}/sharp.x
 
 #============================================================
