@@ -6,7 +6,7 @@ Change Log
 Notable changes to **SHAPRP Pack** will be documented here.
 
 
-Version 2.0 (2025-xx-xx)
+Version 2.0 (2025-09-05)
 ------------------------
 
 New Features
