@@ -17,11 +17,12 @@
       <script src="_static/documentation_options.js?v=60dbed4a"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script>window.MathJax = {"tex": {"macros": {"angstrom": "\\unicode{8491}"}}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Keywords" href="keywords.html" />
+    <link rel="next" title="Simulations" href="simulation.html" />
     <link rel="prev" title="Installation" href="install.html" /> 
 </head>
 
@@ -51,7 +52,8 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Models</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#tully-models">Tully Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#morse-potential-models">Morse Potential Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#linear-chain-models">Linear Chain Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linear-chain-model">Linear Chain Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#super-exchange-model">Super Exchange Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#spinboson-model">Spin–Boson Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#spectral-density">Spectral Density</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#debye-form">Debye form</a></li>
@@ -60,7 +62,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="keywords.html">Keywords</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulations</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Method:</span></p>
 <ul>
@@ -70,10 +72,16 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial1_tully1s.html">Tully Model-I (FSSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial2_tully2p.html">Tully Model-II (RPSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial3_tully3b.html">Tully Model-III (Branching Probability)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial4_lchain.html">Linear Chain Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial5_spinboson.html">Spin-Boson Model (Debye Spectral Density)</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">References:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Bibliography</a></li>
 </ul>
 
@@ -102,8 +110,9 @@
              
   <section id="models">
 <h1>Models<a class="headerlink" href="#models" title="Link to this heading"></a></h1>
-<span id="tab-model"></span><table class="docutils align-default" id="id7">
-<caption><span class="caption-text">Models</span><a class="headerlink" href="#id7" title="Link to this table"></a></caption>
+<p>There are several model systems implemented in <strong>SHARP Pack</strong>, which are summarized in the following table.</p>
+<span id="tab-model"></span><table class="docutils align-default" id="id19">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Models</span><a class="headerlink" href="#id19" title="Link to this table"></a></caption>
 <colgroup>
 <col style="width: 20.0%" />
 <col style="width: 80.0%" />
@@ -115,37 +124,43 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><cite>tully1</cite></p></td>
-<td><p>Tully’s Simple Avoided Crossing Model</p></td>
+<td><p>Tully Model-I: Simple avoided crossing model <span id="id1">[<a class="reference internal" href="reference.html#id67" title="John C. Tully. Molecular dynamics with electronic transitions. J. Chem. Phys., 93:1061-1071, 1990. doi:10.1063/1.459170.">3</a>]</span></p></td>
 </tr>
 <tr class="row-odd"><td><p><cite>tully2</cite></p></td>
-<td><p>Tully’s Dual Avoided Crossing Model</p></td>
+<td><p>Tully Model-II: Dual avoided crossing model <span id="id2">[<a class="reference internal" href="reference.html#id67" title="John C. Tully. Molecular dynamics with electronic transitions. J. Chem. Phys., 93:1061-1071, 1990. doi:10.1063/1.459170.">3</a>]</span></p></td>
 </tr>
 <tr class="row-even"><td><p><cite>tully3</cite></p></td>
-<td><p>Tully’s Extended Coupling with Reflection Model</p></td>
+<td><p>Tully Model-III: Extended coupling with reflection model <span id="id3">[<a class="reference internal" href="reference.html#id67" title="John C. Tully. Molecular dynamics with electronic transitions. J. Chem. Phys., 93:1061-1071, 1990. doi:10.1063/1.459170.">3</a>]</span></p></td>
 </tr>
 <tr class="row-odd"><td><p><cite>morse1</cite></p></td>
-<td><p>Morse Model I – photo-dissociation</p></td>
+<td><p>Morse Model-I: photo-dissociation model <span id="id4">[<a class="reference internal" href="reference.html#id4" title="Eduardo A. Coronado, Jianhua Xing, and William H. Miller. Ultrafast non-adiabatic dynamics of systems with multiple surface crossings: a test of the meyer–miller hamiltonian with semiclassical initial value representation methods. Chem. Phys. Lett., 349:521-529, 2001. doi:10.1016/S0009-2614(01)01242-8.">9</a>]</span></p></td>
 </tr>
 <tr class="row-even"><td><p><cite>morse2</cite></p></td>
-<td><p>Morse Model II – photo-dissociation</p></td>
+<td><p>Morse Model-II: photo-dissociation model <span id="id5">[<a class="reference internal" href="reference.html#id4" title="Eduardo A. Coronado, Jianhua Xing, and William H. Miller. Ultrafast non-adiabatic dynamics of systems with multiple surface crossings: a test of the meyer–miller hamiltonian with semiclassical initial value representation methods. Chem. Phys. Lett., 349:521-529, 2001. doi:10.1016/S0009-2614(01)01242-8.">9</a>]</span></p></td>
 </tr>
 <tr class="row-odd"><td><p><cite>morse3</cite></p></td>
-<td><p>Morse Model III – photo-dissociation</p></td>
+<td><p>Morse Model-III: photo-dissociation model <span id="id6">[<a class="reference internal" href="reference.html#id4" title="Eduardo A. Coronado, Jianhua Xing, and William H. Miller. Ultrafast non-adiabatic dynamics of systems with multiple surface crossings: a test of the meyer–miller hamiltonian with semiclassical initial value representation methods. Chem. Phys. Lett., 349:521-529, 2001. doi:10.1016/S0009-2614(01)01242-8.">9</a>]</span></p></td>
 </tr>
 <tr class="row-even"><td><p><cite>db2lchain</cite></p></td>
-<td><p>2-state model coupled with linear chain</p></td>
+<td><p>2-state model coupled with linear chain model <span id="id7">[<a class="reference internal" href="reference.html#id98" title="Dil K. Limbu and Farnaz A. Shakib. Real-Time Dynamics and Detailed Balance in Ring Polymer Surface Hopping: The Impact of Frustrated Hops. J. Phys. Chem. Lett., 14:8658–8666, 2023. doi:10.1021/acs.jpclett.3c02085.">10</a>, <a class="reference internal" href="reference.html#id111" title="Priya V. Parandekar and John C. Tully. Mixed quantum-classical equilibrium. J. Chem. Phys., 122:094102, 2005. doi:10.1063/1.1856460.">11</a>]</span></p></td>
 </tr>
 <tr class="row-odd"><td><p><cite>db3lchain</cite></p></td>
-<td><p>3-state super-exchange model with linear chain coupling</p></td>
+<td><p>3-state super-exchange model with linear chain model <span id="id8">[<a class="reference internal" href="reference.html#id117" title="Andrew E. Sifain, Linjun Wang, and Oleg V. Prezhdo. Communication: proper treatment of classically forbidden electronic transitions significantly improves detailed balance in surface hopping. J. Chem. Phys., 144:211102, 2016. doi:10.1063/1.4953444.">12</a>]</span></p></td>
 </tr>
-<tr class="row-even"><td><p><cite>spinboson</cite></p></td>
-<td><p>Spin-Boson model coupled to N-harmonic bath</p></td>
+<tr class="row-even"><td><p><cite>superexchange</cite></p></td>
+<td><p>3-state super-exchange model <span id="id9">[<a class="reference internal" href="reference.html#id2" title="Linjun Wang, Dhara Trivedi, and Oleg V. Prezhdo. Global flux surface hopping approach for mixed quantum-classical dynamics. J. Chem. Theory Comput., 10:3598-3605, 2014. doi:10.1021/ct5003835.">13</a>]</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>spinboson</cite></p></td>
+<td><p>Spin-Boson model coupled to N-harmonic bath <span id="id10">[<a class="reference internal" href="reference.html#id27" title="A. J. Leggett, S. Chakravarty, A. T. Dorsey, Matthew P. A. Fisher, Anupam Garg, and W. Zwerger. Dynamics of the dissipative two-state system. Rev. Mod. Phys., 59:1–85, 1987. doi:10.1103/RevModPhys.59.1.">14</a>]</span></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>dboc1</cite></p></td>
+<td><p>Flat Born-Oppenheimer PES model <span id="id11">[<a class="reference internal" href="reference.html#id18" title="Neil Shenvi. Phase-space surface hopping: nonadiabatic dynamics in a superadiabatic basis. J. Chem. Phys., 130:124117, 2009. doi:10.1063/1.3098321.">15</a>, <a class="reference internal" href="reference.html#id26" title="Rami Gherib, Liyuan Ye, Ilya G. Ryabinkin, and Artur F. Izmaylov. On the inclusion of the diagonal born-oppenheimer correction in surface hopping methods. J. Chem. Phys., 144:154103, 2016. doi:10.1063/1.4945817.">16</a>]</span></p></td>
 </tr>
 </tbody>
 </table>
 <section id="tully-models">
 <h2>Tully Models<a class="headerlink" href="#tully-models" title="Link to this heading"></a></h2>
-<p>Diabatic Hamiltonians:</p>
+<p>Diabatic Hamiltonians and parameters for Tully models <span id="id12">[<a class="reference internal" href="reference.html#id67" title="John C. Tully. Molecular dynamics with electronic transitions. J. Chem. Phys., 93:1061-1071, 1990. doi:10.1063/1.459170.">3</a>]</span> are:</p>
 <p><strong>Model I</strong></p>
 <div class="math notranslate nohighlight">
 \[\begin{split}V_{11}(R) =
@@ -173,9 +188,8 @@
   B e^{C R}, &amp; \text{if } R &lt; 0 \\
   B(2 - e^{-C R}), &amp; \text{if } R &gt; 0
 \end{cases}\end{split}\]</div>
-<p><strong>Parameters (atomic units):</strong></p>
-<table class="docutils align-default" id="id8">
-<caption><span class="caption-text">Tully Model Parameters</span><a class="headerlink" href="#id8" title="Link to this table"></a></caption>
+<table class="docutils align-default" id="id20">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Tully Model Parameters (in a.u.)</span><a class="headerlink" href="#id20" title="Link to this table"></a></caption>
 <colgroup>
 <col style="width: 18.2%" />
 <col style="width: 27.3%" />
@@ -193,7 +207,7 @@
 <tr class="row-even"><td><p>A</p></td>
 <td><p>0.01</p></td>
 <td><p>0.1</p></td>
-<td><p>6e-4</p></td>
+<td><p>6 <span class="math notranslate nohighlight">\(\times 10^{-4}\)</span></p></td>
 </tr>
 <tr class="row-odd"><td><p>B</p></td>
 <td><p>1.6</p></td>
@@ -220,146 +234,357 @@
 </section>
 <section id="morse-potential-models">
 <h2>Morse Potential Models<a class="headerlink" href="#morse-potential-models" title="Link to this heading"></a></h2>
+<p>Diabatic Hamiltonians and parameters for three Morse models <span id="id13">[<a class="reference internal" href="reference.html#id4" title="Eduardo A. Coronado, Jianhua Xing, and William H. Miller. Ultrafast non-adiabatic dynamics of systems with multiple surface crossings: a test of the meyer–miller hamiltonian with semiclassical initial value representation methods. Chem. Phys. Lett., 349:521-529, 2001. doi:10.1016/S0009-2614(01)01242-8.">9</a>]</span> are:</p>
 <div class="math notranslate nohighlight">
-\[V_{ii}(R) = D_{e,i} \left(1 - e^{-\beta_i(R - R_{e,i})} \right)^2 + c_i\]</div>
+\[V_{ii}(R) = De_i \left(1 - e^{-\beta_i(R - Re_i)} \right)^2 + c_i\]</div>
 <div class="math notranslate nohighlight">
 \[V_{ij}(R) = A_{ij} e^{-a_{ij}(R - R_{ij})^2}, \quad V_{ji}(R) = V_{ij}(R)\]</div>
-<table class="docutils align-center" id="id9">
-<caption><span class="caption-text">Numerical values of the parameters related to the three Morse potential models (in a.u.)</span><a class="headerlink" href="#id9" title="Link to this table"></a></caption>
+<table class="docutils align-center" id="id21">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">Numerical values of the parameters related to the three Morse potential models (in a.u.)</span><a class="headerlink" href="#id21" title="Link to this table"></a></caption>
 <colgroup>
-<col style="width: 10.0%" />
-<col style="width: 10.0%" />
-<col style="width: 10.0%" />
-<col style="width: 10.0%" />
-<col style="width: 10.0%" />
-<col style="width: 10.0%" />
-<col style="width: 10.0%" />
-<col style="width: 10.0%" />
-<col style="width: 10.0%" />
-<col style="width: 10.0%" />
+<col style="width: 15.2%" />
+<col style="width: 12.1%" />
+<col style="width: 12.1%" />
+<col style="width: 12.1%" />
+<col style="width: 12.1%" />
+<col style="width: 12.1%" />
+<col style="width: 12.1%" />
+<col style="width: 12.1%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"></th>
-<th class="head"></th>
-<th class="head"><p><strong>Model I</strong></p></th>
-<th class="head"></th>
-<th class="head"></th>
-<th class="head"><p><strong>Model II</strong></p></th>
-<th class="head"></th>
-<th class="head"></th>
-<th class="head"><p><strong>Model III</strong></p></th>
-<th class="head"></th>
-</tr>
-<tr class="row-even"><th class="head"><p><strong>Param</strong></p></th>
-<th class="head"><p>1</p></th>
-<th class="head"><p>2</p></th>
-<th class="head"><p>3</p></th>
-<th class="head"><p>1</p></th>
-<th class="head"><p>2</p></th>
-<th class="head"><p>3</p></th>
-<th class="head"><p>1</p></th>
-<th class="head"><p>2</p></th>
-<th class="head"><p>3</p></th>
+<tr class="row-odd"><th class="head"><p><strong>Model-I</strong></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(De_i\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(\beta_i\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(Re_i\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(c_{i}\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(A_{ij}\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(R_{ij}\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(a_{ij}\)</span></p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(D_{e,i}\)</span></p></td>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(V_{11}\)</span></p></td>
 <td><p>0.003</p></td>
-<td><p>0.004</p></td>
-<td><p>0.003</p></td>
-<td><p>0.02</p></td>
-<td><p>0.01</p></td>
-<td><p>0.003</p></td>
-<td><p>0.02</p></td>
-<td><p>0.02</p></td>
-<td><p>0.003</p></td>
-</tr>
-<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\beta_i\)</span></p></td>
 <td><p>0.65</p></td>
-<td><p>0.60</p></td>
-<td><p>0.65</p></td>
-<td><p>0.65</p></td>
-<td><p>0.40</p></td>
-<td><p>0.65</p></td>
-<td><p>0.40</p></td>
-<td><p>0.65</p></td>
-<td><p>0.65</p></td>
-</tr>
-<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(R_{e,i}\)</span></p></td>
 <td><p>5.0</p></td>
-<td><p>4.0</p></td>
-<td><p>6.0</p></td>
-<td><p>4.5</p></td>
-<td><p>4.0</p></td>
-<td><p>4.4</p></td>
-<td><p>4.0</p></td>
-<td><p>4.5</p></td>
-<td><p>6.0</p></td>
-</tr>
-<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(c_i\)</span></p></td>
 <td><p>0.00</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(V_{22}\)</span></p></td>
+<td><p>0.004</p></td>
+<td><p>0.60</p></td>
+<td><p>4.0</p></td>
 <td><p>0.01</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(V_{33}\)</span></p></td>
+<td><p>0.003</p></td>
+<td><p>0.65</p></td>
+<td><p>6.0</p></td>
 <td><p>0.006</p></td>
-<td><p>0.00</p></td>
-<td><p>0.01</p></td>
-<td><p>0.02</p></td>
-<td><p>0.02</p></td>
-<td><p>0.00</p></td>
-<td><p>0.02</p></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(ij\)</span></p></td>
-<td><p>12</p></td>
-<td><p>13</p></td>
-<td><p>23</p></td>
-<td><p>12</p></td>
-<td><p>13</p></td>
-<td><p>23</p></td>
-<td><p>12</p></td>
-<td><p>13</p></td>
-<td><p>23</p></td>
-</tr>
-<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(A_{ij}\)</span></p></td>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(V_{12}\)</span></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 <td><p>0.002</p></td>
-<td><p>0.0</p></td>
-<td><p>0.002</p></td>
-<td><p>0.005</p></td>
-<td><p>0.005</p></td>
-<td><p>0.0</p></td>
-<td><p>0.005</p></td>
-<td><p>0.005</p></td>
-<td><p>0.0</p></td>
-</tr>
-<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(R_{ij}\)</span></p></td>
 <td><p>3.40</p></td>
-<td><p>0.0</p></td>
+<td><p>16.0</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(V_{23}\)</span></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0.002</p></td>
 <td><p>4.80</p></td>
-<td><p>3.66</p></td>
-<td><p>3.34</p></td>
-<td><p>0.0</p></td>
-<td><p>3.40</p></td>
-<td><p>4.97</p></td>
-<td><p>0.0</p></td>
+<td><p>16.0</p></td>
 </tr>
-<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(a_{ij}\)</span></p></td>
-<td><p>16.0</p></td>
-<td><p>0.0</p></td>
-<td><p>16.0</p></td>
+<tr class="row-odd"><td><p><strong>Model-II</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(De_i\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\beta_i\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(Re_i\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(c_{i}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(A_{ij}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(R_{ij}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(a_{ij}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(V_{11}\)</span></p></td>
+<td><p>0.02</p></td>
+<td><p>0.65</p></td>
+<td><p>4.5</p></td>
+<td><p>0.00</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(V_{22}\)</span></p></td>
+<td><p>0.01</p></td>
+<td><p>0.40</p></td>
+<td><p>4.0</p></td>
+<td><p>0.01</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(V_{33}\)</span></p></td>
+<td><p>0.003</p></td>
+<td><p>0.65</p></td>
+<td><p>4.4</p></td>
+<td><p>0.02</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(V_{12}\)</span></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0.005</p></td>
+<td><p>3.66</p></td>
 <td><p>32.0</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(V_{13}\)</span></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0.005</p></td>
+<td><p>3.34</p></td>
 <td><p>32.0</p></td>
-<td><p>0.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Model-III</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(De_i\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\beta_i\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(Re_i\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(c_{i}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(A_{ij}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(R_{ij}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(a_{ij}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(V_{11}\)</span></p></td>
+<td><p>0.02</p></td>
+<td><p>0.40</p></td>
+<td><p>4.0</p></td>
+<td><p>0.02</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(V_{22}\)</span></p></td>
+<td><p>0.02</p></td>
+<td><p>0.65</p></td>
+<td><p>4.5</p></td>
+<td><p>0.00</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(V_{33}\)</span></p></td>
+<td><p>0.003</p></td>
+<td><p>0.65</p></td>
+<td><p>6.0</p></td>
+<td><p>0.02</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(V_{12}\)</span></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0.005</p></td>
+<td><p>3.40</p></td>
 <td><p>32.0</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(V_{13}\)</span></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0.005</p></td>
+<td><p>4.97</p></td>
 <td><p>32.0</p></td>
-<td><p>0.0</p></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="linear-chain-models">
-<h2>Linear Chain Models<a class="headerlink" href="#linear-chain-models" title="Link to this heading"></a></h2>
+<section id="linear-chain-model">
+<h2>Linear Chain Model<a class="headerlink" href="#linear-chain-model" title="Link to this heading"></a></h2>
+<p>Linear Chain Model is <strong>two-level/three-level</strong> system copuled to a signle atom in N-atom
+linear chain, with the following anharmonic, nearest-neighbor potential energy function:</p>
+<div class="math notranslate nohighlight">
+\[V(\mathbf{R}) = \sum_{i=1}^{N} V_M(R_i - R_{i+1})\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[V_M(R) = V_0 \left(a^2 R^2 - a^3 R^3 + 0.58 a^4 R^4 \right)\]</div>
+<p>and <span class="math notranslate nohighlight">\(R_{N+1}\)</span> is a fixed position and the atom farthest from the quantum systerm (<span class="math notranslate nohighlight">\(R_N\)</span>) is connected to Langevin dynamics with friction constant <span class="math notranslate nohighlight">\(\gamma\)</span>. <span id="id14">[<a class="reference internal" href="reference.html#id98" title="Dil K. Limbu and Farnaz A. Shakib. Real-Time Dynamics and Detailed Balance in Ring Polymer Surface Hopping: The Impact of Frustrated Hops. J. Phys. Chem. Lett., 14:8658–8666, 2023. doi:10.1021/acs.jpclett.3c02085.">10</a>, <a class="reference internal" href="reference.html#id111" title="Priya V. Parandekar and John C. Tully. Mixed quantum-classical equilibrium. J. Chem. Phys., 122:094102, 2005. doi:10.1063/1.1856460.">11</a>, <a class="reference internal" href="reference.html#id117" title="Andrew E. Sifain, Linjun Wang, and Oleg V. Prezhdo. Communication: proper treatment of classically forbidden electronic transitions significantly improves detailed balance in surface hopping. J. Chem. Phys., 144:211102, 2016. doi:10.1063/1.4953444.">12</a>]</span></p>
+<table class="docutils align-default" id="id22">
+<caption><span class="caption-number">Table 4 </span><span class="caption-text">Simulation Parameters for <strong>two-level</strong> Linear Chain Model</span><a class="headerlink" href="#id22" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 66.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Value</strong></p></th>
+<th class="head"><p><strong>Unit</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(N\)</span></p></td>
+<td><p>20</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(m\)</span></p></td>
+<td><p>12.0</p></td>
+<td><p>amu</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(V_0\)</span></p></td>
+<td><p>175.0</p></td>
+<td><p>kJ/mol</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(a\)</span></p></td>
+<td><p>4.0</p></td>
+<td><p><span class="math notranslate nohighlight">\(\angstrom ^{-1}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\gamma\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\text{10}^{14}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(s^{-1}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\Delta=\epsilon_2-\epsilon_1\)</span></p></td>
+<td><p>8.0</p></td>
+<td><p>kJ/mol</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(d_{12}\)</span></p></td>
+<td><p>-6.0</p></td>
+<td><p><span class="math notranslate nohighlight">\(\angstrom ^{-1}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default" id="id23">
+<caption><span class="caption-number">Table 5 </span><span class="caption-text">Simulation Parameters for <strong>three-level</strong> Superexchange Linear Chain Model</span><a class="headerlink" href="#id23" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 66.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Value</strong></p></th>
+<th class="head"><p><strong>Unit</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(N\)</span></p></td>
+<td><p>20</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(m\)</span></p></td>
+<td><p>12.0</p></td>
+<td><p>amu</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(V_0\)</span></p></td>
+<td><p>175.0</p></td>
+<td><p>kJ/mol</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(a\)</span></p></td>
+<td><p>4.0</p></td>
+<td><p><span class="math notranslate nohighlight">\(\angstrom ^{-1}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\gamma\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\text{10}^{14}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(s^{-1}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\epsilon_1\)</span></p></td>
+<td><p>0</p></td>
+<td><p>kJ/mol</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\epsilon_2\)</span></p></td>
+<td><p>39.0</p></td>
+<td><p>kJ/mol</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\epsilon_3\)</span></p></td>
+<td><p>13.0</p></td>
+<td><p>kJ/mol</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(d_{12}\)</span></p></td>
+<td><p>-6.0</p></td>
+<td><p><span class="math notranslate nohighlight">\(\angstrom ^{-1}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(d_{23}\)</span></p></td>
+<td><p>8.0</p></td>
+<td><p><span class="math notranslate nohighlight">\(\angstrom ^{-1}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(d_{13}\)</span></p></td>
+<td><p>0</p></td>
+<td><p><span class="math notranslate nohighlight">\(\angstrom ^{-1}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="super-exchange-model">
+<h2>Super Exchange Model<a class="headerlink" href="#super-exchange-model" title="Link to this heading"></a></h2>
+<p>Diabatic Hamiltonians and parameters for 3-state super exchange model <span id="id15">[<a class="reference internal" href="reference.html#id2" title="Linjun Wang, Dhara Trivedi, and Oleg V. Prezhdo. Global flux surface hopping approach for mixed quantum-classical dynamics. J. Chem. Theory Comput., 10:3598-3605, 2014. doi:10.1021/ct5003835.">13</a>]</span> are defined as:</p>
+<div class="math notranslate nohighlight">
+\[V_{ii}(R) = A_i\]</div>
+<div class="math notranslate nohighlight">
+\[V_{ij}(R) = V_{ji}(R) = B_{ij}\, e^{-R^2/2}\]</div>
+<table class="docutils align-center" id="id24">
+<caption><span class="caption-number">Table 6 </span><span class="caption-text">Super Exchange model parameter (in a.u.)</span><a class="headerlink" href="#id24" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 17.2%" />
+<col style="width: 13.8%" />
+<col style="width: 13.8%" />
+<col style="width: 13.8%" />
+<col style="width: 13.8%" />
+<col style="width: 13.8%" />
+<col style="width: 13.8%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(i=1\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(i=2\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(i=3\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(ij=12\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(ij=23\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(ij=13\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(A_i\)</span></p></td>
+<td><p>0</p></td>
+<td><p>0.01</p></td>
+<td><p>0.005</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(B_{ij}\)</span></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0.001</p></td>
+<td><p>0.01</p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="spinboson-model">
 <h2>Spin–Boson Model<a class="headerlink" href="#spinboson-model" title="Link to this heading"></a></h2>
-<p>The Spin–Boson Hamiltonian <a href="#id1"><span class="problematic" id="id2">:cite:`Leggett1987`</span></a> is</p>
+<p>The <strong>spin-boson model</strong> provides a theoretical framework for studying non-adiabatic dynamics in a condensed-phase environment. The corresponding Hamiltonian <span id="id16">[<a class="reference internal" href="reference.html#id27" title="A. J. Leggett, S. Chakravarty, A. T. Dorsey, Matthew P. A. Fisher, Anupam Garg, and W. Zwerger. Dynamics of the dissipative two-state system. Rev. Mod. Phys., 59:1–85, 1987. doi:10.1103/RevModPhys.59.1.">14</a>]</span> is given by:</p>
 <div class="math notranslate nohighlight">
 \[H = H_s + H_b + H_{sb}.\]</div>
 <p>Two–level system Hamiltonian:</p>
@@ -369,12 +594,12 @@
 \epsilon &amp; \Delta \\
 \Delta &amp; -\epsilon
 \end{pmatrix},\end{split}\]</div>
-<p>with bias <span class="math notranslate nohighlight">\(\epsilon\)</span> and coupling <span class="math notranslate nohighlight">\(\Delta\)</span>.</p>
+<p>with bias <span class="math notranslate nohighlight">\(\epsilon\)</span> and coupling <span class="math notranslate nohighlight">\(\Delta\)</span> is interacting with a bath of harmonic oscillators defined with,</p>
 <p>Bath Hamiltonian:</p>
 <div class="math notranslate nohighlight">
 \[H_b = \sum_j \left( \frac{P_j^2}{2 M_j}
 + \frac{1}{2} M_j \omega_j^2 R_j^2 \right).\]</div>
-<p>System–bath coupling:</p>
+<p>Two-level system bilaterally interacting with a harmonic bath,  defined as System–bath coupling Hamiltonian:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}H_{sb} = \sigma_z \sum_j c_j R_j =
 \begin{pmatrix}
@@ -382,36 +607,34 @@
 0 &amp; -\sum_j c_j R_j
 \end{pmatrix}.\end{split}\]</div>
 </section>
-<hr class="docutils" />
 <section id="spectral-density">
 <h2>Spectral Density<a class="headerlink" href="#spectral-density" title="Link to this heading"></a></h2>
-<p>General definition for <span class="math notranslate nohighlight">\(N\)</span> bath modes <a href="#id3"><span class="problematic" id="id4">:cite:`Miller1999-debye, Templaar2018`</span></a>:</p>
+<p>General definition for <span class="math notranslate nohighlight">\(N\)</span> bath modes <span id="id17">[<a class="reference internal" href="reference.html#id12" title="Haobin Wang, Xueyu Song, David Chandler, and William H. Miller. Semiclassical study of electronically nonadiabatic dynamics in the condensed-phase: spin-boson problem with debye spectral density. J. Chem. Phys., 110:4828-4840, 1999. doi:10.1063/1.478388.">17</a>, <a class="reference internal" href="reference.html#id7" title="Roel Templaar and David R. Reichman. Generalization of fewest-switches surface hopping for coherence. J. Chem. Phys., 148:102309, 2018. doi:10.1063/1.5000843.">18</a>]</span>:</p>
 <div class="math notranslate nohighlight">
 \[J(\omega) = \frac{\pi}{2} \sum_{j=1}^{N}
 \frac{c_j^2}{M_j \omega_j} \, \delta(\omega - \omega_j),\]</div>
-<dl class="simple">
-<dt>where,</dt><dd><ul class="simple">
+<p>where</p>
+<blockquote>
+<div><ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(M_j\)</span> = mass of <span class="math notranslate nohighlight">\(j\)</span>-th oscillator,</p></li>
-<li><p><span class="math notranslate nohighlight">\(c_j\)</span> = coupling constant,</p></li>
+<li><p><span class="math notranslate nohighlight">\(c_j\)</span> = coupling constant between the system and the <span class="math notranslate nohighlight">\(j\)</span>,-th oscillator,</p></li>
 <li><p><span class="math notranslate nohighlight">\(\omega_j\)</span> = oscillator frequency.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 <section id="debye-form">
 <h3>Debye form<a class="headerlink" href="#debye-form" title="Link to this heading"></a></h3>
 <div class="math notranslate nohighlight">
 \[J_D(\omega) = \frac{E_r}{2} \,
 \frac{\omega \, \omega_c}{\omega^2 + \omega_c^2},\]</div>
-<dl class="simple">
-<dt>where,</dt><dd><ul class="simple">
+<p>where</p>
+<blockquote>
+<div><ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(E_r\)</span> = reorganization energy,</p></li>
-<li><p><span class="math notranslate nohighlight">\(\omega_c\)</span> = cutoff frequency.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\omega_c\)</span> = characteristic bath frequency.</p></li>
 </ul>
-</dd>
-</dl>
-<hr class="docutils" />
+</div></blockquote>
 <p><strong>Debye Bath Discretization</strong></p>
-<p>Frequencies and couplings are discretizeda as <a href="#id5"><span class="problematic" id="id6">:cite:`Wang:2001_bath_discret,Hanna:2013_bath_discret`</span></a>:</p>
+<p>Frequencies and couplings are discretizeda as <span id="id18">[<a class="reference internal" href="reference.html#id10" title="Haobin Wang, Michael Thoss, and William H. Miller. Systematic convergence in the dynamical hybrid approach for complex systems: a numerically exact methodology. J. Chem. Phys., 115:2979-2990, 2001. doi:10.1063/1.1385561.">19</a>, <a class="reference internal" href="reference.html#id9" title="Najeh Rekik, Chang-Yu Hsieh, Holly Freedman, and Gabriel Hanna. A mixed quantum-classical liouville study of the population dynamics in a model photo-induced condensed phase electron transfer reaction. J. Chem. Phys., 138:144106, 2013. doi:10.1063/1.4799272.">20</a>]</span>:</p>
 <div class="math notranslate nohighlight">
 \[\omega_j = \omega_c \cdot
 \tan\left( \frac{j}{N} \tan^{-1}\left( \frac{\omega_{\text{max}}}{\omega_c} \right) \right),\]</div>
@@ -420,20 +643,19 @@
 \frac{M_j E_r}{\pi N} \,
 \tan^{-1}\left( \frac{\omega_{\text{max}}}{\omega_c} \right)
 },\]</div>
-<p>with <span class="math notranslate nohighlight">\(\omega_{\text{max}} = 20 \omega_c\)</span>.</p>
+<p>with <span class="math notranslate nohighlight">\(\omega_{\text{max}} = 20 \omega_c\)</span>, a high-frequency cutoff.</p>
 </section>
-<hr class="docutils" />
 <section id="ohmic-form">
 <h3>Ohmic form<a class="headerlink" href="#ohmic-form" title="Link to this heading"></a></h3>
 <div class="math notranslate nohighlight">
 \[J_O(\omega) = \frac{\pi}{2} \, \alpha \, \omega \, e^{\omega/\omega_c},\]</div>
-<dl class="simple">
-<dt>where,</dt><dd><ul class="simple">
+<p>where</p>
+<blockquote>
+<div><ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\alpha\)</span> = Kondo parameter that controls the strength of the coupling,</p></li>
-<li><p><span class="math notranslate nohighlight">\(\omega_c\)</span> = cutoff frequency.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\omega_c\)</span> = characteristic bath frequency.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 <p><strong>Ohmic Bath Discretization</strong></p>
 <p>Frequencies and couplings are discretizeda as:</p>
 <div class="math notranslate nohighlight">
@@ -451,7 +673,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="install.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="keywords.html" class="btn btn-neutral float-right" title="Keywords" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="simulation.html" class="btn btn-neutral float-right" title="Simulations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

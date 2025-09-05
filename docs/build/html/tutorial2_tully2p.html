@@ -1,0 +1,228 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tully Model-II (RPSH) &mdash; SHARP Pack 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="shortcut icon" href="_static/rpsh.png"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=60dbed4a"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tully Model-III (Branching Probability)" href="tutorial3_tully3b.html" />
+    <link rel="prev" title="Tully Model-I (FSSH)" href="tutorial1_tully1s.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SHARP Pack
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Method:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="method-rpsh.html">Ring Polymer Surface Hopping (RPSH) Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="method-dboc.html">Diagonal Born–Oppenheimer Correction (DBOC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="method-decoh.html">Decoherence</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial1_tully1s.html">Tully Model-I (FSSH)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tully Model-II (RPSH)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prepare-param-in">Prepare <code class="docutils literal notranslate"><span class="pre">param.in</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-simulation">Run Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plot-results">Plot Results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial3_tully3b.html">Tully Model-III (Branching Probability)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial4_lchain.html">Linear Chain Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial5_spinboson.html">Spin-Boson Model (Debye Spectral Density)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Bibliography</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SHARP Pack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Tully Model-II (RPSH)</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tully-model-ii-rpsh">
+<span id="ex2-tully2p"></span><h1>Tully Model-II (RPSH)<a class="headerlink" href="#tully-model-ii-rpsh" title="Link to this heading"></a></h1>
+<p>This tutorial demonstrates how to run RPSH simulation in <strong>parallel mode</strong>.
+The number of parallel runs is controlled by the value of <code class="docutils literal notranslate"><span class="pre">ncore</span>&#160; <span class="pre">n</span></code> specified in the <code class="docutils literal notranslate"><span class="pre">param.in</span></code> file.</p>
+<p>Follow the steps below to perform the simulation:</p>
+<section id="prepare-param-in">
+<h2>Prepare <code class="docutils literal notranslate"><span class="pre">param.in</span></code><a class="headerlink" href="#prepare-param-in" title="Link to this heading"></a></h2>
+<p>Set <code class="docutils literal notranslate"><span class="pre">ncore</span>&#160; <span class="pre">n</span></code> (where <code class="docutils literal notranslate"><span class="pre">4</span></code> is the number of desired parallel runs).</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#tully model-II input parameters</span>
+model<span class="w">        </span>tully2
+nParticle<span class="w">    </span><span class="m">1</span>
+nbeads<span class="w">       </span><span class="m">4</span>
+approx<span class="w">       </span>CA
+nmode<span class="w">        </span>matrix
+iseed<span class="w">        </span><span class="m">12345</span>
+ncore<span class="w">        </span><span class="m">4</span>
+tstep<span class="w">        </span><span class="m">1</span>.0
+nsteps<span class="w">       </span><span class="m">3000</span>
+ntraj<span class="w">        </span><span class="m">1000</span>
+pinit<span class="w">        </span><span class="m">15</span>.0
+rsamp<span class="w">        </span>gaussian
+vsamp<span class="w">        </span>fixed
+rundtail<span class="w">     </span>Yes
+iprint<span class="w">       </span><span class="m">10</span>
+finish
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="run-simulation">
+<h2>Run Simulation<a class="headerlink" href="#run-simulation" title="Link to this heading"></a></h2>
+<p>Run the simulation using the provided job script in <code class="docutils literal notranslate"><span class="pre">utility/</span></code> directory (e.g., <code class="docutils literal notranslate"><span class="pre">job-script-hpc.sh</span></code> for an HPC cluster, or <code class="docutils literal notranslate"><span class="pre">job-script-local.sh</span></code> for local execution).</p>
+<p>Based on <code class="docutils literal notranslate"><span class="pre">ncore</span>&#160; <span class="pre">4</span></code>, the job script will:</p>
+<ul>
+<li><p>Create <strong>4</strong> <code class="docutils literal notranslate"><span class="pre">run*</span></code> directories.</p></li>
+<li><p>Distribute the trajectories evenly across the runs.</p></li>
+<li><p>Execute the simulations in parallel.</p></li>
+<li><p>After all parallel simulations are complete, the script automatically averages the results from the <strong>4</strong> <code class="docutils literal notranslate"><span class="pre">run*</span></code> and produces the final population output.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To get average result from parallel runs, must to specify <code class="docutils literal notranslate"><span class="pre">fname</span></code>, and <code class="docutils literal notranslate"><span class="pre">df</span></code> inside the <strong>write_average_input()</strong> fucntion in <code class="docutils literal notranslate"><span class="pre">job_script_hcp.sh</span></code> or <code class="docutils literal notranslate"><span class="pre">job_script_local.sh</span></code> as:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># ==== FUNCTION TO CREATE AVERAGE INPUT ====</span>
+write_average_input<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="c1">#fname :: File name of specific population data for averaging</span>
+<span class="c1">#df    :: No. of data column(s)(except first column)</span>
+
+<span class="nv">fname</span><span class="o">=</span><span class="s2">&quot;pop_diabat3.out&quot;</span>
+<span class="nv">df</span><span class="o">=</span><span class="m">2</span>
+.
+.
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To compute a standalone average of a specific output file after completing the parallel simulation, one can use <code class="docutils literal notranslate"><span class="pre">job_script_avg.sh</span></code> script provided in <code class="docutils literal notranslate"><span class="pre">utility/</span></code> directory.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Pay attention to modifying the variables <code class="docutils literal notranslate"><span class="pre">fname</span></code> (output filename) and <code class="docutils literal notranslate"><span class="pre">df</span></code> (number of data columns, excluding the first column) inside the <code class="docutils literal notranslate"><span class="pre">write_average_input()</span></code> function of <code class="docutils literal notranslate"><span class="pre">job_script_avg.sh</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.
+.
+<span class="c1"># ==== FUNCTION TO CREATE AVERAGE INPUT ====</span>
+write_average_input<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="c1">#fname :: File name of specific population data for averaging</span>
+<span class="c1">#df    :: No. of data column(s)(except first column)</span>
+
+<span class="nv">fname</span><span class="o">=</span><span class="s2">&quot;pop_diabat2.out&quot;</span>
+<span class="nv">df</span><span class="o">=</span><span class="m">4</span>
+.
+.
+</pre></div>
+</div>
+</div>
+</li>
+</ul>
+</section>
+<section id="plot-results">
+<h2>Plot Results<a class="headerlink" href="#plot-results" title="Link to this heading"></a></h2>
+<p>Finally, use any visualization tool (e.g., <strong>gnuplot</strong> or <strong>matplotlib</strong>) to plot the population dynamics from the output files and analyze the results.</p>
+<blockquote>
+<div><div class="highlight-gnuplot notranslate"><div class="highlight"><pre><span></span><span class="c">#!/usr/bin/gnuplot</span>
+
+<span class="k">set</span><span class="w"> </span><span class="nb">xlabel</span><span class="w"> </span><span class="s">&quot;Time (a.u.)&quot;</span>
+<span class="k">set</span><span class="w"> </span><span class="nb">ylabel</span><span class="w"> </span><span class="s">&quot;Population&quot;</span>
+<span class="k">set</span><span class="w"> </span><span class="nb">title</span><span class="w"> </span><span class="s">&quot;Tully2 Diabatic Populations&quot;</span>
+<span class="k">plot</span><span class="w"> </span><span class="s">&quot;pop_diabat3_ave.out&quot;</span><span class="w"> </span><span class="nb">u</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="w"> </span><span class="nb">w</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="n">lw</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nb">title</span><span class="w"> </span><span class="s">&quot;Diabatic State 1&quot;</span><span class="o">,</span><span class="w"> </span>\
+<span class="w">     </span><span class="s">&quot;pop_diabat3_ave.out&quot;</span><span class="w"> </span><span class="nb">u</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">3</span><span class="w"> </span><span class="nb">w</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="n">lw</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="nb">title</span><span class="w"> </span><span class="s">&quot;Diabatic State 2&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tutorial1_tully1s.html" class="btn btn-neutral float-left" title="Tully Model-I (FSSH)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorial3_tully3b.html" class="btn btn-neutral float-right" title="Tully Model-III (Branching Probability)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SHARP Pack Developers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

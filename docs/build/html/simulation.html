@@ -1,0 +1,834 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulations &mdash; SHARP Pack 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="shortcut icon" href="_static/rpsh.png"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=60dbed4a"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"tex": {"macros": {"angstrom": "\\unicode{8491}"}}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Ring Polymer Surface Hopping (RPSH) Algorithm" href="method-rpsh.html" />
+    <link rel="prev" title="Models" href="model.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SHARP Pack
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Models</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Simulations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#keywords">Keywords</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#input-file">Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#output-files">Output Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#population-calculation">Population Calculation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#adiabatic-population"><strong>Adiabatic Population</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#diabatic-population"><strong>Diabatic Population</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-simulation">Running Simulation</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Method:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="method-rpsh.html">Ring Polymer Surface Hopping (RPSH) Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="method-dboc.html">Diagonal Born–Oppenheimer Correction (DBOC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="method-decoh.html">Decoherence</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial1_tully1s.html">Tully Model-I (FSSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial2_tully2p.html">Tully Model-II (RPSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial3_tully3b.html">Tully Model-III (Branching Probability)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial4_lchain.html">Linear Chain Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial5_spinboson.html">Spin-Boson Model (Debye Spectral Density)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Bibliography</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SHARP Pack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Simulations</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="simulations">
+<h1>Simulations<a class="headerlink" href="#simulations" title="Link to this heading"></a></h1>
+<p>To run a simulation with <strong>SHARP Pack</strong>, only a single input file named
+<code class="docutils literal notranslate"><span class="pre">param.in</span></code> is required. This file contains all simulation details specified through predefined keywords.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The file must be located in the same directory where the executable
+<code class="docutils literal notranslate"><span class="pre">sharp.x</span></code> is launched, unless a path is explicitly provided.</p>
+</div>
+<section id="keywords">
+<h2>Keywords<a class="headerlink" href="#keywords" title="Link to this heading"></a></h2>
+<p>Table <a class="reference internal" href="#tab-keyword"><span class="std std-ref">Input Keywords</span></a> lists all available input parameter keywords and their usage.</p>
+<span id="tab-keyword"></span><table class="docutils align-center" id="id2">
+<caption><span class="caption-number">Table 7 </span><span class="caption-text">Input Keywords</span><a class="headerlink" href="#id2" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Keywords</strong></p></th>
+<th class="head"><p><strong>Arguments</strong></p></th>
+<th class="head"><p><strong>Descriptions</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>acckval</strong></p></td>
+<td><p><cite>yes</cite></p></td>
+<td><p>If TRUE, writes accumulated result with k-value; useful for branching probability calculation(s) of <strong>Tully model</strong></p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><span class="math notranslate nohighlight">\(\color{blue}{\text{no}}\)</span></p></td>
+<td><p>No accumulated result(s)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>approximation</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\color{blue}{\text{CA}}\)</span></p></td>
+<td><p>Centroid approximation RPSH (RPSH-CA)</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>BA</p></td>
+<td><p>Bead approximation RPSH (RPSH-BA)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>dboc</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\color{blue}{\text{BF}}\)</span></p></td>
+<td><p>DBOC corrected force(s) at bead level</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>CF</p></td>
+<td><p>DBOC corrected force(s) at centroid level</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>decoherence</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\color{blue}{\text{none}}\)</span></p></td>
+<td><p>No decoherence correction</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>damp</p></td>
+<td><p>Expontial damping decoherence</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>dynamics</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\color{blue}{\text{rpmd}}\)</span></p></td>
+<td><p>RPMD dynamics with surface hopping</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><span class="math notranslate nohighlight">\(\text{trpmd}\)</span></p></td>
+<td><p>T-RPMD dynamics with surface hopping</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>iprint</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td><p>Print data every n timesteps</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>iseed</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td><p>Random number generator seed</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>nbead</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td><p>Number of bead(s)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>ncore</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td><p>Number of core(s): (1-Serial), (n-Parallel)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>nequil</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td><p>equailibrate steps <strong>if pimd sampling</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>nmode</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\color{blue}{\text{fft}}\)</span></p></td>
+<td><p>FFT tranform for normal mode</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>matrix</p></td>
+<td><p>use normal mode tranformation matrix for normal mode</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>nparticle</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td><p>Number of simulating particle(s)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>nsample</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td><p>sample run steps <strong>if pimd sampling</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>nstate</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\color{blue}{n}\)</span></p></td>
+<td><p>Number of electronic states; Default based on Model</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>nstep</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td><p>Number of simulation steps</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>ntraj</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td><p>Number of trajectories</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>model</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(s\)</span></p></td>
+<td><p>Model name string from Table <a class="reference internal" href="model.html#tab-model"><span class="std std-ref">Models</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>pimd</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\text{pile} \quad \tau\)</span></p></td>
+<td><p>PIMD sampling of postion and velocity with PILE thermostat</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>pinit</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(f\)</span></p></td>
+<td><p>Initial momentum (a.u.)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>rsamp</strong></p></td>
+<td><p>fraction</p></td>
+<td><p>Sample centroid bead from Gaussian distribution and other  bead(s) position based on fraction of de-Broglie length</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><span class="math notranslate nohighlight">\(\color{blue}{\text{gaussian}}\)</span></p></td>
+<td><p>Sample initial bead(s) position from Gaussian distribution</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>wigner</p></td>
+<td><p>Sample initial bead(s) position from Wigner distribution</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>rmap</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\color{blue}{\text{no}}\)</span></p></td>
+<td><p>No mapping ring polymer centroid to dividing surface after sampling <strong>rsamp</strong></p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>r0</p></td>
+<td><p>Mapping ring polymer centroid to dividing surface after sampling <strong>rsamp</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>rmode</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\color{blue}{\text{direct}}\)</span></p></td>
+<td><p>Direct ring polymer sampling of <strong>rsamp</strong></p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>norm</p></td>
+<td><p>Normal mode ring polymer sampling of <strong>rsamp</strong> for <strong>gaussian</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>rundtail</strong></p></td>
+<td><p><cite>yes</cite></p></td>
+<td><p>Print run-time details of the simulation</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><span class="math notranslate nohighlight">\(\color{blue}{\text{no}}\)</span></p></td>
+<td><p>No details of simulation</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>temperature</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(f\)</span></p></td>
+<td><p>Temperature (K)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>tstep</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(f\)</span></p></td>
+<td><p>Simulation time-step (a.u.)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>vsamp</strong></p></td>
+<td><p>fixed</p></td>
+<td><p>Deterministic initial momentum</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><span class="math notranslate nohighlight">\(\color{blue}{\text{gaussian}}\)</span></p></td>
+<td><p>Sample initial momenta from Gaussian distribution</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>wigner</p></td>
+<td><p>Sample initial momenta from Wigner distribution</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>vrescale</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\color{blue}{\text{CL}}\)</span></p></td>
+<td><p>Centroid-approximation level of velocity rescaling of ring-polymer for energy conservation</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>BL</p></td>
+<td><p>Bead-approximation level of velocity rescaling of ring-polymer for energy conservation</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>vreverse</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\color{blue}{\text{never}}\)</span></p></td>
+<td><p>Never reversal (NR) velocity for frustrated hop(s)</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>always</p></td>
+<td><p>Always reversal (VR) of velocity for frustrated hop(s)</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>delV1</p></td>
+<td><p>Velocity reversal based on Truhlar’s <span class="math notranslate nohighlight">\(\Delta V\)</span> scheme</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>delV2</p></td>
+<td><p>Velocity reversal based on Subotnik’s <span class="math notranslate nohighlight">\(\Delta V^2\)</span> scheme</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>finish</strong></p></td>
+<td><p><cite>***</cite></p></td>
+<td><p>End of the input file</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="simple">
+<dt><em>Legend:</em></dt><dd><p><span class="math notranslate nohighlight">\(n\)</span> – integer,
+<span class="math notranslate nohighlight">\(f\)</span> – real number,
+<span class="math notranslate nohighlight">\(s\)</span> – string,
+<span class="math notranslate nohighlight">\(\color{blue}{\text{blue}}\)</span> – denotes default value.</p>
+</dd>
+</dl>
+<hr class="docutils" />
+<table class="docutils align-center" id="id3">
+<caption><span class="caption-number">Table 8 </span><span class="caption-text">Spin-boson model specific keywords</span><a class="headerlink" href="#id3" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 17.4%" />
+<col style="width: 26.1%" />
+<col style="width: 56.5%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Keywords</strong></p></th>
+<th class="head"><p><strong>Arguments</strong></p></th>
+<th class="head"><p><strong>Descriptions</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>model</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\text{spinboson} \quad \epsilon \quad \Delta \quad \text{enu}\)</span></p></td>
+<td><p>Spin-boson model with parameters with scale factor <code class="docutils literal notranslate"><span class="pre">enu</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>spectra</strong></p></td>
+<td><p>debye <span class="math notranslate nohighlight">\(\quad E_r \quad \omega_c \quad T\)</span></p></td>
+<td><p>Debye spectral density parameters and temperature</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>ohmic <span class="math notranslate nohighlight">\(\quad E_r \quad \omega_c \quad T\)</span></p></td>
+<td><p>Ohmic spectral density parameters and temperature</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<ul class="simple">
+<li><p>All input parameters are specified in <strong>atomic units (a.u.)</strong>, except for <strong>temperature</strong>, which must be given in <strong>Kelvin</strong>.</p></li>
+<li><p>For <strong>spin-boson parameters</strong>, values are expressed in energy unit of <span class="math notranslate nohighlight">\(\text{cm}^{-1}\)</span> including temperature, and scaled by the factor <code class="docutils literal notranslate"><span class="pre">enu</span></code>.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">enu</span> <span class="pre">=</span> <span class="pre">1</span></code>, the spin-boson parameters are interpreted directly as in <strong>atomic units</strong>.</p></li>
+</ul>
+</div>
+</section>
+<section id="input-file">
+<h2>Input File<a class="headerlink" href="#input-file" title="Link to this heading"></a></h2>
+<p>A sample input file (param.in) for Spin-Boson model.</p>
+<blockquote>
+<div><div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-number">Listing 1 </span><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">SAMPLE</span> <span class="pre">INPUT</span> <span class="pre">FILE</span> <span class="pre">(param.in)</span></code></span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="c1">#SHARP Pack INPUT PARAMETERS</span>
+<span class="w"> </span><span class="c1">#model(spinboson eps delta, enu)</span>
+<span class="w"> </span>model<span class="w">  </span>spinboson<span class="w">  </span><span class="m">0</span>.0<span class="w">  </span><span class="m">1</span>.0<span class="w">  </span><span class="m">104</span>.25
+
+<span class="w"> </span><span class="c1">#bathspectrum (lambda wc temp)</span>
+<span class="w"> </span>spectra<span class="w">  </span>debye<span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">2</span>
+
+<span class="w"> </span>nbeads<span class="w">  </span><span class="m">8</span>
+
+<span class="w"> </span>approx<span class="w">  </span>CA
+
+<span class="w"> </span>nmode<span class="w">  </span>matrix
+<span class="w"> </span>
+<span class="w"> </span>iseed<span class="w">  </span><span class="m">12345</span>
+
+<span class="w"> </span>nParticle<span class="w">  </span><span class="m">100</span>
+
+<span class="w"> </span><span class="c1">#number steps</span>
+<span class="w"> </span>nsteps<span class="w">  </span><span class="m">41340</span>
+
+<span class="w"> </span><span class="c1">#trajectories</span>
+<span class="w"> </span>ntraj<span class="w">  </span><span class="m">1000</span>
+
+<span class="w"> </span>ncore<span class="w">  </span><span class="m">20</span>
+
+<span class="w"> </span><span class="c1">#timestep</span>
+<span class="w"> </span>tstep<span class="w">  </span><span class="m">1</span>.0
+
+<span class="w"> </span><span class="c1">#postion sampling </span>
+<span class="w"> </span>rsamp<span class="w">  </span>gaussian
+<span class="w"> </span>rmode<span class="w">  </span>direct
+<span class="w"> </span>rmap<span class="w">   </span>no
+
+<span class="w"> </span><span class="c1">#velocity sampling</span>
+<span class="w"> </span>vsamp<span class="w">  </span>gaussian
+
+<span class="w"> </span><span class="c1">#velocity reversal scheme for frustrated hop</span>
+<span class="w"> </span>vreverse<span class="w">  </span>always
+
+<span class="w"> </span><span class="c1">#decoherence</span>
+<span class="w"> </span>decoherence<span class="w">  </span>none
+
+<span class="w"> </span>rundtail<span class="w">  </span>yes
+
+<span class="w"> </span>finish
+<span class="w"> </span><span class="c1">#end of Input File</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+</section>
+<section id="output-files">
+<h2>Output Files<a class="headerlink" href="#output-files" title="Link to this heading"></a></h2>
+<p>After a successful simulation run, SHARP Pack generates the following output files:</p>
+<span id="tab-outfile"></span><table class="docutils align-center" id="id5">
+<caption><span class="caption-number">Table 9 </span><span class="caption-text">Output file(s)</span><a class="headerlink" href="#id5" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 23.1%" />
+<col style="width: 76.9%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>File(s)</strong></p></th>
+<th class="head"><p><strong>Descriptions</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">param.out</span></code></p></td>
+<td><p>Lists all the model parameters used in the simulation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dcoupling.out</span></code></p></td>
+<td><p>Detailed trajectory data including positions, momenta, energies, NACs, etc.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hoppinghist.out</span></code></p></td>
+<td><p>Records surface-hopping events between different potential energy surfaces.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pop_adiabat1.out</span></code></p></td>
+<td><p>Adiabatic population computed using Method I.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pop_adiabat2.out</span></code></p></td>
+<td><p>Adiabatic population computed using Method II.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pop_diabat1.out</span></code></p></td>
+<td><p>Diabatic population computed using Method I.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pop_diabat2.out</span></code></p></td>
+<td><p>Diabatic population computed using Method II.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pop_diabat3.out</span></code></p></td>
+<td><p>Diabatic population computed using Method III.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pop_branch.out</span></code></p></td>
+<td><p>Branching probablity of <strong>Tully model</strong> if <code class="docutils literal notranslate"><span class="pre">accKval</span></code>  <code class="docutils literal notranslate"><span class="pre">yes</span></code> .</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sampling_pos.out</span></code></p></td>
+<td><p>Initial sampling distribution of positions.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sampling_vel.out</span></code></p></td>
+<td><p>Initial sampling distribution of velocities.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sampling_dis.out</span></code></p></td>
+<td><p>Initial sampling Boltzmann distribution function of speeds.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pimd_sample.out</span></code></p></td>
+<td><p>PIMD sampling output (generated only if PIMD sampling is enabled).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">energy_surface.out</span></code></p></td>
+<td><p>Diabatic and adiabatic energy surfaces, including NAC vectors.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">energy_dboc.out</span></code></p></td>
+<td><p>Adiabatic and DBOC energy surfaces (if dboc is requested)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">psi.out</span></code></p></td>
+<td><p>Wavefunctions, adiabatic coefficients, and PES.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bathfrequency.out</span></code></p></td>
+<td><p>Spectral density information (specific to the spin-boson model).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The output files <code class="docutils literal notranslate"><span class="pre">dcoupling.out</span></code>, <code class="docutils literal notranslate"><span class="pre">hoppinghist.out</span></code>, and <code class="docutils literal notranslate"><span class="pre">psi.out</span></code> are produced <strong>only if</strong> <code class="docutils literal notranslate"><span class="pre">rundtail</span></code> is <code class="docutils literal notranslate"><span class="pre">yes</span></code> in the input file.</p>
+</div>
+</section>
+<section id="population-calculation">
+<h2>Population Calculation<a class="headerlink" href="#population-calculation" title="Link to this heading"></a></h2>
+<p>SHARP Pack runs simulations in an <strong>adiabatic formalism</strong>; hence, the adiabatic state populations are the direct results. But it also provides multiple approaches for computing adiabatic and diabatic populations.</p>
+<section id="adiabatic-population">
+<h3><strong>Adiabatic Population</strong><a class="headerlink" href="#adiabatic-population" title="Link to this heading"></a></h3>
+<p>There are two methods:</p>
+<blockquote>
+<div><p><strong>Method-I: Direct counting trajectory</strong></p>
+<p>The percentage of trajectories propagating on each adiabatic PES represents the population of that state.</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[P_{\alpha} = \langle \delta_{\alpha,\lambda} \rangle\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lambda\)</span> is the adiabatic active surface.</p>
+<p>output file name: <code class="docutils literal notranslate"><span class="pre">pop_adiabat1.out</span></code></p>
+</div></blockquote>
+<p><strong>Method-II: Density matrix method</strong></p>
+<p>Populations are computed from the complex-valued electronic coefficients.</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[P_{\alpha} = \langle \rho_{\alpha\alpha} \rangle\]</div>
+<p>where <span class="math notranslate nohighlight">\(\rho_{ij} = c_i\,c_j^*\)</span> is the electronic density matrix.</p>
+<p>output file name: <code class="docutils literal notranslate"><span class="pre">pop_adiabat2.out</span></code></p>
+</div></blockquote>
+</div></blockquote>
+</section>
+<section id="diabatic-population">
+<h3><strong>Diabatic Population</strong><a class="headerlink" href="#diabatic-population" title="Link to this heading"></a></h3>
+<p>There are three methods, <span id="id1">[<a class="reference internal" href="reference.html#id6" title="Brian R. Landry, Martin J. Falk, and Joseph E. Subotnik. Communication: the correct interpretation of surface hopping trajectories: how to calculate electronic properties. J. Chem. Phys., 139:211101, 2013. doi:10.1063/1.4837795.">21</a>]</span> using <span class="math notranslate nohighlight">\(U_{ij}\)</span> which are elements of the adiabatic-to-diabatic transformation matrix, and <span class="math notranslate nohighlight">\(\lambda\)</span> denotes the active surface.</p>
+<blockquote>
+<div><p><strong>Method-I: Projection Method</strong></p>
+<p>The diabatic population is determined by projecting the active adiabatic state onto the diabatic basis.</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[P_\alpha = \left\langle \sum_i |U_{\alpha i}\, \delta_{i,\lambda}|^2 \right\rangle,\]</div>
+<p>output file name: <code class="docutils literal notranslate"><span class="pre">pop_diabat1.out</span></code></p>
+</div></blockquote>
+<p><strong>Method-II: Electronic Wavefunction Method</strong></p>
+<p>Diabatic populations are calculated by transforming the electronic coefficients <span class="math notranslate nohighlight">\(c_i\)</span> in the adiabatic basis to the diabatic representation.</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[P_\alpha = \left\langle \sum_i | U_{\alpha i}\,c_i |^2 \right\rangle,\]</div>
+<p>output file name: <code class="docutils literal notranslate"><span class="pre">pop_diabat2.out</span></code></p>
+</div></blockquote>
+<p><strong>Method-III: Mixed quantum-classical density matrix</strong></p>
+<p>The diabatic populations are extracted from the electronic density matrix in the diabatic representation.</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[P_\alpha = \left\langle \sum_i |U_{\alpha i}|^2 \delta_{i,\lambda} + \sum_{i&lt;j} 2\, \text{Re}\left[ U_{\alpha i} , \rho_{ij} , U_{\alpha j}^* \right] \right\rangle,\]</div>
+<p>output file name: <code class="docutils literal notranslate"><span class="pre">pop_diabat3.out</span></code></p>
+</div></blockquote>
+</div></blockquote>
+</section>
+</section>
+<section id="running-simulation">
+<h2>Running Simulation<a class="headerlink" href="#running-simulation" title="Link to this heading"></a></h2>
+<p>To run <strong>SHARP Pack</strong>, a single input file <code class="docutils literal notranslate"><span class="pre">param.in</span></code> is required, which defines the system model parameters (see <a class="reference internal" href="#tab-keyword"><span class="std std-ref">Input Keywords</span></a> for details). Simulations are executed using the provided bash scripts located in the <code class="docutils literal notranslate"><span class="pre">utility/</span></code> directory.</p>
+<p>Available job submission scripts:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">job-script-local.sh</span></code>
+Run simulations on a <strong>local machine</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">job-script-hpc.sh</span></code>
+Submit jobs on an <strong>HPC cluster</strong> using the <strong>Slurm</strong> workload manager.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">job-script-branching.sh</span></code>
+Used <strong>only</strong> for computing branching probabilities on <strong>Tully model</strong>  over multiple <em>k</em>-values on an HPC system.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">job-script-avg.sh</span></code>
+Submit job that computes average of <cite>output</cite> of the completed parallel jobs simulation.</p></li>
+</ul>
+<p>Each script automatically generates the appropriate job submission file (serial or parallel, depending on the <code class="docutils literal notranslate"><span class="pre">ncore</span></code> value in <code class="docutils literal notranslate"><span class="pre">param.in</span></code>) and submits the job.</p>
+<p><strong>Usage</strong></p>
+<p>Run any of the scripts as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run on a local machine</span>
+$<span class="w"> </span>sh<span class="w"> </span>job-script-local.sh
+
+<span class="c1"># Run on an HPC cluster (Slurm)</span>
+$<span class="w"> </span>sh<span class="w"> </span>job-script-hpc.sh
+
+<span class="c1"># Compute branching probability on HPC</span>
+$<span class="w"> </span>sh<span class="w"> </span>job-script-branching.sh
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><strong>Example script</strong></p>
+<p>An example of <code class="docutils literal notranslate"><span class="pre">job_script_hpc.sh</span></code> is shown below which is designed for running simulations on an <strong>HPC cluster</strong> using the Slurm workload manager.
+It automatically detects the number of cores (<code class="docutils literal notranslate"><span class="pre">ncore</span></code>) requested in the <code class="docutils literal notranslate"><span class="pre">param.in</span></code> file and prepares the submission accordingly:</p>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">ncore</span>&#160; <span class="pre">1</span></code>; A <strong>serial job</strong> is created and submitted.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">ncore</span>&#160; <span class="pre">n</span></code> (<code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>); The script creates n <strong>run* directories</strong> and distributes the number of trajectories across them for <strong>parallel simulation</strong>.
+After all simulations are complete, the results are averaged to produce the final output.</p></li>
+</ul>
+<hr class="docutils" />
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-number">Listing 2 </span><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">Bash</span> <span class="pre">script</span> <span class="pre">for</span> <span class="pre">job</span> <span class="pre">submission</span></code></span><a class="headerlink" href="#id6" title="Link to this code"></a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">#============================================================</span>
+<span class="c1">#     JOB SCRIPT TO RUN SHARP PACK v2 ON HPC SERIAL/PARALLEL</span>
+<span class="c1">#     WHILE RUNNING PARALLEL, BASED ON n-CPU, IT CREATES</span>
+<span class="c1">#     n-DIRECTORIES AND RUN JOBS PARALLELLY, AND FINALLY </span>
+<span class="c1">#     COMPUTES AVERAGE OF THE DISIRED POPULATATION (NEED TO</span>
+<span class="c1">#     SPECIFY FOR INPUT, SEE EXAMPLE IN, WRITE_AVERAGE_INPUT)</span>
+<span class="c1">#</span>
+<span class="c1">#     authors    - D.K. Limbu &amp; F.A. Shakib     </span>
+<span class="c1">#</span>
+<span class="c1">#     Method Development and Materials Simulation Laboratory</span>
+<span class="c1">#     New Jersey Institute of Technology</span>
+<span class="c1">#</span>
+<span class="c1">#     USAGE:: bash job_script_hpc.sh</span>
+<span class="c1">#           - creates and run job(s)</span>
+<span class="c1">#</span>
+<span class="c1">#============================================================</span>
+
+<span class="c1"># Path to your executable</span>
+<span class="c1">#============================================================</span>
+<span class="nv">root2bin</span><span class="o">=</span>~/Softwares/SHARP_pack2/bin
+<span class="nv">exe</span><span class="o">=</span><span class="si">${</span><span class="nv">root2bin</span><span class="si">}</span>/sharp.x
+
+<span class="c1">#============================================================</span>
+<span class="nv">maxcore</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">ncore</span><span class="o">=</span><span class="k">$(</span>awk<span class="w"> </span><span class="s1">&#39;/ncore/{print $2}&#39;</span><span class="w"> </span>param.in<span class="k">)</span>
+<span class="nv">maxcore</span><span class="o">=</span><span class="k">$((</span><span class="nv">ncore</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nv">maxcore</span><span class="w"> </span>?<span class="w"> </span><span class="nv">ncore</span><span class="w"> </span>:<span class="w"> </span><span class="nv">maxcore</span><span class="k">))</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;ncore(s):&#39;</span><span class="w"> </span><span class="nv">$maxcore</span>
+
+<span class="c1"># ==== CONFIGURATION ====</span>
+<span class="c1">#============================================================</span>
+<span class="nv">root_dir</span><span class="o">=</span><span class="s2">&quot;run&quot;</span><span class="w">            </span><span class="c1"># Base directory name</span>
+<span class="nv">ncore</span><span class="o">=</span><span class="nv">$maxcore</span><span class="w">            </span><span class="c1"># Number of parallel jobs/directories</span>
+<span class="nv">param_file</span><span class="o">=</span><span class="s2">&quot;param.in&quot;</span><span class="w">     </span><span class="c1"># Parameter file to copy to each directory</span>
+
+<span class="c1"># Determine padding width based on ncore</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ncore</span><span class="s2">&quot;</span><span class="w"> </span>-lt<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">   </span><span class="nv">pad</span><span class="o">=</span><span class="m">1</span>
+<span class="k">elif</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$ncore</span><span class="s2">&quot;</span><span class="w"> </span>-lt<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">   </span><span class="nv">pad</span><span class="o">=</span><span class="m">2</span>
+<span class="k">else</span>
+<span class="w">   </span><span class="nv">pad</span><span class="o">=</span><span class="m">3</span>
+<span class="k">fi</span>
+
+<span class="c1"># ==== FUNCTION TO CREATE AVERAGE INPUT ====</span>
+write_average_input<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="c1">#fname :: File name of specific population data for averaging</span>
+<span class="w">  </span><span class="c1">#df    :: No. of data column(s)(except first column)?</span>
+
+<span class="w">  </span><span class="nv">fname</span><span class="o">=</span><span class="s2">&quot;pop_diabat3.out&quot;</span><span class="w">   </span>
+<span class="w">  </span><span class="nv">df</span><span class="o">=</span><span class="m">2</span>
+
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Calculating average results from </span><span class="nv">$ncore</span><span class="s2"> parallel jobs.&quot;</span>
+
+<span class="w">  </span>rm<span class="w"> </span>-f<span class="w"> </span>input
+
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="si">${</span><span class="nv">root_dir</span><span class="si">}</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>input
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="si">${</span><span class="nv">fname</span><span class="si">}</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>input
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="si">${</span><span class="nv">ncore</span><span class="si">}</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>input
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="si">${</span><span class="nv">df</span><span class="si">}</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>input
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="si">${</span><span class="nv">pad</span><span class="si">}</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>input
+
+<span class="o">}</span>
+
+<span class="c1"># ==== FUNCTION TO CREATE PARALLEL DIRECTORIES ====</span>
+paralleldir<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="c1"># Check if the first directory already exists</span>
+<span class="w">  </span><span class="nv">first_dir</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">root_dir</span><span class="si">}</span><span class="s2">%0</span><span class="si">${</span><span class="nv">pad</span><span class="si">}</span><span class="s2">g&quot;</span><span class="w"> </span><span class="m">1</span><span class="k">)</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$first_dir</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;**********************************&#39;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$first_dir</span><span class="s2"> exists. Remove it first!&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;**********************************&#39;</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="w">  </span><span class="k">fi</span>
+
+<span class="w">  </span><span class="c1"># Create directories and copy files</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>seq<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;%0</span><span class="si">${</span><span class="nv">pad</span><span class="si">}</span><span class="s2">g&quot;</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="nv">$ncore</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nv">dir</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">root_dir</span><span class="si">}${</span><span class="nv">i</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">    </span>mkdir<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$dir</span><span class="s2">&quot;</span>
+<span class="w">    </span>cp<span class="w"> </span>param.in<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$dir</span><span class="s2">/param.in&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$i</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$dir</span><span class="s2">/icpu.in&quot;</span>
+<span class="w">  </span><span class="k">done</span>
+
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Created </span><span class="nv">$ncore</span><span class="s2"> directories: </span><span class="si">${</span><span class="nv">root_dir</span><span class="si">}</span><span class="k">$(</span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;%0</span><span class="si">${</span><span class="nv">pad</span><span class="si">}</span><span class="s2">d&quot;</span><span class="w"> </span><span class="m">1</span><span class="k">)</span><span class="s2"> to </span><span class="si">${</span><span class="nv">root_dir</span><span class="si">}${</span><span class="nv">ncore</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+<span class="c1"># ==== FUNCTION TO WRITE SLURM ARRAY SCRIPT ====</span>
+write_array_job<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+
+<span class="w">  </span>cat<span class="w"> </span><span class="s">&lt;&lt;EOF &gt; submit_array.sh</span>
+<span class="s">#!/bin/bash</span>
+<span class="s">#SBATCH --job-name=array_run</span>
+<span class="s">#SBATCH --array=1-${ncore}</span>
+<span class="s">#SBATCH --output=${root_dir}%0${pad}a/myoutput_%A_%a.out</span>
+<span class="s">#SBATCH --error=${root_dir}%0${pad}a/jobError_%A_%a.out</span>
+<span class="s">#SBATCH --nodes=1</span>
+<span class="s">#SBATCH --ntasks=1</span>
+<span class="s">#SBATCH --cpus-per-task=1</span>
+<span class="s">#SBATCH -p RM-shared</span>
+<span class="s">#SBATCH --mem-per-cpu=2000M</span>
+<span class="s">#SBATCH --mail-type=end,fail</span>
+<span class="s">#SBATCH --time=01:00:00</span>
+
+<span class="s">cd ${root_dir}\$(printf &quot;%0${pad}d&quot; \${SLURM_ARRAY_TASK_ID})</span>
+
+<span class="s"> $exe</span>
+
+<span class="s">EOF</span>
+
+<span class="w">  </span>chmod<span class="w"> </span>+x<span class="w"> </span>submit_array.sh
+<span class="o">}</span>
+
+<span class="c1"># ==== FUNCTION TO WRITE SERIAL SLURM  SCRIPT ====</span>
+write_serial_job<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+
+<span class="w">  </span>cat<span class="w"> </span><span class="s">&lt;&lt;EOF &gt; submit_serial.sh</span>
+<span class="s">#!/bin/bash</span>
+<span class="s">#SBATCH --job-name=serial_run</span>
+<span class="s">#SBATCH --output=myoutput%j.out</span>
+<span class="s">#SBATCH --error=jobError.out</span>
+<span class="s">#SBATCH --nodes=1</span>
+<span class="s">#SBATCH --ntasks=1</span>
+<span class="s">#SBATCH --cpus-per-task=1</span>
+<span class="s">#SBATCH -p RM-shared</span>
+<span class="s">#SBATCH --mem-per-cpu=2000M</span>
+<span class="s">#SBATCH --mail-type=end,fail</span>
+<span class="s">#SBATCH --time=10:00:00</span>
+
+<span class="s"> $exe</span>
+
+<span class="s">EOF</span>
+
+<span class="w">  </span>chmod<span class="w"> </span>+x<span class="w"> </span>submit_serial.sh
+<span class="o">}</span>
+
+<span class="c1"># ==== FUNCTION TO WRITE ANALYSIS JOB SCRIPT ====</span>
+write_average_job<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">  </span>cat<span class="w"> </span><span class="s">&lt;&lt;EOF &gt; average_job.sh</span>
+<span class="s">#!/bin/bash</span>
+<span class="s">#SBATCH --job-name=average</span>
+<span class="s">#SBATCH --output=myoutput%j.out</span>
+<span class="s">#SBATCH --error=jobError.out</span>
+<span class="s">#SBATCH --ntasks=1</span>
+<span class="s">#SBATCH --cpus-per-task=1</span>
+<span class="s">#SBATCH -p RM-shared</span>
+<span class="s">#SBATCH --mem-per-cpu=2000M</span>
+<span class="s">#SBATCH --mail-type=end,fail</span>
+<span class="s">#SBATCH --time=00:10:00</span>
+
+<span class="s">  ${root2bin}/average.x</span>
+
+<span class="s">EOF</span>
+
+<span class="w">  </span>chmod<span class="w"> </span>+x<span class="w"> </span>average_job.sh
+<span class="o">}</span>
+
+<span class="c1">#============================================================</span>
+<span class="c1">## RUN SERIAL JOB ##</span>
+<span class="c1">#============================================================</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$ncore</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Serial job running in a single core!!&quot;</span>
+
+<span class="w">  </span>write_serial_job
+
+<span class="w">  </span>sbatch<span class="w"> </span>submit_serial.sh
+
+<span class="c1">#============================================================</span>
+<span class="c1">## RUN PARALLEL JOB(S) ON HPC ##</span>
+<span class="c1">#============================================================</span>
+<span class="k">elif</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$ncore</span><span class="w"> </span>-gt<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="c1">#create parallel jobs</span>
+
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Parallel job running on &quot;</span><span class="w"> </span><span class="nv">$ncore</span><span class="w"> </span><span class="s2">&quot;core(s).&quot;</span>
+
+<span class="w">  </span><span class="c1"># ==== MAIN ====</span>
+<span class="w">  </span>paralleldir
+<span class="w">  </span>write_array_job
+<span class="w">  </span>write_average_input
+<span class="w">  </span>write_average_job
+
+<span class="w">  </span><span class="c1"># Submit array job</span>
+<span class="w">  </span><span class="nv">array_jobid</span><span class="o">=</span><span class="k">$(</span>sbatch<span class="w"> </span>--parsable<span class="w"> </span>submit_array.sh<span class="k">)</span>
+
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Submitting post-processing job dependent on array job </span><span class="si">${</span><span class="nv">array_jobid</span><span class="si">}</span><span class="s2">...&quot;</span>
+
+<span class="w">  </span><span class="c1"># Submit average job to run only after array job completes</span>
+<span class="w">  </span>sbatch<span class="w"> </span>--dependency<span class="o">=</span>afterok:<span class="nv">$array_jobid</span><span class="w"> </span>average_job.sh
+
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;All jobs submitted successfully!&quot;</span>
+
+<span class="k">fi</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To compute the average results from parallel runs, must to specify <code class="docutils literal notranslate"><span class="pre">fname</span></code>, and <code class="docutils literal notranslate"><span class="pre">df</span></code> inside the <strong>write_average_input()</strong> fucntion in <code class="docutils literal notranslate"><span class="pre">job_script_hcp.sh</span></code> or <code class="docutils literal notranslate"><span class="pre">job_script_local.sh</span></code> as:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># ==== FUNCTION TO CREATE AVERAGE INPUT ====</span>
+write_average_input<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="c1">#fname :: File name of specific population data for averaging</span>
+<span class="c1">#df    :: No. of data column(s)(except first column)</span>
+
+<span class="nv">fname</span><span class="o">=</span><span class="s2">&quot;pop_diabat3.out&quot;</span>
+<span class="nv">df</span><span class="o">=</span><span class="m">2</span>
+.
+.
+</pre></div>
+</div>
+<p>The final average output file is <code class="docutils literal notranslate"><span class="pre">fname_ave.out</span></code>. e.g. <code class="docutils literal notranslate"><span class="pre">pop_diabat3.out</span></code> ==&gt; <code class="docutils literal notranslate"><span class="pre">pop_diabat3_ave.out</span></code></p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="model.html" class="btn btn-neutral float-left" title="Models" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="method-rpsh.html" class="btn btn-neutral float-right" title="Ring Polymer Surface Hopping (RPSH) Algorithm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SHARP Pack Developers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

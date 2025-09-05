@@ -1,7 +1,7 @@
 Decoherence
 ===========
 
-Energy-based decoherence correction :cite:`decoh2007` applies exponential damping to inactive adiabatic states, while renormalizing the active state to preserve the total wavefunction norm (:math:`\sum |c_i|^2 = 1`).
+Energy-based decoherence correction :cite:`decoh:2004,decoh2007` applies exponential damping to inactive adiabatic states, while renormalizing the active state to preserve the total wavefunction norm (:math:`\sum |c_i|^2 = 1`).
 
 .. math::
 

@@ -7,17 +7,16 @@ The RPSH method combines the nuclear path-integral representation of nuclei :cit
    :widths: 50 50
    :align: center
 
-   * - .. figure:: _static/ringpolymer.png
+   * - .. figure:: _static/figures/ringpolymer.png
           :width: 95%
           :align: center
           :alt: Path integral formalism
 
 
-     - .. figure:: _static/rpsh2.png
+     - .. figure:: _static/figures/rpsh2.png
           :width: 95%
           :align: center
           :alt: Ring polymer surface hopping
-
 
 For a system of :math:`N` particles in the electronic ground state, the general Hamiltonian is:
 
@@ -76,19 +75,22 @@ Two approximations for TDSE propagation are used in RPSH :cite:`Shushkov:2012`:
       - i\hbar \sum_{\gamma}
       \dot{\bar{\mathbf{R}}} \cdot \mathbf{d}_{\alpha\gamma}(\bar{\mathbf{R}}) c_{\gamma}(t).
 
-The probability of a non-adiabatic transition at each timestep :math:`\Delta t` is computed from the density matrix :math:`\rho_{\alpha\gamma} = c_{\alpha} c_{\gamma}^*` and NACVs (as in RPSH-BA or RPSH-CA).  
+The probability of a non-adiabatic transition at each timestep :math:`\Delta t` is computed from the density matrix :math:`\rho_{\alpha\gamma} = c_{\alpha} c_{\gamma}^*` and NACVs within the framework of the FSSH algorithm,:cite:`Tully:1990` (needs to modify the corresponding relation appropriately for RPSH-BA or RPSH-CA).
 
    .. math::
 
         g_{\alpha\rightarrow\gamma} =
-        \max\left(0, \frac{2\,\Delta t}{|c_{\alpha}|^2}
-        \mathrm{Re} \left[ c_{\alpha}^* c_{\gamma}\,
-        \mathbf{\dot{R}}\cdot \mathbf{d}_{\alpha\gamma} \right]\right).
+        \max\left(0, \frac{ -2\, 
+        \mathrm{Re} \left[ \rho_{\gamma \alpha}^* \,
+        \mathbf{\dot{R}}\cdot \mathbf{d}_{\gamma \alpha} \right]\,\delta t}
+        {\rho_{\alpha\alpha}}\right).
 
- - Attempt a hop between states. If a hop occurs, the ring polymer switches surfaces and nuclear velocities are rescaled to conserve total energy. If the hop is energetically forbidden, remain in the current state. 
+Now attempt a hop between states. If a hop occurs, the ring polymer switches surfaces and nuclear velocities are rescaled to conserve total energy. If the hop is energetically forbidden, remain in the current state. 
 
-.. figure:: _static/rpsh2.png
+.. figure:: _static/figures/rpsh2.png
    :width: 50%
    :align: center
    :alt: Ring polymer surface hopping
 
+
+Continue nuclear and electronic propagation until the end of the simulation time.

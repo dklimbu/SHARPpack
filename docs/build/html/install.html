@@ -47,15 +47,12 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#step-1-clone-the-source-code">Step 1: Clone the Source Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-2-navigate-to-the-source-directory">Step 2: Navigate to the Source Directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-3-compile-the-executable">Step 3: Compile the Executable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-4-verify-the-executable">Step 4: Verify the Executable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#required-libraries">Required Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compilation-steps">Compilation Steps</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="model.html">Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="keywords.html">Keywords</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulations</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Method:</span></p>
 <ul>
@@ -65,10 +62,16 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial1_tully1s.html">Tully Model-I (FSSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial2_tully2p.html">Tully Model-II (RPSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial3_tully3b.html">Tully Model-III (Branching Probability)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial4_lchain.html">Linear Chain Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial5_spinboson.html">Spin-Boson Model (Debye Spectral Density)</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">References:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Bibliography</a></li>
 </ul>
 
@@ -96,47 +99,74 @@
            <div itemprop="articleBody">
              
   <section id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
-<p id="id1">To install <strong>SHARP Pack</strong>, follow the steps below:</p>
-<section id="step-1-clone-the-source-code">
-<h2>Step 1: Clone the Source Code<a class="headerlink" href="#step-1-clone-the-source-code" title="Link to this heading"></a></h2>
-<blockquote>
-<div><p>Clone the <strong>SHARP Pack 2.0</strong> source code from the  GitHub repository:</p>
+<span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
+<p>The source code is compiled using the provided <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> in the <code class="docutils literal notranslate"><span class="pre">source</span></code> directory. The package has been tested under <strong>Linux</strong> with the <strong>Intel Fortran compiler</strong>.</p>
+<section id="required-libraries">
+<h2>Required Libraries<a class="headerlink" href="#required-libraries" title="Link to this heading"></a></h2>
+<p>To compile and run SHARP Pack, the following external libraries must be installed: <strong>BLAS</strong>, <strong>LAPACK</strong>, and <strong>FFTW3</strong>.</p>
+</section>
+<section id="compilation-steps">
+<h2>Compilation Steps<a class="headerlink" href="#compilation-steps" title="Link to this heading"></a></h2>
+<ul>
+<li><p>Clone the <strong>SHARP Pack 2.0</strong> source code from the  GitHub repository:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/fashakib/SHARP_pack.git
 </pre></div>
 </div>
-</div></blockquote>
-</section>
-<section id="step-2-navigate-to-the-source-directory">
-<h2>Step 2: Navigate to the Source Directory<a class="headerlink" href="#step-2-navigate-to-the-source-directory" title="Link to this heading"></a></h2>
-<blockquote>
-<div><p>Once the package has been downloaded, navigate to the directory containing the source codes:</p>
+</li>
+<li><p>Once the package has been downloaded, navigate to the directory containing the source codes:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>SHARP_pack/source
 </pre></div>
 </div>
-</div></blockquote>
-</section>
-<section id="step-3-compile-the-executable">
-<h2>Step 3: Compile the Executable<a class="headerlink" href="#step-3-compile-the-executable" title="Link to this heading"></a></h2>
-<blockquote>
-<div><p>Compile the <strong>SHARP Pack</strong> executable using the <code class="docutils literal notranslate"><span class="pre">make</span></code> command:</p>
+</li>
+<li><p>Open the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> and update the library paths to point to your installed libraries.
+For example, edit the lines:</p>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nv">LIBPATH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>-L/path/to/blas<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>-L/path/to/lapack<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>-L/path/to/fftw3
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure to replace <code class="docutils literal notranslate"><span class="pre">/path/to/...</span></code> with the correct installation paths on your system.</p>
+</div>
+</li>
+<li><p>Compile the code by running:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>make
 </pre></div>
 </div>
-</div></blockquote>
-</section>
-<section id="step-4-verify-the-executable">
-<h2>Step 4: Verify the Executable<a class="headerlink" href="#step-4-verify-the-executable" title="Link to this heading"></a></h2>
-<blockquote>
-<div><p>If the compilation is successful, the <code class="docutils literal notranslate"><span class="pre">sharp.x</span></code> executable will be generated in the <cite>bin</cite> directory. To verify, run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ls<span class="w"> </span>../bin/sharp.x
+</li>
+<li><p>Upon successful compilation, the <code class="docutils literal notranslate"><span class="pre">bin/</span></code> directory will contain the main executable, <code class="docutils literal notranslate"><span class="pre">sharp.x</span></code>, and the auxiliary executables, <code class="docutils literal notranslate"><span class="pre">average.x</span></code>, and <code class="docutils literal notranslate"><span class="pre">average2db.x</span></code>. To verify, run:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ls<span class="w"> </span>../bin/sharp.x
 </pre></div>
 </div>
-</div></blockquote>
-</section>
-<section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
-<p>After completing the installation, you can use <code class="docutils literal notranslate"><span class="pre">sharp.x</span></code> to perform RPSH dynamic simulations.</p>
+</li>
+<li><p>Add the <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory to your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> for convenience:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/path/to/SHARP_pack/bin
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Now the <strong>SHARP Pack</strong> is ready to run RPSH simulations.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>When using SHARP Pack, please cite the following papers:</p>
+<ul class="simple">
+<li><ol class="upperalpha simple" start="4">
+<li><ol class="upperalpha simple" start="11">
+<li><p>Limbu and F. A. Shakib, <a class="reference external" href="https://doi.org/10.1016/j.simpa.2023.100604">Software Impacts 19, 100604 (2024).</a></p></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><ol class="upperalpha simple" start="4">
+<li><ol class="upperalpha simple" start="11">
+<li><p>Limbu and F. A. Shakib, <a class="reference external" href="https://doi.org/10.1021/acs.jpclett.3c02085">J. Phys. Chem. Lett. 14, 8658–8666 (2023).</a></p></li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+</div>
 </section>
 </section>
 

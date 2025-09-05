@@ -7,7 +7,7 @@ When the nuclear kinetic energy operator
 
    \hat{T}_\mathrm{n} = -\sum_{I} \frac{\hbar^2}{2 M_I} \nabla_{\mathbf{R}_I}^2
 
-acts on the adiabatic electronic wavefunctions both diagonal and off-diagonal non-adiabatic couplings arise. The diagonal term behaves like a potential energy correction and modifies the adiabatic
+acts on the adiabatic electronic wavefunctions both diagonal and off-diagonal non-adiabatic couplings arise. :cite:`dboc2016` The diagonal term behaves like a potential energy correction and modifies the adiabatic
 PESs, :math:`V_\alpha(\mathbf{R})`, as
 
 .. math::

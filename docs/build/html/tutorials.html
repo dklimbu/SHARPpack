@@ -17,10 +17,12 @@
       <script src="_static/documentation_options.js?v=60dbed4a"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"tex": {"macros": {"angstrom": "\\unicode{8491}"}}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Bibliography" href="reference.html" />
+    <link rel="next" title="Tully Model-I (FSSH)" href="tutorial1_tully1s.html" />
     <link rel="prev" title="Decoherence" href="method-decoh.html" /> 
 </head>
 
@@ -48,7 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model.html">Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="keywords.html">Keywords</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulations</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Method:</span></p>
 <ul>
@@ -59,9 +61,15 @@
 <p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial1_tully1s.html">Tully Model-I (FSSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial2_tully2p.html">Tully Model-II (RPSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial3_tully3b.html">Tully Model-III (Branching Probability)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial4_lchain.html">Linear Chain Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial5_spinboson.html">Spin-Boson Model (Debye Spectral Density)</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">References:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Bibliography</a></li>
 </ul>
 
@@ -90,7 +98,32 @@
              
   <section id="tutorials">
 <h1>Tutorials<a class="headerlink" href="#tutorials" title="Link to this heading"></a></h1>
-<p>This section contains a number of tutorials.</p>
+<p>This section provides step-by-step tutorials for running <strong>SHARP Pack</strong>.
+Each tutorial includes the required <code class="docutils literal notranslate"><span class="pre">param.in</span></code> input template, execution commands, and simple plotting instructions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>All simulations assume SHARP Pack is compiled (see <a class="reference internal" href="install.html#installation"><span class="std std-ref">Installation</span></a>) and the executable is available as <code class="docutils literal notranslate"><span class="pre">sharp.x</span></code>.</p></li>
+<li><p>By default, the program reads input parameters from <code class="docutils literal notranslate"><span class="pre">param.in</span></code> in the working directory.</p></li>
+<li><p>Units: All input parameters are in <strong>atomic units</strong>, except temperature in Kelvin. Spin-boson model parameters are given in <span class="math notranslate nohighlight">\(\text{cm}^{-1}\)</span> when <code class="docutils literal notranslate"><span class="pre">enu</span></code> <span class="math notranslate nohighlight">\(\neq\)</span> <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></li>
+</ul>
+</div>
+<p><strong>List of tutorials:</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="tutorial1_tully1s.html#ex1-tully1s"><span class="std std-ref">Tully Model-I (FSSH)</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial2_tully2p.html#ex2-tully2p"><span class="std std-ref">Tully Model-II (RPSH)</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial3_tully3b.html#ex3-tully3b"><span class="std std-ref">Tully Model-III (Branching Probability)</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial4_lchain.html#ex4-lchain"><span class="std std-ref">Linear Chain Model</span></a></p></li>
+<li><p><a class="reference internal" href="tutorial5_spinboson.html#ex5-sb"><span class="std std-ref">Spin-Boson Model (Debye Spectral Density)</span></a></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All the example tutorials can be found in the <code class="docutils literal notranslate"><span class="pre">example/</span></code> directory.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Job submission bash scripts are located in the <code class="docutils literal notranslate"><span class="pre">utility/</span></code> directory for the HPC Slurm system, as well as on the local machine.</p>
+</div>
 </section>
 
 
@@ -98,7 +131,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="method-decoh.html" class="btn btn-neutral float-left" title="Decoherence" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="reference.html" class="btn btn-neutral float-right" title="Bibliography" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="tutorial1_tully1s.html" class="btn btn-neutral float-right" title="Tully Model-I (FSSH)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

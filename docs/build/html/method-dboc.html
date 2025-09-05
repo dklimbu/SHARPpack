@@ -17,7 +17,8 @@
       <script src="_static/documentation_options.js?v=60dbed4a"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script>window.MathJax = {"tex": {"macros": {"angstrom": "\\unicode{8491}"}}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -49,7 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model.html">Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="keywords.html">Keywords</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulations</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Method:</span></p>
 <ul class="current">
@@ -59,10 +60,16 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial1_tully1s.html">Tully Model-I (FSSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial2_tully2p.html">Tully Model-II (RPSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial3_tully3b.html">Tully Model-III (Branching Probability)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial4_lchain.html">Linear Chain Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial5_spinboson.html">Spin-Boson Model (Debye Spectral Density)</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">References:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Bibliography</a></li>
 </ul>
 
@@ -94,7 +101,7 @@
 <p>When the nuclear kinetic energy operator</p>
 <div class="math notranslate nohighlight">
 \[\hat{T}_\mathrm{n} = -\sum_{I} \frac{\hbar^2}{2 M_I} \nabla_{\mathbf{R}_I}^2\]</div>
-<p>acts on the adiabatic electronic wavefunctions both diagonal and off-diagonal non-adiabatic couplings arise. The diagonal term behaves like a potential energy correction and modifies the adiabatic
+<p>acts on the adiabatic electronic wavefunctions both diagonal and off-diagonal non-adiabatic couplings arise. <span id="id1">[<a class="reference internal" href="reference.html#id26" title="Rami Gherib, Liyuan Ye, Ilya G. Ryabinkin, and Artur F. Izmaylov. On the inclusion of the diagonal born-oppenheimer correction in surface hopping methods. J. Chem. Phys., 144:154103, 2016. doi:10.1063/1.4945817.">16</a>]</span> The diagonal term behaves like a potential energy correction and modifies the adiabatic
 PESs, <span class="math notranslate nohighlight">\(V_\alpha(\mathbf{R})\)</span>, as</p>
 <div class="math notranslate nohighlight">
 \[\tilde{V}_{\alpha}(\mathbf{R}) =

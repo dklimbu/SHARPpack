@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SHARP Pack documentation &mdash; SHARP Pack 2.0 documentation</title>
+  <title>Welcome to SHARP Pack Documentation! &mdash; SHARP Pack 2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -17,7 +17,8 @@
       <script src="_static/documentation_options.js?v=60dbed4a"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script>window.MathJax = {"tex": {"macros": {"angstrom": "\\unicode{8491}"}}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -48,7 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model.html">Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="keywords.html">Keywords</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulations</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Method:</span></p>
 <ul>
@@ -58,10 +59,16 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial1_tully1s.html">Tully Model-I (FSSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial2_tully2p.html">Tully Model-II (RPSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial3_tully3b.html">Tully Model-III (Branching Probability)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial4_lchain.html">Linear Chain Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial5_spinboson.html">Spin-Boson Model (Debye Spectral Density)</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">References:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Bibliography</a></li>
 </ul>
 
@@ -79,7 +86,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">SHARP Pack documentation</li>
+      <li class="breadcrumb-item active">Welcome to SHARP Pack Documentation!</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -88,40 +95,40 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="sharp-pack-documentation">
-<h1>SHARP Pack documentation<a class="headerlink" href="#sharp-pack-documentation" title="Link to this heading"></a></h1>
+  <section id="welcome-to-sharp-pack-documentation">
+<h1>Welcome to SHARP Pack Documentation!<a class="headerlink" href="#welcome-to-sharp-pack-documentation" title="Link to this heading"></a></h1>
 <figure class="align-center">
-<a class="reference internal image-reference" href="_images/rpsh.png"><img alt="SHARPPack" src="_images/rpsh.png" style="width: 243.8px; height: 178.60000000000002px;" />
+<a class="reference internal image-reference" href="_images/rpsh.png"><img alt="SHARPPack" src="_images/rpsh.png" style="width: 65%;" />
 </a>
 </figure>
-<p>Welcome to <strong>SHARP Pack</strong> documentation,</p>
 <div class="toctree-wrapper compound">
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This website is in under active development…</p>
 </div>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="install.html#step-1-clone-the-source-code">Step 1: Clone the Source Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#step-2-navigate-to-the-source-directory">Step 2: Navigate to the Source Directory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#step-3-compile-the-executable">Step 3: Compile the Executable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#step-4-verify-the-executable">Step 4: Verify the Executable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#required-libraries">Required Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#compilation-steps">Compilation Steps</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="model.html">Models</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="model.html#tully-models">Tully Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="model.html#morse-potential-models">Morse Potential Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model.html#linear-chain-models">Linear Chain Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#linear-chain-model">Linear Chain Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#super-exchange-model">Super Exchange Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="model.html#spinboson-model">Spin–Boson Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="model.html#spectral-density">Spectral Density</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="keywords.html">Keywords</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#keywords">Keywords</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#input-file">Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#output-files">Output Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#population-calculation">Population Calculation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#running-simulation">Running Simulation</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -135,12 +142,18 @@
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial1_tully1s.html">Tully Model-I (FSSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial2_tully2p.html">Tully Model-II (RPSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial3_tully3b.html">Tully Model-III (Branching Probability)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial4_lchain.html">Linear Chain Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial5_spinboson.html">Spin-Boson Model (Debye Spectral Density)</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">References:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Bibliography</a></li>
 </ul>
 </div>

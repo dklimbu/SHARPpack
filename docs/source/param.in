@@ -1,0 +1,47 @@
+ #SHARP Pack INPUT PARAMETERS
+ #model(spinboson eps delta, enu)
+ model  spinboson  0.0  1.0  104.25
+
+ #bathspectrum (lambda wc temp)
+ spectra  debye  1  1  2
+
+ nbeads  8
+
+ approx  CA
+
+ nmode  matrix
+ 
+ iseed  12345
+
+ nParticle  100
+
+ #number steps
+ nsteps  41340
+
+ #trajectories
+ ntraj  1000
+
+ ncore  20
+
+ #timestep
+ tstep  1.0
+
+ #postion sampling 
+ rsamp  gaussian
+ rmode  direct
+ rmap   no
+
+ #velocity sampling
+ vsamp  gaussian
+
+ #velocity reversal scheme for frustrated hop
+ vreverse  always
+
+ #decoherence
+ decoherence  none
+
+ rundtail  yes
+
+ finish
+ #end of Input File
+

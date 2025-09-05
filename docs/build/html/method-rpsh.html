@@ -17,12 +17,13 @@
       <script src="_static/documentation_options.js?v=60dbed4a"></script>
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script>window.MathJax = {"tex": {"macros": {"angstrom": "\\unicode{8491}"}}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Diagonal Born–Oppenheimer Correction (DBOC)" href="method-dboc.html" />
-    <link rel="prev" title="Keywords" href="keywords.html" /> 
+    <link rel="prev" title="Simulations" href="simulation.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,7 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model.html">Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="keywords.html">Keywords</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulations</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Method:</span></p>
 <ul class="current">
@@ -59,10 +60,16 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial1_tully1s.html">Tully Model-I (FSSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial2_tully2p.html">Tully Model-II (RPSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial3_tully3b.html">Tully Model-III (Branching Probability)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial4_lchain.html">Linear Chain Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial5_spinboson.html">Spin-Boson Model (Debye Spectral Density)</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">References:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Bibliography</a></li>
 </ul>
 
@@ -91,7 +98,7 @@
              
   <section id="ring-polymer-surface-hopping-rpsh-algorithm">
 <h1>Ring Polymer Surface Hopping (RPSH) Algorithm<a class="headerlink" href="#ring-polymer-surface-hopping-rpsh-algorithm" title="Link to this heading"></a></h1>
-<p>The RPSH method combines the nuclear path-integral representation of nuclei <a href="#id1"><span class="problematic" id="id2">:cite:`Craig:2004`</span></a> with Tully’s fewest-switches surface hopping <a href="#id3"><span class="problematic" id="id4">:cite:`Tully:1990`</span></a> scheme.</p>
+<p>The RPSH method combines the nuclear path-integral representation of nuclei <span id="id1">[<a class="reference internal" href="reference.html#id104" title="Ian R. Craig and David E. Manolopoulos. Quantum Statistics and Classical Mechanics: Real Time Correlation Functions from Ring Polymer Molecular Dynamics. J. Chem. Phys., 121:3368–3373, 2004. doi:10.1063/1.1777575.">5</a>]</span> with Tully’s fewest-switches surface hopping <span id="id2">[<a class="reference internal" href="reference.html#id67" title="John C. Tully. Molecular dynamics with electronic transitions. J. Chem. Phys., 93:1061-1071, 1990. doi:10.1063/1.459170.">3</a>]</span> scheme.</p>
 <table class="docutils align-center">
 <colgroup>
 <col style="width: 50.0%" />
@@ -133,7 +140,7 @@ The Hamiltonian is modified by introducing state-dependent potentials:</p>
 <div class="math notranslate nohighlight">
 \[V_{\alpha}(\mathbf{R}) = \langle \alpha; \mathbf{R} | \hat{V} | \alpha; \mathbf{R} \rangle,\]</div>
 <p>leading to the <strong>Ring Polymer Surface Hopping (RPSH)</strong> algorithm. This requires numerical integration of the time-dependent Schrödinger equation (TDSE) along classical trajectories.</p>
-<p>Two approximations for TDSE propagation are used in RPSH <a href="#id5"><span class="problematic" id="id6">:cite:`Shushkov:2012`</span></a>:</p>
+<p>Two approximations for TDSE propagation are used in RPSH <span id="id3">[<a class="reference internal" href="reference.html#id94" title="Philip Shushkov, Richard Li, and John C. Tully. Ring polymer molecular dynamics with surface hopping. J. Chem. Phys., 137:22A549, 2012. doi:10.1063/1.4766449.">6</a>]</span>:</p>
 <ol class="arabic">
 <li><p><strong>Bead Approximation (RPSH-BA)</strong>
 The TDSE is averaged over beads:</p>
@@ -156,30 +163,28 @@ V_{\alpha}(\bar{\mathbf{R}}) c_{\alpha}(t)
 \dot{\bar{\mathbf{R}}} \cdot \mathbf{d}_{\alpha\gamma}(\bar{\mathbf{R}}) c_{\gamma}(t).\]</div>
 </li>
 </ol>
-<p>The probability of a non-adiabatic transition at each timestep <span class="math notranslate nohighlight">\(\Delta t\)</span> is computed from the density matrix <span class="math notranslate nohighlight">\(\rho_{\alpha\gamma} = c_{\alpha} c_{\gamma}^*\)</span> and NACVs (as in RPSH-BA or RPSH-CA).</p>
+<p>The probability of a non-adiabatic transition at each timestep <span class="math notranslate nohighlight">\(\Delta t\)</span> is computed from the density matrix <span class="math notranslate nohighlight">\(\rho_{\alpha\gamma} = c_{\alpha} c_{\gamma}^*\)</span> and NACVs within the framework of the FSSH algorithm,:cite:<cite>Tully:1990</cite> (needs to modify the corresponding relation appropriately for RPSH-BA or RPSH-CA).</p>
 <blockquote>
-<div><blockquote>
 <div><div class="math notranslate nohighlight">
 \[g_{\alpha\rightarrow\gamma} =
-\max\left(0, \frac{2\,\Delta t}{|c_{\alpha}|^2}
-\mathrm{Re} \left[ c_{\alpha}^* c_{\gamma}\,
-\mathbf{\dot{R}}\cdot \mathbf{d}_{\alpha\gamma} \right]\right).\]</div>
+\max\left(0, \frac{ -2\,
+\mathrm{Re} \left[ \rho_{\gamma \alpha}^* \,
+\mathbf{\dot{R}}\cdot \mathbf{d}_{\gamma \alpha} \right]\,\delta t}
+{\rho_{\alpha\alpha}}\right).\]</div>
 </div></blockquote>
-<ul class="simple">
-<li><p>Attempt a hop between states. If a hop occurs, the ring polymer switches surfaces and nuclear velocities are rescaled to conserve total energy. If the hop is energetically forbidden, remain in the current state.</p></li>
-</ul>
-</div></blockquote>
+<p>Now attempt a hop between states. If a hop occurs, the ring polymer switches surfaces and nuclear velocities are rescaled to conserve total energy. If the hop is energetically forbidden, remain in the current state.</p>
 <figure class="align-center">
 <a class="reference internal image-reference" href="_images/rpsh2.png"><img alt="Ring polymer surface hopping" src="_images/rpsh2.png" style="width: 50%;" />
 </a>
 </figure>
+<p>Continue nuclear and electronic propagation until the end of the simulation time.</p>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="keywords.html" class="btn btn-neutral float-left" title="Keywords" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="simulation.html" class="btn btn-neutral float-left" title="Simulations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="method-dboc.html" class="btn btn-neutral float-right" title="Diagonal Born–Oppenheimer Correction (DBOC)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

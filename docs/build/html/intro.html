@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Installation" href="install.html" />
-    <link rel="prev" title="SHARP Pack documentation" href="index.html" /> 
+    <link rel="prev" title="Welcome to SHARP Pack Documentation!" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,7 +48,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model.html">Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="keywords.html">Keywords</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulations</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Theoretical Method:</span></p>
 <ul>
@@ -58,10 +58,16 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial1_tully1s.html">Tully Model-I (FSSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial2_tully2p.html">Tully Model-II (RPSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial3_tully3b.html">Tully Model-III (Branching Probability)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial4_lchain.html">Linear Chain Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial5_spinboson.html">Spin-Boson Model (Debye Spectral Density)</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">References:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Bibliography</a></li>
 </ul>
 
@@ -90,25 +96,25 @@
              
   <section id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h1>
-<figure class="align-center">
-<a class="reference internal image-reference" href="_images/rpsh.png"><img alt="SHARPPack" src="_images/rpsh.png" style="width: 243.8px; height: 178.60000000000002px;" />
-</a>
-</figure>
-<p>Non-adiabatic dynamics—quantum transitions between electronic and/or vibronic states—is a critical process in electrochemical and photoelectrochemical reactions, including those involved in natural and artificial energy conversion systems.</p>
-<p>Simulating these processes accurately in condensed phases with thousands of degrees of freedom (DOFs), especially when nuclear quantum effects (NQEs) like proton tunneling and zero-point energy are significant, is computationally demanding.</p>
-<p><strong>Mixed quantum-classical dynamics (MQCD)</strong> methods address this by treating only light particles quantum-mechanically and treating the environment classically.</p>
-<p>One of the most widely used MQCD methods is <strong>Fewest-Switches Surface Hopping (FSSH)</strong>, where the quantum wavepacket is represented by classical trajectories traveling on a single adiabatic surface interrupted by hops to other surfaces.</p>
-<p>However, independent classical trajectories used in FSSH are not able to capture decoherence or NQEs accurately.</p>
-<p>Approaches like <strong>Centroid Molecular Dynamics (CMD)</strong> and <strong>Ring Polymer Molecular Dynamics (RPMD)</strong> offer a way to model NQEs, but have limitations for multi-electron transfer or real-time electronic coherence effects.</p>
-<p><strong>Ring Polymer Surface Hopping (RPSH)</strong> is a method that combines RPMD and FSSH to overcome these challenges.</p>
-<p>SHARP Pack—short for <em>Surface Hopping And Ring Polymer</em> package—is a modular, parallelized, and user-friendly software that implements RPSH, enabling simulations from model systems to more realistic applications.</p>
-<p>Features of SHARP Pack:</p>
+<p>Non-adiabatic dynamics—quantum transitions between electronic and/or vibronic states—is a critical process in electrochemical and photoelectrochemical reactions, including those involved in natural and artificial energy conversion systems. <span id="id1">[<a class="reference internal" href="reference.html#id71" title="M. H. V. Huynh and T. J. Meyer. Proton-coupled electron transfer. Chem. Rev., 107:5004–5064, 2007. doi:10.1021/cr0500030.">1</a>, <a class="reference internal" href="reference.html#id72" title="S. Hammes-Schiffer and A. A. Stuchebrukhov. Theory of coupled electron and proton transfer reactions. Chem. Rev., 110:6939–6960, 2010. doi:10.1021/cr1001436.">2</a>]</span></p>
+<p>Simulating these processes accurately in condensed phases with thousands of degrees of freedom (DOFs), especially when nuclear quantum effects (NQEs) like proton tunneling and zero-point energy are significant, is computationally demanding. Mixed quantum-classical dynamics (MQCD) methods address this by treating only light particles quantum-mechanically and treating the environment classically.</p>
+<p>One of the most widely used MQCD methods is Fewest-Switches Surface Hopping (FSSH) <span id="id2">[<a class="reference internal" href="reference.html#id67" title="John C. Tully. Molecular dynamics with electronic transitions. J. Chem. Phys., 93:1061-1071, 1990. doi:10.1063/1.459170.">3</a>]</span>, where the quantum wavepacket is represented by classical trajectories traveling on a single adiabatic surface interrupted by hops to other surfaces. However, independent classical trajectories used in FSSH are not able to capture decoherence or NQEs accurately.</p>
+<p>Approaches like Centroid Molecular Dynamics (CMD) <span id="id3">[<a class="reference internal" href="reference.html#id110" title="J. Cao and G. A. Voth. The formulation of quantum statistical mechanics based on the Feynman path centroid density. IV. Algorithms for centroid molecular dynamics. J. Chem. Phys., 101:6168–6183, 1994. doi:10.1063/1.467176.">4</a>]</span> and Ring Polymer Molecular Dynamics (RPMD) <span id="id4">[<a class="reference internal" href="reference.html#id104" title="Ian R. Craig and David E. Manolopoulos. Quantum Statistics and Classical Mechanics: Real Time Correlation Functions from Ring Polymer Molecular Dynamics. J. Chem. Phys., 121:3368–3373, 2004. doi:10.1063/1.1777575.">5</a>]</span> offer a way to model NQEs, but have limitations for multi-electron transfer or real-time electronic coherence effects. Ring Polymer Surface Hopping (RPSH) <span id="id5">[<a class="reference internal" href="reference.html#id94" title="Philip Shushkov, Richard Li, and John C. Tully. Ring polymer molecular dynamics with surface hopping. J. Chem. Phys., 137:22A549, 2012. doi:10.1063/1.4766449.">6</a>, <a class="reference internal" href="reference.html#id95" title="Farnaz A. Shakib and Pengfei Huo. Ring Polymer Surface Hopping: Incorporating Nuclear Quantum Effects into Nonadiabatic Molecular Dynamics Simulations. J. Phys. Chem. Lett., 8:3073–3080, 2017. doi:10.1021/acs.jpclett.7b01343.">7</a>]</span> is a method that combines RPMD and FSSH to overcome these challenges.</p>
+<p>SHARP Pack <span id="id6">[<a class="reference internal" href="reference.html#id100" title="Dil K. Limbu and Farnaz A. Shakib. SHARP pack: a modular software for incorporating nuclear quantum effects into non-adiabatic quantum dynamic simulations in condensed phases. Software Impacts, 19:100604, 2024. doi:10.1016/j.simpa.2023.100604.">8</a>]</span> —short for <em>Surface Hopping And Ring Polymer</em> package—is a modular, parallelized, and user-friendly software that implements RPSH, enabling simulations from model systems to more realistic applications.</p>
+<p><strong>Features of SHARP Pack:</strong></p>
 <ul class="simple">
-<li><p>Coupled electronic-nuclear motion</p></li>
-<li><p>Surface hopping algorithm</p></li>
-<li><p>Feynman’s path integral formalism</p></li>
-<li><p>Extensible for new methodologies and models</p></li>
-<li><p>Efficient yet accurate nonadiabatic dynamics</p></li>
+<li><p>Supports both FSSH and RPSH simulations.</p></li>
+<li><p>Provides a variety of model Hamiltonians including 1D Tully to spin-boson model with Debye/Ohmic spectral density.</p></li>
+<li><p>Handles flexible initial conditions and user-defined control parameters.</p></li>
+<li><p>Implements different schemes for velocity rescaling within the surface hopping algorithm.</p></li>
+<li><p>Propagates dynamics using both velocity-Verlet and Langevin dynamics schemes.</p></li>
+<li><p>Enables serial as well as parallel simulations with trajectory distribution across multiple cores.</p></li>
+<li><p>Offers PIMD sampling with PILE thermostat for initial sampling.</p></li>
+<li><p>Option for Diagonal Born-Oppenheimer correction (DBOC) for accurate quantum dynamics.</p></li>
+<li><p>Presents option for decoherence correction to improve population and coherence evolution.</p></li>
+<li><p>Produces a wide range of outputs: energies, NACs, populations, branching probablities, etc.</p></li>
+<li><p>Provides ready-to-use job scripts for local runs, HPC cluster submissions, and branching probability analysis.</p></li>
+<li><p>Supplies comprehensive tutorials and example cases with scripts for visualization.</p></li>
 </ul>
 </section>
 
@@ -116,7 +122,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="SHARP Pack documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to SHARP Pack Documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="install.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

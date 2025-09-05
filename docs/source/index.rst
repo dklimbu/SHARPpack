@@ -3,22 +3,17 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-SHARP Pack documentation
-========================
+Welcome to SHARP Pack Documentation!
+====================================
 
-.. figure:: _static/rpsh.png
-   :scale: 20 %
+.. figure:: _static/figures/rpsh.png
+   :width: 65%
    :align: center
    :alt: SHARPPack
-
-Welcome to **SHARP Pack** documentation, 
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
-
-.. note::
-   This website is in under active development...
 
 .. toctree::
    :maxdepth: 2
@@ -27,7 +22,7 @@ Welcome to **SHARP Pack** documentation,
    intro
    install
    model
-   keywords
+   simulation
 
 .. toctree::
    :maxdepth: 1
@@ -41,10 +36,16 @@ Welcome to **SHARP Pack** documentation,
    :maxdepth: 1
    :caption: Tutorials:
 
-   tutorial
+   tutorials
+   tutorial1_tully1s
+   tutorial2_tully2p
+   tutorial3_tully3b
+   tutorial4_lchain
+   tutorial5_spinboson
 
 .. toctree::
    :maxdepth: 1
-   :caption: References:
+   :caption: Miscellaneous:
 
+   changelog
    reference

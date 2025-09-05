@@ -1,0 +1,219 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linear Chain Model &mdash; SHARP Pack 2.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="shortcut icon" href="_static/rpsh.png"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=60dbed4a"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Spin-Boson Model (Debye Spectral Density)" href="tutorial5_spinboson.html" />
+    <link rel="prev" title="Tully Model-III (Branching Probability)" href="tutorial3_tully3b.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SHARP Pack
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Theoretical Method:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="method-rpsh.html">Ring Polymer Surface Hopping (RPSH) Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="method-dboc.html">Diagonal Born–Oppenheimer Correction (DBOC)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="method-decoh.html">Decoherence</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial1_tully1s.html">Tully Model-I (FSSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial2_tully2p.html">Tully Model-II (RPSH)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial3_tully3b.html">Tully Model-III (Branching Probability)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Linear Chain Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prepare-param-in">Prepare <code class="docutils literal notranslate"><span class="pre">param.in</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-simulation">Run Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plot-result">Plot Result</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial5_spinboson.html">Spin-Boson Model (Debye Spectral Density)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Miscellaneous:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Bibliography</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SHARP Pack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Linear Chain Model</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="linear-chain-model">
+<span id="ex4-lchain"></span><h1>Linear Chain Model<a class="headerlink" href="#linear-chain-model" title="Link to this heading"></a></h1>
+<p>This tutorial demonstrates running the <strong>Linear Chain Model</strong> at a temperature of <strong>500 K</strong> for a simulation time of <strong>50 ps</strong> and compare the simulation result obtained from SHARP Pack with the <strong>exact analytical result</strong>.</p>
+<p>Follow the steps below:</p>
+<section id="prepare-param-in">
+<h2>Prepare <code class="docutils literal notranslate"><span class="pre">param.in</span></code><a class="headerlink" href="#prepare-param-in" title="Link to this heading"></a></h2>
+<p>Prepare input file <code class="docutils literal notranslate"><span class="pre">param.in</span></code> with the model and simulation parameters setting <code class="docutils literal notranslate"><span class="pre">temperatrue</span>&#160; <span class="pre">500</span></code>.</p>
+<blockquote>
+<div><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>#linear chain model input parameter
+model        db2lchain
+nParticle    20
+nbeads       1
+iseed        12345
+ncore        1
+tstep        10.0
+nsteps       206700
+ntraj        200
+temperature  500.0
+rsamp        gaussian
+vsamp        gaussian
+iprint       100
+finish
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="run-simulation">
+<h2>Run Simulation<a class="headerlink" href="#run-simulation" title="Link to this heading"></a></h2>
+<p>Run the simulation using one of the following methods:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># direct execution</span>
+$<span class="w"> </span>./sharp.x
+
+<span class="c1"># for running on a local machine</span>
+$<span class="w"> </span>sh<span class="w"> </span>job-script-local.sh
+
+<span class="c1">#for submitting jobs on an HPC cluster (Slurm)</span>
+$<span class="w"> </span>sh<span class="w"> </span>job-script-hpc.sh
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="plot-result">
+<h2>Plot Result<a class="headerlink" href="#plot-result" title="Link to this heading"></a></h2>
+<p>Use <strong>gnuplot</strong> script <code class="docutils literal notranslate"><span class="pre">plot-pop.gnu</span></code> to plot the convergence of population to exact Boltzmann distribution.</p>
+<blockquote>
+<div><div class="highlight-gnuplot notranslate"><div class="highlight"><pre><span></span><span class="c">#!/usr/bin/gnuplot</span>
+<span class="k">set</span><span class="w"> </span><span class="nb">encoding</span><span class="w"> </span><span class="n">iso_8859_1</span>
+<span class="k">set</span><span class="w"> </span><span class="nb">key</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="n">center</span>
+<span class="k">set</span><span class="w"> </span><span class="nb">terminal</span><span class="w"> </span><span class="n">pdf</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="mi">4</span><span class="n">in</span><span class="o">,</span><span class="mf">2.8</span><span class="n">in</span><span class="w"> </span><span class="n">enhanced</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="n">font</span><span class="w"> </span><span class="s">&#39;Helvetica,16&#39;</span>
+<span class="k">set</span><span class="w"> </span><span class="nb">border</span><span class="w"> </span><span class="n">lw</span><span class="w"> </span><span class="mf">2.5</span>
+<span class="k">set</span><span class="w"> </span><span class="nb">tics</span><span class="w"> </span><span class="n">scale</span><span class="w"> </span><span class="mf">1.2</span>
+<span class="k">set</span><span class="w"> </span><span class="nb">ylabel</span><span class="w"> </span><span class="s">&quot;{/Helvetica=22 Population}&quot;</span>
+<span class="k">set</span><span class="w"> </span><span class="nb">xlabel</span><span class="w"> </span><span class="s">&quot;{/Helvetica=22 time (ps)}&quot;</span>
+<span class="k">set</span><span class="w"> </span><span class="nb">mytics</span><span class="w"> </span><span class="mi">2</span>
+<span class="k">set</span><span class="w"> </span><span class="nb">mxtics</span><span class="w"> </span><span class="mi">2</span>
+<span class="k">set</span><span class="w"> </span><span class="nb">grid</span><span class="w"> </span><span class="n">xtics</span><span class="w"> </span><span class="n">ytics</span>
+
+<span class="nv">e1</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nv">e2</span><span class="o">=</span><span class="mf">8.0</span><span class="p">;</span>
+<span class="nv">temp</span><span class="o">=</span><span class="mf">500.0</span><span class="w">  </span><span class="c">#in Kevlin</span>
+<span class="nv">kbT</span><span class="o">=</span><span class="mf">0.0083</span><span class="o">*</span><span class="n">temp</span>
+
+<span class="c">#exact Boltzmann distribution</span>
+<span class="nf">p1</span><span class="p">(</span>x<span class="p">)</span><span class="o">=</span><span class="nf">exp</span><span class="p">(</span><span class="o">-</span><span class="n">e1</span><span class="o">/</span><span class="n">kbT</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="nf">exp</span><span class="p">(</span><span class="o">-</span><span class="n">e1</span><span class="o">/</span><span class="n">kbT</span><span class="p">)</span><span class="o">+</span><span class="nf">exp</span><span class="p">(</span><span class="o">-</span><span class="n">e2</span><span class="o">/</span><span class="n">kbT</span><span class="p">));</span>
+<span class="nf">p2</span><span class="p">(</span>x<span class="p">)</span><span class="o">=</span><span class="nf">exp</span><span class="p">(</span><span class="o">-</span><span class="n">e2</span><span class="o">/</span><span class="n">kbT</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="nf">exp</span><span class="p">(</span><span class="o">-</span><span class="n">e1</span><span class="o">/</span><span class="n">kbT</span><span class="p">)</span><span class="o">+</span><span class="nf">exp</span><span class="p">(</span><span class="o">-</span><span class="n">e2</span><span class="o">/</span><span class="n">kbT</span><span class="p">));</span>
+
+<span class="nv">outfile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;fig-population.pdf&#39;</span>
+<span class="k">set</span><span class="w"> </span><span class="nb">output</span><span class="w"> </span><span class="n">outfile</span>
+<span class="k">set</span><span class="w"> </span><span class="nb">key</span><span class="w"> </span><span class="n">opaque</span><span class="w"> </span><span class="n">samplen</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="n">spacing</span><span class="w"> </span><span class="mf">1.3</span><span class="w"> </span><span class="n">font</span><span class="w"> </span><span class="s">&quot;Helvetica, 14&quot;</span>
+<span class="k">plot</span><span class="w"> </span><span class="s">&#39;pop_adiabat1.out&#39;</span><span class="w"> </span><span class="nb">u</span><span class="w"> </span><span class="p">(</span><span class="nf">column</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">41340</span><span class="p">)</span><span class="o">:</span><span class="mi">2</span><span class="w"> </span><span class="nb">w</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="n">lc</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="nb">t</span><span class="s">&#39;FSSH: P_1&#39;</span><span class="o">,</span>\
+<span class="w">     </span><span class="s">&#39;pop_adiabat1.out&#39;</span><span class="w"> </span><span class="nb">u</span><span class="w"> </span><span class="p">(</span><span class="nf">column</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="mi">41340</span><span class="p">)</span><span class="o">:</span><span class="mi">3</span><span class="w"> </span><span class="nb">w</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="n">lc</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="nb">t</span><span class="s">&#39;FSSH: P_2&#39;</span><span class="o">,</span>\
+<span class="w">      </span><span class="nf">p1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nb">w</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="n">lc</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="n">lw</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="nb">t</span><span class="s">&#39;Exact: P_1&#39;</span><span class="o">,</span>\
+<span class="w">      </span><span class="nf">p2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nb">w</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="n">lc</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">lw</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="nb">t</span><span class="s">&#39;Exact: P_2&#39;</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="_images/fig-lchain-pop.png"><img alt="Population convergence" src="_images/fig-lchain-pop.png" style="width: 60%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Population convergence of linear chain model to  exact Boltzmann distribution at 500 K by FSSH method.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tutorial3_tully3b.html" class="btn btn-neutral float-left" title="Tully Model-III (Branching Probability)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorial5_spinboson.html" class="btn btn-neutral float-right" title="Spin-Boson Model (Debye Spectral Density)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, SHARP Pack Developers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
