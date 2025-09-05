@@ -17,13 +17,13 @@ Compilation Steps
 
   .. code-block:: console
 
-      $ git clone https://github.com/fashakib/SHARP_pack.git
+      $ git clone https://github.com/fashakib/SHARP_pack_2.git
 
 - Once the package has been downloaded, navigate to the directory containing the source codes:
 
   .. code-block:: console
 
-      $ cd SHARP_pack/source
+      $ cd SHARP_pack_2/source
 
 - Open the ``Makefile`` and update the library paths to point to your installed libraries.
   For example, edit the lines:
@@ -55,7 +55,7 @@ Compilation Steps
 
   .. code-block:: bash
 
-      export PATH=$PATH:/path/to/SHARP_pack/bin
+      export PATH=$PATH:/path/to/SHARP_pack_2/bin
 
 Now the **SHARP Pack** is ready to run RPSH simulations.
 
